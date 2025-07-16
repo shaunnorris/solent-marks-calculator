@@ -327,6 +327,7 @@
         @media (max-width: 480px) {
             body {
                 padding: 5px;
+                font-size: 17px; /* Reduced from 19px */
             }
             
             .container {
@@ -354,17 +355,20 @@
             .zone-checkbox {
                 padding: 10px;
                 min-height: 45px;
-                font-size: 1.1em; /* Increased from 0.9em */
+                font-size: 1.0em; /* Reduced from 1.1em */
             }
             
             select {
                 padding: 14px;
-                font-size: 19px; /* Increased from 16px */
+                font-size: 17px; /* Reduced from 19px */
             }
             
             .btn {
                 padding: 16px;
-                font-size: 19px; /* Increased from 16px */
+                font-size: 17px; /* Reduced from 19px */
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
             }
             
             .mark-input-row {
@@ -374,6 +378,35 @@
             .mark-input-row .btn {
                 min-width: 70px;
                 padding: 14px 8px;
+                font-size: 16px; /* Smaller for Add button */
+            }
+            
+            /* Course table mobile optimizations */
+            .course-table {
+                font-size: 0.9em; /* Smaller font for mobile */
+            }
+            
+            .course-table th,
+            .course-table td {
+                padding: 8px 4px; /* Reduced padding */
+                word-wrap: break-word;
+                max-width: 0; /* Allow text wrapping */
+            }
+            
+            .course-table td small {
+                font-size: 0.8em; /* Smaller description text */
+                display: block;
+                margin-top: 2px;
+            }
+            
+            /* Section titles */
+            .section-title {
+                font-size: 1.4em; /* Reduced from 1.6em */
+            }
+            
+            /* Labels */
+            label {
+                font-size: 1.0em; /* Reduced from 1.1em */
             }
         }
         
