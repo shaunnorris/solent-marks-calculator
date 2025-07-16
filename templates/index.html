@@ -424,11 +424,16 @@
                 
                 <div class="form-group">
                     <label>Current Course:</label>
-                    <div class="course-list" id="courseList"></div>
-                    <button type="button" class="btn btn-danger" id="clearCourseBtn">Clear Course</button>
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <div class="course-list" id="courseList" style="flex: 1;"></div>
+                    </div>
+                </div>
+                <!-- Calculate button directly under course list, not in flex row -->
+                <div style="margin: 16px auto 0 auto; text-align: center;">
+                    <button type="button" class="btn btn-primary" id="calculateCourseBtn" style="width: 20vw; max-width: 200px; min-width: 90px;">Calculate Course Legs</button>
                 </div>
                 
-                <button type="button" class="btn btn-primary" id="calculateCourseBtn">Calculate Course Legs</button>
+                <!-- Remove Clear Course button from here -->
             </div>
 
             <div class="loading" id="courseLoading" style="display: none;">
@@ -452,7 +457,12 @@
             </div>
             
             <div class="error" id="courseError" style="display: none;"></div>
-        </div>
+
+            <!-- Clear Course button: last element in .content -->
+            <div style="margin: 24px auto 0 auto; text-align: center;">
+                <button type="button" class="btn btn-danger" id="clearCourseBtn" style="width: 20vw; max-width: 200px; min-width: 90px;">Clear Course</button>
+            </div>
+        </div> <!-- end .content -->
     </div>
 
     <script>
