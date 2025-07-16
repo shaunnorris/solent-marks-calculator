@@ -1,21 +1,16 @@
-# 2025 Solent Racing Marks Calculator
+# Solent Marks Calculator
 
-A mobile-optimized web application for calculating bearings and distances between racing marks in the Solent area. Built with Flask and designed for iPhone/Android use.
+A Flask web application for calculating bearings and distances between racing marks using GPX data.
 
 ## Features
 
-- **Zone Filtering**: Filter marks by their prefix (1, 2, 3, etc.)
-- **Course Builder**: Add marks in sequence to build race courses
-- **Bearing & Distance Calculation**: Calculate compass bearings and distances between marks
-- **Mobile Optimized**: Touch-friendly interface for mobile devices
-- **Real-time Updates**: Dynamic dropdown population based on selected zones
+- Load racing marks from GPX files
+- Filter marks by zones
+- Build race courses by selecting marks
+- Calculate bearings and distances between course legs
+- Modern, responsive web interface
 
-## Local Development
-
-### Prerequisites
-
-- Python 3.8+
-- pip
+## Development
 
 ### Setup
 
@@ -27,142 +22,98 @@ cd solent-marks-calculator
 
 2. Install dependencies:
 ```bash
-pip install -r requirements.txt
+python3 -m pip install -r requirements.txt
 ```
 
 3. Run the development server:
 ```bash
-python3 app.py
+python3 -m flask run --host=0.0.0.0 --port=5000
 ```
 
-4. Open http://localhost:5000 in your browser
+The application will be available at `http://localhost:5000`
 
-### Running Tests
+### Testing
 
+Run tests using pytest:
 ```bash
 python3 -m pytest test_app.py -v
 ```
 
 ## Production Deployment
 
-### Server Setup
+### Initial Setup (First Time)
 
-1. **Create the virtual host directory**:
+Use the `first-deploy.sh` script for initial server setup:
+
 ```bash
-sudo mkdir -p /var/www/marks.lymxod.org.uk
-sudo chown $USER:$USER /var/www/marks.lymxod.org.uk
+# On your production server
+chmod +x first-deploy.sh
+./first-deploy.sh
 ```
 
-2. **Set up SSL certificate** (using Let's Encrypt):
+This script will:
+- Create the application directory
+- Clone the repository
+- Set up Python virtual environment
+- Install dependencies
+- Configure Gunicorn
+- Create and enable systemd service
+- Set proper permissions
+
+### Updates (After Initial Setup)
+
+Use the `update.sh` script for quick code updates:
+
 ```bash
-sudo certbot certonly --apache -d marks.lymxod.org.uk
+# On your production server
+chmod +x update.sh
+./update.sh
 ```
 
-3. **Enable required Apache modules**:
-```bash
-sudo a2enmod proxy
-sudo a2enmod proxy_http
-sudo a2enmod ssl
-sudo a2enmod headers
-sudo a2enmod rewrite
-```
-
-4. **Configure Apache**:
-```bash
-sudo cp apache2.conf /etc/apache2/sites-available/marks.lymxod.org.uk.conf
-sudo a2ensite marks.lymxod.org.uk
-sudo apache2ctl configtest
-sudo systemctl reload apache2
-```
-
-### Automated Deployment
-
-1. **On your local machine**, push to GitHub:
-```bash
-git add .
-git commit -m "Your commit message"
-git push origin main
-```
-
-2. **On the production server**, run the deployment script:
-```bash
-./deploy.sh
-```
-
-The deployment script will:
+This script will:
 - Pull the latest code from GitHub
-- Install/update dependencies
-- Create a systemd service (if not exists)
-- Restart the application
+- Restart the service
 - Show service status
 
 ### Manual Deployment
 
 If you prefer manual deployment:
 
-1. SSH to your server
-2. Navigate to the app directory:
 ```bash
+# SSH into your production server
 cd /var/www/marks.lymxod.org.uk
-```
 
-3. Pull latest changes:
-```bash
-git pull origin main
-```
+# Pull latest changes
+git fetch origin
+git reset --hard origin/main
 
-4. Install dependencies:
-```bash
-python3 -m pip install --user -r requirements.txt
-```
-
-5. Restart the service:
-```bash
+# Restart the service
 sudo systemctl restart solent-marks
+
+# Check status
+sudo systemctl status solent-marks
 ```
-
-### Service Management
-
-- **Check status**: `sudo systemctl status solent-marks`
-- **View logs**: `sudo journalctl -u solent-marks -f`
-- **Restart**: `sudo systemctl restart solent-marks`
-- **Stop**: `sudo systemctl stop solent-marks`
-- **Start**: `sudo systemctl start solent-marks`
-
-### Apache Management
-
-- **Check Apache status**: `sudo systemctl status apache2`
-- **Restart Apache**: `sudo systemctl restart apache2`
-- **View Apache logs**: `sudo tail -f /var/log/apache2/marks.lymxod.org.uk-error.log`
-
-## API Endpoints
-
-- `GET /` - Main application interface
-- `GET /marks?zones=1,2` - Get marks filtered by zones
-- `POST /course` - Calculate course legs (JSON: `{"marks": ["1A", "1B", "2C"]}`)
 
 ## File Structure
 
 ```
 ├── app.py                 # Main Flask application
-├── test_app.py           # Test suite
+├── templates/
+│   └── index.html        # Web interface template
+├── 2025scra.gpx          # GPX file with racing marks
+├── first-deploy.sh       # Initial deployment script
+├── update.sh             # Quick update script
+├── gunicorn.conf.py      # Gunicorn configuration
 ├── requirements.txt      # Python dependencies
-├── gunicorn.conf.py     # Gunicorn configuration
-├── apache2.conf         # Apache2 configuration
-├── deploy.sh            # Deployment script
-├── 2025scra.gpx         # GPX data file
-└── templates/
-    └── index.html       # Main application template
+└── test_app.py          # Test suite
 ```
 
-## Contributing
+## Configuration
 
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests for new functionality
-5. Run the test suite
-6. Submit a pull request
+The application uses:
+- **Gunicorn** as the WSGI server
+- **systemd** for process management
+- **Nginx** as reverse proxy (configured separately)
 
 ## License
 

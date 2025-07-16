@@ -32,9 +32,33 @@ else
     git reset --hard origin/$BRANCH
 fi
 
-# Install/update dependencies
+# Create virtual environment if it doesn't exist
+if [ ! -d "venv" ]; then
+    echo "🐍 Creating virtual environment..."
+    python3 -m venv venv
+fi
+
+# Activate virtual environment and install dependencies
 echo "📦 Installing dependencies..."
-python3 -m pip install --user -r requirements.txt
+source venv/bin/activate
+pip install --upgrade pip
+pip install -r requirements.txt
+
+# Create Gunicorn config if it doesn't exist
+if [ ! -f "gunicorn.conf.py" ]; then
+    echo "🔧 Creating Gunicorn configuration..."
+    cat > gunicorn.conf.py <<EOF
+bind = "127.0.0.1:8000"
+workers = 3
+worker_class = "sync"
+worker_connections = 1000
+timeout = 30
+keepalive = 2
+max_requests = 1000
+max_requests_jitter = 100
+preload_app = True
+EOF
+fi
 
 # Create systemd service file if it doesn't exist
 SERVICE_FILE="/etc/systemd/system/solent-marks.service"
@@ -51,7 +75,7 @@ User=www-data
 Group=www-data
 WorkingDirectory=$APP_DIR
 Environment=PATH=$APP_DIR/venv/bin
-ExecStart=/usr/local/bin/gunicorn --config gunicorn.conf.py app:app
+ExecStart=$APP_DIR/venv/bin/gunicorn --config gunicorn.conf.py app:app
 Restart=always
 RestartSec=10
 
