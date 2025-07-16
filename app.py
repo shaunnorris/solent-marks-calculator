@@ -69,7 +69,7 @@ def get_marks():
     if zones:
         filtered_marks = get_marks_by_zone(all_marks, zones)
     else:
-        filtered_marks = []
+        filtered_marks = all_marks  # Return all marks when no zones specified
     
     return jsonify({
         'marks': filtered_marks,
@@ -82,6 +82,8 @@ def index():
     marks = load_gpx_marks()
     zones = get_available_zones(marks)
     return render_template('index.html', marks=marks, zones=zones)
+
+
 
 @app.route('/calculate', methods=['POST'])
 def calculate():
