@@ -966,4 +966,117 @@
 <desc>Hook #</desc>
 </wpt>
 
+<wpt lat="50.707833" lon="-1.507167">
+<name>23</name>
+<sym>Y</sym>
+<desc>Harbour</desc>
+</wpt>
+
+<wpt lat="50.712000" lon="-1.495000">
+<name>29</name>
+<sym>Y</sym>
+<desc>R Sol YC ODM</desc>
+</wpt>
+
+<wpt lat="50.710667" lon="-1.498000">
+<name>2HE</name>
+<sym>R</sym>
+<desc>East Fairway Bouy</desc>
+</wpt>
+
+<wpt lat="50.710500" lon="-1.487667">
+<name>2#</name>
+<sym>Y</sym>
+<desc>Towers</desc>
+</wpt>
+
+<wpt lat="50.733167" lon="-1.516500">
+<name>2♠</name>
+<sym>Y</sym>
+<desc>Spade</desc>
+</wpt>
+
+<wpt lat="50.738000" lon="-1.511000">
+<name>2🌰</name>
+<sym>Y</sym>
+<desc>Acorn/Oakhaven</desc>
+</wpt>
+
+<wpt lat="50.741833" lon="-1.500000">
+<name>2S</name>
+<sym>Y</sym>
+<desc>East Mark</desc>
+</wpt>
+
+<wpt lat="50.738500" lon="-1.513500">
+<name>2Y</name>
+<sym>B</sym>
+<desc>Black &amp; Orange</desc>
+</wpt>
+
+<wpt lat="50.741833" lon="-1.509333">
+<name>2Z</name>
+<sym>B</sym>
+<desc>Black &amp; White</desc>
+</wpt>
+
+<wpt lat="50.748667" lon="-1.495000">
+<name>2π</name>
+<sym>Y</sym>
+<desc>Pylewell Inner</desc>
+</wpt>
+
+<wpt lat="50.729667" lon="-1.525500">
+<name>2+</name>
+<sym>Y</sym>
+<desc>Plus Mark</desc>
+</wpt>
+
+<wpt lat="50.743167" lon="-1.515333">
+<name>2@</name>
+<sym>Y</sym>
+<desc>West Reach</desc>
+</wpt>
+
+<wpt lat="50.722000" lon="-1.535500">
+<name>2V1</name>
+<sym>Y</sym>
+<desc>Inshore of Mark L</desc>
+</wpt>
+
+<wpt lat="50.722167" lon="-1.512500">
+<name>2V2</name>
+<sym>Y</sym>
+<desc>between Marks C &amp; T</desc>
+</wpt>
+
+<wpt lat="50.734333" lon="-1.506667">
+<name>2V3</name>
+<sym>Y</sym>
+<desc>South of Jack in Basket</desc>
+</wpt>
+
+<wpt lat="50.747833" lon="-1.487667">
+<name>2V4</name>
+<sym>Y</sym>
+<desc>North of Mark E</desc>
+</wpt>
+
+<wpt lat="50.744833" lon="-1.482500">
+<name>2V5</name>
+<sym>Y</sym>
+<desc>Between Marks E &amp; G</desc>
+</wpt>
+
+<wpt lat="50.740167" lon="-1.477500">
+<name>2V6</name>
+<sym>Y</sym>
+<desc>Between Marks F &amp; G</desc>
+</wpt>
+
+<wpt lat="50.749667" lon="-1.465500">
+<name>2V7</name>
+<sym>Y</sym>
+<desc>Between Marks G &amp; J</desc>
+</wpt>
 </gpx>
