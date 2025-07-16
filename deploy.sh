@@ -8,7 +8,7 @@ set -e  # Exit on any error
 echo "🚀 Starting deployment of Solent Marks Calculator..."
 
 # Configuration
-APP_DIR="/var/www/marks.lymcod.org.uk"
+APP_DIR="/var/www/marks.lymxod.org.uk"
 REPO_URL="https://github.com/shaunnorris/solent-marks-calculator.git"
 BRANCH="main"
 
@@ -77,4 +77,4 @@ echo "📊 Checking service status..."
 sudo systemctl status solent-marks --no-pager -l
 
 echo "✅ Deployment completed successfully!"
-echo "🌐 Application should be available at: https://marks.lymcod.org.uk" 
+echo "🌐 Application should be available at: https://marks.lymxod.org.uk" 
