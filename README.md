@@ -21,7 +21,7 @@ A mobile-optimized web application for calculating bearings and distances betwee
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/solent-marks-calculator.git
+git clone https://github.com/shaunnorris/solent-marks-calculator.git
 cd solent-marks-calculator
 ```
 
@@ -49,21 +49,30 @@ python3 -m pytest test_app.py -v
 
 1. **Create the virtual host directory**:
 ```bash
-sudo mkdir -p /var/www/marks.lymcod.org
-sudo chown $USER:$USER /var/www/marks.lymcod.org
+sudo mkdir -p /var/www/marks.lymcod.org.uk
+sudo chown $USER:$USER /var/www/marks.lymcod.org.uk
 ```
 
 2. **Set up SSL certificate** (using Let's Encrypt):
 ```bash
-sudo certbot certonly --nginx -d marks.lymcod.org
+sudo certbot certonly --apache -d marks.lymcod.org.uk
 ```
 
-3. **Configure Nginx**:
+3. **Enable required Apache modules**:
 ```bash
-sudo cp nginx.conf /etc/nginx/sites-available/marks.lymcod.org
-sudo ln -s /etc/nginx/sites-available/marks.lymcod.org /etc/nginx/sites-enabled/
-sudo nginx -t
-sudo systemctl reload nginx
+sudo a2enmod proxy
+sudo a2enmod proxy_http
+sudo a2enmod ssl
+sudo a2enmod headers
+sudo a2enmod rewrite
+```
+
+4. **Configure Apache**:
+```bash
+sudo cp apache2.conf /etc/apache2/sites-available/marks.lymcod.org.uk.conf
+sudo a2ensite marks.lymcod.org.uk
+sudo apache2ctl configtest
+sudo systemctl reload apache2
 ```
 
 ### Automated Deployment
@@ -94,7 +103,7 @@ If you prefer manual deployment:
 1. SSH to your server
 2. Navigate to the app directory:
 ```bash
-cd /var/www/marks.lymcod.org
+cd /var/www/marks.lymcod.org.uk
 ```
 
 3. Pull latest changes:
@@ -120,6 +129,12 @@ sudo systemctl restart solent-marks
 - **Stop**: `sudo systemctl stop solent-marks`
 - **Start**: `sudo systemctl start solent-marks`
 
+### Apache Management
+
+- **Check Apache status**: `sudo systemctl status apache2`
+- **Restart Apache**: `sudo systemctl restart apache2`
+- **View Apache logs**: `sudo tail -f /var/log/apache2/marks.lymcod.org.uk-error.log`
+
 ## API Endpoints
 
 - `GET /` - Main application interface
@@ -133,8 +148,8 @@ sudo systemctl restart solent-marks
 ├── test_app.py           # Test suite
 ├── requirements.txt      # Python dependencies
 ├── gunicorn.conf.py     # Gunicorn configuration
+├── apache2.conf         # Apache2 configuration
 ├── deploy.sh            # Deployment script
-├── nginx.conf           # Nginx configuration
 ├── 2025scra.gpx         # GPX data file
 └── templates/
     └── index.html       # Main application template

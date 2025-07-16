@@ -8,8 +8,8 @@ set -e  # Exit on any error
 echo "🚀 Starting deployment of Solent Marks Calculator..."
 
 # Configuration
-APP_DIR="/var/www/marks.lymcod.org"
-REPO_URL="https://github.com/yourusername/solent-marks-calculator.git"
+APP_DIR="/var/www/marks.lymcod.org.uk"
+REPO_URL="https://github.com/shaunnorris/solent-marks-calculator.git"
 BRANCH="main"
 
 # Create app directory if it doesn't exist
@@ -64,6 +64,10 @@ EOF
     sudo systemctl enable solent-marks
 fi
 
+# Set proper permissions
+echo "🔐 Setting permissions..."
+sudo chown -R www-data:www-data "$APP_DIR"
+
 # Restart the service
 echo "🔄 Restarting service..."
 sudo systemctl restart solent-marks
@@ -73,4 +77,4 @@ echo "📊 Checking service status..."
 sudo systemctl status solent-marks --no-pager -l
 
 echo "✅ Deployment completed successfully!"
-echo "🌐 Application should be available at: https://marks.lymcod.org" 
+echo "🌐 Application should be available at: https://marks.lymcod.org.uk" 
