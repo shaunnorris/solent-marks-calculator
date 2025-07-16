@@ -154,7 +154,7 @@ def calculate_bearing(mark1, mark2):
     # Convert to compass bearing (0-360 degrees)
     bearing = (bearing + 360) % 360
     
-    return round(bearing, 1)
+    return round(bearing)
 
 def calculate_distance(mark1, mark2):
     """Calculate distance between two marks in nautical miles"""
