@@ -106,7 +106,8 @@ Type=exec
 User=www-data
 Group=www-data
 WorkingDirectory=$APP_DIR
-ExecStart=python3 -m gunicorn --config gunicorn.conf.py app:app
+Environment=PATH=$APP_DIR/venv/bin
+ExecStart=$APP_DIR/venv/bin/gunicorn --config gunicorn.conf.py app:app
 Restart=always
 RestartSec=10
 
