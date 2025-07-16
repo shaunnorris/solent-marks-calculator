@@ -107,3 +107,37 @@ def test_calculate_route_missing_data(client):
     assert response.status_code == 400
     data = response.get_json()
     assert 'error' in data 
+
+def test_course_route_success(client):
+    """Test course calculation for a sequence of marks"""
+    marks = load_gpx_marks()
+    if len(marks) >= 3:
+        mark_names = [marks[0]['name'], marks[1]['name'], marks[2]['name']]
+        response = client.post('/course', json={'marks': mark_names})
+        assert response.status_code == 200
+        data = response.get_json()
+        assert 'legs' in data
+        assert len(data['legs']) == 2  # n marks = n-1 legs
+        for leg in data['legs']:
+            assert 'from' in leg
+            assert 'to' in leg
+            assert 'bearing' in leg
+            assert 'distance' in leg
+            assert isinstance(leg['bearing'], (int, float))
+            assert isinstance(leg['distance'], (int, float))
+
+def test_course_route_invalid_marks(client):
+    """Test course calculation with invalid mark names"""
+    response = client.post('/course', json={'marks': ['Invalid1', 'Invalid2']})
+    assert response.status_code == 400
+    data = response.get_json()
+    assert 'error' in data
+
+def test_course_route_too_few_marks(client):
+    """Test course calculation with less than two marks"""
+    marks = load_gpx_marks()
+    if marks:
+        response = client.post('/course', json={'marks': [marks[0]['name']]})
+        assert response.status_code == 400
+        data = response.get_json()
+        assert 'error' in data 

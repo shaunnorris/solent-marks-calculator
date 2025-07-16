@@ -71,6 +71,33 @@ def calculate():
         'mark2': mark2
     })
 
+@app.route('/course', methods=['POST'])
+def course():
+    """Calculate bearings and distances for a sequence of marks (race course)"""
+    data = request.get_json()
+    mark_names = data.get('marks')
+    if not mark_names or not isinstance(mark_names, list) or len(mark_names) < 2:
+        return jsonify({'error': 'At least two marks must be provided'}), 400
+
+    marks = load_gpx_marks()
+    name_to_mark = {m['name']: m for m in marks}
+    try:
+        course_marks = [name_to_mark[name] for name in mark_names]
+    except KeyError:
+        return jsonify({'error': 'One or more marks not found'}), 400
+
+    legs = []
+    for i in range(len(course_marks) - 1):
+        m1 = course_marks[i]
+        m2 = course_marks[i+1]
+        legs.append({
+            'from': {'name': m1['name'], 'description': m1['description']},
+            'to': {'name': m2['name'], 'description': m2['description']},
+            'bearing': calculate_bearing(m1, m2),
+            'distance': calculate_distance(m1, m2)
+        })
+    return jsonify({'legs': legs})
+
 def calculate_bearing(mark1, mark2):
     """Calculate compass bearing from mark1 to mark2 in degrees"""
     lat1 = math.radians(mark1['lat'])

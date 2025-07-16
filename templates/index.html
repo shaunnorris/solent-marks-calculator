@@ -193,7 +193,6 @@
                         {% endfor %}
                     </select>
                 </div>
-                
                 <div class="form-group">
                     <label for="mark2">Select Second Mark:</label>
                     <select id="mark2" name="mark2" required>
@@ -203,38 +202,54 @@
                         {% endfor %}
                     </select>
                 </div>
-                
                 <button type="submit" class="calculate-btn" id="calculateBtn">
                     Calculate Bearing & Distance
                 </button>
             </form>
-            
-            <div class="loading" id="loading" style="display: none;">
+
+            <hr style="margin: 40px 0;">
+
+            <div id="course-section">
+                <h2 style="margin-bottom: 20px;">Build Race Course</h2>
+                <div class="form-group">
+                    <label for="courseMarkSelect">Add Mark to Course (in order):</label>
+                    <select id="courseMarkSelect">
+                        <option value="">Choose a mark...</option>
+                        {% for mark in marks %}
+                        <option value="{{ mark.name }}">{{ mark.name }} - {{ mark.description }}</option>
+                        {% endfor %}
+                    </select>
+                    <button type="button" class="calculate-btn" style="margin-top:10px;" id="addMarkBtn">Add Mark</button>
+                </div>
+                <div class="form-group">
+                    <label>Current Course:</label>
+                    <ul id="courseList" style="margin-bottom: 10px;"></ul>
+                    <button type="button" class="calculate-btn" style="background:#c33;" id="clearCourseBtn">Clear Course</button>
+                </div>
+                <button type="button" class="calculate-btn" id="calculateCourseBtn" style="margin-top:10px;">Calculate Course Legs</button>
+            </div>
+
+            <div class="loading" id="courseLoading" style="display: none;">
                 <div class="spinner"></div>
-                <p>Calculating...</p>
+                <p>Calculating course legs...</p>
             </div>
-            
-            <div class="result" id="result">
-                <h3>Results</h3>
-                <div class="result-item">
-                    <span class="result-label">From:</span>
-                    <span class="result-value" id="fromMark"></span>
-                </div>
-                <div class="result-item">
-                    <span class="result-label">To:</span>
-                    <span class="result-value" id="toMark"></span>
-                </div>
-                <div class="result-item">
-                    <span class="result-label">Compass Bearing:</span>
-                    <span class="result-value" id="bearing"></span>
-                </div>
-                <div class="result-item">
-                    <span class="result-label">Distance:</span>
-                    <span class="result-value" id="distance"></span>
-                </div>
+
+            <div class="result" id="courseResult">
+                <h3>Course Legs</h3>
+                <table style="width:100%;border-collapse:collapse;">
+                    <thead>
+                        <tr style="background:#f0f0f0;">
+                            <th style="padding:8px;border-bottom:1px solid #ccc;">From</th>
+                            <th style="padding:8px;border-bottom:1px solid #ccc;">To</th>
+                            <th style="padding:8px;border-bottom:1px solid #ccc;">Bearing</th>
+                            <th style="padding:8px;border-bottom:1px solid #ccc;">Distance</th>
+                        </tr>
+                    </thead>
+                    <tbody id="courseLegsTableBody"></tbody>
+                </table>
             </div>
-            
-            <div class="error" id="error" style="display: none;"></div>
+
+            <div class="error" id="courseError" style="display: none;"></div>
         </div>
     </div>
 
@@ -315,6 +330,117 @@
         
         function hideError() {
             document.getElementById('error').style.display = 'none';
+        }
+
+        // --- Race Course JS ---
+        let courseMarks = [];
+        const courseList = document.getElementById('courseList');
+        const courseMarkSelect = document.getElementById('courseMarkSelect');
+        const addMarkBtn = document.getElementById('addMarkBtn');
+        const clearCourseBtn = document.getElementById('clearCourseBtn');
+        const calculateCourseBtn = document.getElementById('calculateCourseBtn');
+        const courseResult = document.getElementById('courseResult');
+        const courseError = document.getElementById('courseError');
+        const courseLoading = document.getElementById('courseLoading');
+        const courseLegsTableBody = document.getElementById('courseLegsTableBody');
+
+        function renderCourseList() {
+            courseList.innerHTML = '';
+            courseMarks.forEach((mark, idx) => {
+                const li = document.createElement('li');
+                li.textContent = mark;
+                li.style.display = 'flex';
+                li.style.justifyContent = 'space-between';
+                li.style.alignItems = 'center';
+                li.style.marginBottom = '4px';
+                const removeBtn = document.createElement('button');
+                removeBtn.textContent = 'Remove';
+                removeBtn.style.marginLeft = '10px';
+                removeBtn.style.background = '#c33';
+                removeBtn.style.color = 'white';
+                removeBtn.style.border = 'none';
+                removeBtn.style.borderRadius = '4px';
+                removeBtn.style.padding = '2px 8px';
+                removeBtn.style.cursor = 'pointer';
+                removeBtn.onclick = () => {
+                    courseMarks.splice(idx, 1);
+                    renderCourseList();
+                };
+                li.appendChild(removeBtn);
+                courseList.appendChild(li);
+            });
+        }
+
+        addMarkBtn.onclick = function() {
+            const selected = courseMarkSelect.value;
+            if (!selected) return;
+            courseMarks.push(selected);
+            renderCourseList();
+        };
+
+        clearCourseBtn.onclick = function() {
+            courseMarks = [];
+            renderCourseList();
+            hideCourseResult();
+            hideCourseError();
+        };
+
+        calculateCourseBtn.onclick = async function() {
+            hideCourseResult();
+            hideCourseError();
+            if (courseMarks.length < 2) {
+                showCourseError('Please add at least two marks to the course.');
+                return;
+            }
+            showCourseLoading();
+            try {
+                const response = await fetch('/course', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ marks: courseMarks })
+                });
+                const data = await response.json();
+                if (response.ok) {
+                    showCourseResult(data.legs);
+                } else {
+                    showCourseError(data.error || 'An error occurred');
+                }
+            } catch (error) {
+                showCourseError('Network error: ' + error.message);
+            } finally {
+                hideCourseLoading();
+            }
+        };
+
+        function showCourseLoading() {
+            courseLoading.style.display = 'block';
+            calculateCourseBtn.disabled = true;
+        }
+        function hideCourseLoading() {
+            courseLoading.style.display = 'none';
+            calculateCourseBtn.disabled = false;
+        }
+        function showCourseResult(legs) {
+            courseLegsTableBody.innerHTML = '';
+            legs.forEach(leg => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `<td style='padding:8px;border-bottom:1px solid #eee;'>${leg.from.name} (${leg.from.description})</td>` +
+                               `<td style='padding:8px;border-bottom:1px solid #eee;'>${leg.to.name} (${leg.to.description})</td>` +
+                               `<td style='padding:8px;border-bottom:1px solid #eee;'>${leg.bearing}&deg;</td>` +
+                               `<td style='padding:8px;border-bottom:1px solid #eee;'>${leg.distance} nautical miles</td>`;
+                courseLegsTableBody.appendChild(tr);
+            });
+            courseResult.classList.add('show');
+        }
+        function hideCourseResult() {
+            courseResult.classList.remove('show');
+        }
+        function showCourseError(message) {
+            courseError.textContent = message;
+            courseError.style.display = 'block';
+        }
+        function hideCourseError() {
+            courseError.style.display = 'none';
         }
     </script>
 </body>
