@@ -636,8 +636,8 @@
             legs.forEach(leg => {
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
-                    <td>${leg.from.name}<br><small>${leg.from.description}</small></td>
-                    <td>${leg.to.name}<br><small>${leg.to.description}</small></td>
+                    <td style="font-size: 1.3em; font-weight: 600;">${leg.from.name}</td>
+                    <td style="font-size: 1.3em; font-weight: 600;">${leg.to.name}</td>
                     <td>${leg.bearing}°</td>
                     <td>${leg.distance} nm</td>
                 `;
