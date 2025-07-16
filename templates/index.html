@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>GPX Mark Calculator</title>
+    <title>2025 Solent Racing Marks Calculator</title>
     <style>
         * {
             margin: 0;
@@ -269,38 +269,14 @@
             border-radius: 12px;
             padding: 15px;
             margin-bottom: 15px;
-            max-height: 200px;
-            overflow-y: auto;
-        }
-        
-        .course-list li {
+            min-height: 60px;
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            padding: 10px;
-            margin-bottom: 8px;
-            background: white;
-            border-radius: 8px;
-            border: 1px solid #e1e8ed;
         }
         
-        .course-list li:last-child {
-            margin-bottom: 0;
-        }
-        
-        .remove-btn {
-            background: #e74c3c;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            padding: 6px 12px;
-            font-size: 0.8em;
-            cursor: pointer;
-            -webkit-tap-highlight-color: transparent;
-        }
-        
-        .remove-btn:active {
-            transform: scale(0.95);
+        .course-list.empty {
+            color: #666;
+            font-style: italic;
         }
         
         .course-table {
@@ -386,7 +362,7 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>GPX Course Builder</h1>
+            <h1>2025 Solent Racing Marks Calculator</h1>
             <p>Build race courses and calculate bearings & distances</p>
         </div>
         
@@ -523,29 +499,13 @@
         const courseLegsTableBody = document.getElementById('courseLegsTableBody');
 
         function renderCourseList() {
-            courseList.innerHTML = '';
             if (courseMarks.length === 0) {
-                courseList.innerHTML = '<p style="text-align: center; color: #666; padding: 20px;">No marks added yet</p>';
-                return;
+                courseList.innerHTML = '<span class="empty">No marks added yet</span>';
+                courseList.classList.add('empty');
+            } else {
+                courseList.innerHTML = courseMarks.join(', ');
+                courseList.classList.remove('empty');
             }
-            
-            courseMarks.forEach((mark, idx) => {
-                const li = document.createElement('li');
-                li.innerHTML = `
-                    <span style="flex: 1;">${mark}</span>
-                    <button class="remove-btn" data-index="${idx}">Remove</button>
-                `;
-                courseList.appendChild(li);
-            });
-            
-            // Add event listeners to remove buttons
-            courseList.querySelectorAll('.remove-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const index = parseInt(this.getAttribute('data-index'));
-                    courseMarks.splice(index, 1);
-                    renderCourseList();
-                });
-            });
         }
 
         addMarkBtn.addEventListener('click', function() {
