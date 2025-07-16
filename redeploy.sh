@@ -61,7 +61,13 @@ fi
 
 # Step 4: Install dependencies
 echo "📦 Step 4: Installing dependencies..."
-python3 -m pip install --user -r requirements.txt
+python3 -m pip install -r requirements.txt
+
+# Check if we need to install gunicorn
+if ! python3 -c "import gunicorn" 2>/dev/null; then
+    echo "📦 Installing gunicorn..."
+    python3 -m pip install gunicorn
+fi
 
 # Step 5: Test the application locally
 echo "🧪 Step 5: Testing application locally..."
@@ -89,6 +95,7 @@ except Exception as e:
 
 # Step 6: Create systemd service
 echo "🔧 Step 6: Creating systemd service..."
+
 sudo tee "/etc/systemd/system/$SERVICE_NAME.service" > /dev/null <<EOF
 [Unit]
 Description=Solent Marks Calculator
@@ -99,8 +106,7 @@ Type=exec
 User=www-data
 Group=www-data
 WorkingDirectory=$APP_DIR
-Environment=PATH=$APP_DIR/venv/bin
-ExecStart=/usr/local/bin/gunicorn --config gunicorn.conf.py app:app
+ExecStart=python3 -m gunicorn --config gunicorn.conf.py app:app
 Restart=always
 RestartSec=10
 
