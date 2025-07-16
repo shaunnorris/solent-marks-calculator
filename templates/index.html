@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>GPX Mark Calculator</title>
     <style>
         * {
@@ -12,44 +12,60 @@
         }
         
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            padding: 20px;
+            padding: 10px;
+            font-size: 16px; /* Prevent zoom on iOS */
         }
         
         .container {
-            max-width: 800px;
+            max-width: 100%;
             margin: 0 auto;
             background: white;
-            border-radius: 15px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
             overflow: hidden;
+            min-height: calc(100vh - 20px);
         }
         
         .header {
             background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
             color: white;
-            padding: 30px;
+            padding: 25px 20px;
             text-align: center;
         }
         
         .header h1 {
-            font-size: 2.5em;
-            margin-bottom: 10px;
+            font-size: 1.8em;
+            margin-bottom: 8px;
+            font-weight: 700;
         }
         
         .header p {
-            font-size: 1.1em;
+            font-size: 1em;
             opacity: 0.9;
         }
         
         .content {
-            padding: 40px;
+            padding: 20px;
+        }
+        
+        .section {
+            margin-bottom: 30px;
+        }
+        
+        .section-title {
+            font-size: 1.3em;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #e1e8ed;
         }
         
         .form-group {
-            margin-bottom: 25px;
+            margin-bottom: 20px;
         }
         
         label {
@@ -57,61 +73,133 @@
             margin-bottom: 8px;
             font-weight: 600;
             color: #2c3e50;
+            font-size: 0.95em;
         }
         
         select {
             width: 100%;
-            padding: 12px;
+            padding: 15px;
             border: 2px solid #e1e8ed;
-            border-radius: 8px;
+            border-radius: 12px;
             font-size: 16px;
             background: white;
             transition: border-color 0.3s ease;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 15px center;
+            background-size: 16px;
+            padding-right: 45px;
         }
         
         select:focus {
             outline: none;
             border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
         }
         
-        .calculate-btn {
+        .btn {
             width: 100%;
-            padding: 15px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+            padding: 18px;
             border: none;
-            border-radius: 8px;
-            font-size: 18px;
+            border-radius: 12px;
+            font-size: 16px;
             font-weight: 600;
             cursor: pointer;
-            transition: transform 0.2s ease;
+            transition: all 0.2s ease;
+            margin-bottom: 10px;
+            -webkit-tap-highlight-color: transparent;
         }
         
-        .calculate-btn:hover {
-            transform: translateY(-2px);
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
         }
         
-        .calculate-btn:disabled {
+        .btn-primary:active {
+            transform: scale(0.98);
+        }
+        
+        .btn-danger {
+            background: #e74c3c;
+            color: white;
+        }
+        
+        .btn-secondary {
+            background: #95a5a6;
+            color: white;
+        }
+        
+        .btn:disabled {
             opacity: 0.6;
             cursor: not-allowed;
             transform: none;
         }
         
-        .result {
-            margin-top: 30px;
-            padding: 25px;
+        .zone-filter {
             background: #f8f9fa;
+            padding: 20px;
+            border-radius: 15px;
+            border-left: 5px solid #667eea;
+            margin-bottom: 25px;
+        }
+        
+        .zone-checkboxes {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+            gap: 12px;
+        }
+        
+        .zone-checkbox {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            padding: 12px;
+            background: white;
+            border: 2px solid #e1e8ed;
             border-radius: 10px;
+            transition: all 0.3s ease;
+            min-height: 50px;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        .zone-checkbox:active {
+            transform: scale(0.95);
+        }
+        
+        .zone-checkbox input[type="checkbox"] {
+            margin-right: 8px;
+            transform: scale(1.3);
+            accent-color: #667eea;
+        }
+        
+        .zone-checkbox input[type="checkbox"]:checked + span {
+            font-weight: 600;
+            color: #667eea;
+        }
+        
+        .zone-checkbox:has(input[type="checkbox"]:checked) {
+            border-color: #667eea;
+            background: #f0f4ff;
+        }
+        
+        .result {
+            margin-top: 25px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 15px;
             border-left: 5px solid #667eea;
             display: none;
         }
         
         .result.show {
             display: block;
-            animation: fadeIn 0.5s ease;
+            animation: slideUp 0.3s ease;
         }
         
-        @keyframes fadeIn {
+        @keyframes slideUp {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
@@ -119,13 +207,13 @@
         .result h3 {
             color: #2c3e50;
             margin-bottom: 15px;
-            font-size: 1.3em;
+            font-size: 1.2em;
         }
         
         .result-item {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
             padding: 10px 0;
             border-bottom: 1px solid #e1e8ed;
         }
@@ -142,91 +230,200 @@
         .result-value {
             font-weight: 500;
             color: #667eea;
+            text-align: right;
         }
         
         .error {
             background: #fee;
             color: #c33;
             padding: 15px;
-            border-radius: 8px;
+            border-radius: 12px;
             margin-top: 20px;
             border-left: 5px solid #c33;
+            font-size: 0.9em;
         }
         
         .loading {
             text-align: center;
-            padding: 20px;
+            padding: 30px 20px;
             color: #666;
         }
         
         .spinner {
-            border: 3px solid #f3f3f3;
-            border-top: 3px solid #667eea;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
             border-radius: 50%;
-            width: 30px;
-            height: 30px;
+            width: 40px;
+            height: 40px;
             animation: spin 1s linear infinite;
-            margin: 0 auto 10px;
+            margin: 0 auto 15px;
         }
         
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+        
+        .course-list {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        
+        .course-list li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            margin-bottom: 8px;
+            background: white;
+            border-radius: 8px;
+            border: 1px solid #e1e8ed;
+        }
+        
+        .course-list li:last-child {
+            margin-bottom: 0;
+        }
+        
+        .remove-btn {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 6px 12px;
+            font-size: 0.8em;
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        .remove-btn:active {
+            transform: scale(0.95);
+        }
+        
+        .course-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            font-size: 0.9em;
+        }
+        
+        .course-table th {
+            background: #f0f0f0;
+            padding: 12px 8px;
+            border-bottom: 2px solid #ccc;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        .course-table td {
+            padding: 12px 8px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .divider {
+            height: 1px;
+            background: #e1e8ed;
+            margin: 30px 0;
+        }
+        
+        /* Mobile-specific optimizations */
+        @media (max-width: 480px) {
+            body {
+                padding: 5px;
+            }
+            
+            .container {
+                border-radius: 15px;
+                min-height: calc(100vh - 10px);
+            }
+            
+            .header {
+                padding: 20px 15px;
+            }
+            
+            .header h1 {
+                font-size: 1.6em;
+            }
+            
+            .content {
+                padding: 15px;
+            }
+            
+            .zone-checkboxes {
+                grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
+                gap: 8px;
+            }
+            
+            .zone-checkbox {
+                padding: 10px;
+                min-height: 45px;
+                font-size: 0.9em;
+            }
+            
+            select {
+                padding: 14px;
+                font-size: 16px;
+            }
+            
+            .btn {
+                padding: 16px;
+                font-size: 16px;
+            }
+        }
+        
+        /* Prevent text selection on buttons */
+        .btn, .zone-checkbox, .remove-btn {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>GPX Mark Calculator</h1>
-            <p>Calculate bearing and distance between any two marks</p>
+            <h1>GPX Course Builder</h1>
+            <p>Build race courses and calculate bearings & distances</p>
         </div>
         
         <div class="content">
-            <form id="calculatorForm">
-                <div class="form-group">
-                    <label for="mark1">Select First Mark:</label>
-                    <select id="mark1" name="mark1" required>
-                        <option value="">Choose a mark...</option>
-                        {% for mark in marks %}
-                        <option value="{{ mark.name }}">{{ mark.name }} - {{ mark.description }}</option>
+            <!-- Zone Filter Section -->
+            <div class="section">
+                <div class="section-title">Filter by Zone</div>
+                <div class="zone-filter">
+                    <div class="zone-checkboxes">
+                        {% for zone in zones %}
+                        <label class="zone-checkbox">
+                            <input type="checkbox" value="{{ zone }}" class="zone-cb">
+                            <span>Zone {{ zone }}</span>
+                        </label>
                         {% endfor %}
-                    </select>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="mark2">Select Second Mark:</label>
-                    <select id="mark2" name="mark2" required>
-                        <option value="">Choose a mark...</option>
-                        {% for mark in marks %}
-                        <option value="{{ mark.name }}">{{ mark.name }} - {{ mark.description }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-                <button type="submit" class="calculate-btn" id="calculateBtn">
-                    Calculate Bearing & Distance
-                </button>
-            </form>
+            </div>
 
-            <hr style="margin: 40px 0;">
-
-            <div id="course-section">
-                <h2 style="margin-bottom: 20px;">Build Race Course</h2>
+            <!-- Race Course Builder -->
+            <div class="section">
+                <div class="section-title">Build Course</div>
                 <div class="form-group">
-                    <label for="courseMarkSelect">Add Mark to Course (in order):</label>
+                    <label for="courseMarkSelect">Add Mark to Course:</label>
                     <select id="courseMarkSelect">
                         <option value="">Choose a mark...</option>
-                        {% for mark in marks %}
-                        <option value="{{ mark.name }}">{{ mark.name }} - {{ mark.description }}</option>
-                        {% endfor %}
                     </select>
-                    <button type="button" class="calculate-btn" style="margin-top:10px;" id="addMarkBtn">Add Mark</button>
+                    <button type="button" class="btn btn-primary" id="addMarkBtn">Add Mark</button>
                 </div>
+                
                 <div class="form-group">
                     <label>Current Course:</label>
-                    <ul id="courseList" style="margin-bottom: 10px;"></ul>
-                    <button type="button" class="calculate-btn" style="background:#c33;" id="clearCourseBtn">Clear Course</button>
+                    <div class="course-list" id="courseList"></div>
+                    <button type="button" class="btn btn-danger" id="clearCourseBtn">Clear Course</button>
                 </div>
-                <button type="button" class="calculate-btn" id="calculateCourseBtn" style="margin-top:10px;">Calculate Course Legs</button>
+                
+                <button type="button" class="btn btn-primary" id="calculateCourseBtn">Calculate Course Legs</button>
             </div>
 
             <div class="loading" id="courseLoading" style="display: none;">
@@ -236,106 +433,87 @@
 
             <div class="result" id="courseResult">
                 <h3>Course Legs</h3>
-                <table style="width:100%;border-collapse:collapse;">
+                <table class="course-table">
                     <thead>
-                        <tr style="background:#f0f0f0;">
-                            <th style="padding:8px;border-bottom:1px solid #ccc;">From</th>
-                            <th style="padding:8px;border-bottom:1px solid #ccc;">To</th>
-                            <th style="padding:8px;border-bottom:1px solid #ccc;">Bearing</th>
-                            <th style="padding:8px;border-bottom:1px solid #ccc;">Distance</th>
+                        <tr>
+                            <th>From</th>
+                            <th>To</th>
+                            <th>Bearing</th>
+                            <th>Distance</th>
                         </tr>
                     </thead>
                     <tbody id="courseLegsTableBody"></tbody>
                 </table>
             </div>
-
+            
             <div class="error" id="courseError" style="display: none;"></div>
         </div>
     </div>
 
     <script>
-        document.getElementById('calculatorForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
-            
-            const mark1 = document.getElementById('mark1').value;
-            const mark2 = document.getElementById('mark2').value;
-            
-            if (!mark1 || !mark2) {
-                showError('Please select both marks');
-                return;
-            }
-            
-            if (mark1 === mark2) {
-                showError('Please select two different marks');
-                return;
-            }
-            
-            showLoading();
-            hideError();
-            hideResult();
-            
+        // Zone filtering functionality
+        let allMarks = [];
+        const zoneCheckboxes = document.querySelectorAll('.zone-cb');
+        const courseMarkSelect = document.getElementById('courseMarkSelect');
+
+        // Load all marks on page load
+        async function loadAllMarks() {
             try {
-                const response = await fetch('/calculate', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        mark1: mark1,
-                        mark2: mark2
-                    })
-                });
-                
+                const response = await fetch('/marks');
                 const data = await response.json();
-                
-                if (response.ok) {
-                    showResult(data);
-                } else {
-                    showError(data.error || 'An error occurred');
-                }
+                allMarks = data.marks;
+                updateDropdowns();
             } catch (error) {
-                showError('Network error: ' + error.message);
-            } finally {
-                hideLoading();
+                console.error('Error loading marks:', error);
             }
-        });
-        
-        function showLoading() {
-            document.getElementById('loading').style.display = 'block';
-            document.getElementById('calculateBtn').disabled = true;
-        }
-        
-        function hideLoading() {
-            document.getElementById('loading').style.display = 'none';
-            document.getElementById('calculateBtn').disabled = false;
-        }
-        
-        function showResult(data) {
-            document.getElementById('fromMark').textContent = `${data.mark1.name} (${data.mark1.description})`;
-            document.getElementById('toMark').textContent = `${data.mark2.name} (${data.mark2.description})`;
-            document.getElementById('bearing').textContent = `${data.bearing}°`;
-            document.getElementById('distance').textContent = `${data.distance} nautical miles`;
-            
-            document.getElementById('result').classList.add('show');
-        }
-        
-        function hideResult() {
-            document.getElementById('result').classList.remove('show');
-        }
-        
-        function showError(message) {
-            document.getElementById('error').textContent = message;
-            document.getElementById('error').style.display = 'block';
-        }
-        
-        function hideError() {
-            document.getElementById('error').style.display = 'none';
         }
 
-        // --- Race Course JS ---
+        // Update dropdowns based on selected zones
+        async function updateDropdowns() {
+            const selectedZones = Array.from(zoneCheckboxes)
+                .filter(cb => cb.checked)
+                .map(cb => cb.value);
+            
+            let filteredMarks = [];
+            if (selectedZones.length > 0) {
+                const zonesParam = selectedZones.join(',');
+                try {
+                    const response = await fetch(`/marks?zones=${zonesParam}`);
+                    const data = await response.json();
+                    filteredMarks = data.marks;
+                } catch (error) {
+                    console.error('Error filtering marks:', error);
+                }
+            }
+            
+            // Update course dropdown
+            const currentValue = courseMarkSelect.value;
+            courseMarkSelect.innerHTML = '<option value="">Choose a mark...</option>';
+            
+            filteredMarks.forEach(mark => {
+                const option = document.createElement('option');
+                option.value = mark.name;
+                option.textContent = `${mark.name} - ${mark.description}`;
+                courseMarkSelect.appendChild(option);
+            });
+            
+            // Restore previous selection if it's still valid
+            if (currentValue && filteredMarks.some(m => m.name === currentValue)) {
+                courseMarkSelect.value = currentValue;
+            }
+        }
+
+        // Add event listeners for zone checkboxes
+        zoneCheckboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', updateDropdowns);
+        });
+
+        // Load marks when page loads
+        document.addEventListener('DOMContentLoaded', loadAllMarks);
+
+        // Race Course functionality
         let courseMarks = [];
         const courseList = document.getElementById('courseList');
-        const courseMarkSelect = document.getElementById('courseMarkSelect');
         const addMarkBtn = document.getElementById('addMarkBtn');
         const clearCourseBtn = document.getElementById('clearCourseBtn');
         const calculateCourseBtn = document.getElementById('calculateCourseBtn');
@@ -346,46 +524,45 @@
 
         function renderCourseList() {
             courseList.innerHTML = '';
+            if (courseMarks.length === 0) {
+                courseList.innerHTML = '<p style="text-align: center; color: #666; padding: 20px;">No marks added yet</p>';
+                return;
+            }
+            
             courseMarks.forEach((mark, idx) => {
                 const li = document.createElement('li');
-                li.textContent = mark;
-                li.style.display = 'flex';
-                li.style.justifyContent = 'space-between';
-                li.style.alignItems = 'center';
-                li.style.marginBottom = '4px';
-                const removeBtn = document.createElement('button');
-                removeBtn.textContent = 'Remove';
-                removeBtn.style.marginLeft = '10px';
-                removeBtn.style.background = '#c33';
-                removeBtn.style.color = 'white';
-                removeBtn.style.border = 'none';
-                removeBtn.style.borderRadius = '4px';
-                removeBtn.style.padding = '2px 8px';
-                removeBtn.style.cursor = 'pointer';
-                removeBtn.onclick = () => {
-                    courseMarks.splice(idx, 1);
-                    renderCourseList();
-                };
-                li.appendChild(removeBtn);
+                li.innerHTML = `
+                    <span style="flex: 1;">${mark}</span>
+                    <button class="remove-btn" data-index="${idx}">Remove</button>
+                `;
                 courseList.appendChild(li);
+            });
+            
+            // Add event listeners to remove buttons
+            courseList.querySelectorAll('.remove-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const index = parseInt(this.getAttribute('data-index'));
+                    courseMarks.splice(index, 1);
+                    renderCourseList();
+                });
             });
         }
 
-        addMarkBtn.onclick = function() {
+        addMarkBtn.addEventListener('click', function() {
             const selected = courseMarkSelect.value;
             if (!selected) return;
             courseMarks.push(selected);
             renderCourseList();
-        };
+        });
 
-        clearCourseBtn.onclick = function() {
+        clearCourseBtn.addEventListener('click', function() {
             courseMarks = [];
             renderCourseList();
             hideCourseResult();
             hideCourseError();
-        };
+        });
 
-        calculateCourseBtn.onclick = async function() {
+        calculateCourseBtn.addEventListener('click', async function() {
             hideCourseResult();
             hideCourseError();
             if (courseMarks.length < 2) {
@@ -410,35 +587,42 @@
             } finally {
                 hideCourseLoading();
             }
-        };
+        });
 
         function showCourseLoading() {
             courseLoading.style.display = 'block';
             calculateCourseBtn.disabled = true;
         }
+        
         function hideCourseLoading() {
             courseLoading.style.display = 'none';
             calculateCourseBtn.disabled = false;
         }
+        
         function showCourseResult(legs) {
             courseLegsTableBody.innerHTML = '';
             legs.forEach(leg => {
                 const tr = document.createElement('tr');
-                tr.innerHTML = `<td style='padding:8px;border-bottom:1px solid #eee;'>${leg.from.name} (${leg.from.description})</td>` +
-                               `<td style='padding:8px;border-bottom:1px solid #eee;'>${leg.to.name} (${leg.to.description})</td>` +
-                               `<td style='padding:8px;border-bottom:1px solid #eee;'>${leg.bearing}&deg;</td>` +
-                               `<td style='padding:8px;border-bottom:1px solid #eee;'>${leg.distance} nautical miles</td>`;
+                tr.innerHTML = `
+                    <td>${leg.from.name}<br><small>${leg.from.description}</small></td>
+                    <td>${leg.to.name}<br><small>${leg.to.description}</small></td>
+                    <td>${leg.bearing}°</td>
+                    <td>${leg.distance} nm</td>
+                `;
                 courseLegsTableBody.appendChild(tr);
             });
             courseResult.classList.add('show');
         }
+        
         function hideCourseResult() {
             courseResult.classList.remove('show');
         }
+        
         function showCourseError(message) {
             courseError.textContent = message;
             courseError.style.display = 'block';
         }
+        
         function hideCourseError() {
             courseError.style.display = 'none';
         }

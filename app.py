@@ -38,11 +38,50 @@ def load_gpx_marks():
     
     return marks
 
+def get_available_zones(marks):
+    """Get list of available zones (first character of mark names)"""
+    zones = set()
+    for mark in marks:
+        if mark['name']:
+            zones.add(mark['name'][0])
+    return sorted(list(zones))
+
+def get_marks_by_zone(marks, zones):
+    """Filter marks by zone (first character of mark name)"""
+    if not zones:
+        return []
+    
+    filtered_marks = []
+    for mark in marks:
+        if mark['name'] and mark['name'][0] in zones:
+            filtered_marks.append(mark)
+    return filtered_marks
+
+@app.route('/marks')
+def get_marks():
+    """Get marks filtered by zones"""
+    zones_param = request.args.get('zones', '')
+    zones = [z.strip() for z in zones_param.split(',') if z.strip()]
+    
+    all_marks = load_gpx_marks()
+    available_zones = get_available_zones(all_marks)
+    
+    if zones:
+        filtered_marks = get_marks_by_zone(all_marks, zones)
+    else:
+        filtered_marks = []
+    
+    return jsonify({
+        'marks': filtered_marks,
+        'zones': available_zones
+    })
+
 @app.route('/')
 def index():
     """Main page"""
     marks = load_gpx_marks()
-    return render_template('index.html', marks=marks)
+    zones = get_available_zones(marks)
+    return render_template('index.html', marks=marks, zones=zones)
 
 @app.route('/calculate', methods=['POST'])
 def calculate():

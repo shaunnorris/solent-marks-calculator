@@ -141,3 +141,65 @@ def test_course_route_too_few_marks(client):
         assert response.status_code == 400
         data = response.get_json()
         assert 'error' in data 
+
+def test_get_marks_by_zone():
+    """Test filtering marks by zone (first character of mark name)"""
+    from app import get_marks_by_zone, load_gpx_marks
+    
+    all_marks = load_gpx_marks()
+    
+    # Test zone 1
+    zone1_marks = get_marks_by_zone(all_marks, ['1'])
+    assert len(zone1_marks) > 0
+    for mark in zone1_marks:
+        assert mark['name'].startswith('1')
+    
+    # Test multiple zones
+    zone_1_2_marks = get_marks_by_zone(all_marks, ['1', '2'])
+    assert len(zone_1_2_marks) > 0
+    for mark in zone_1_2_marks:
+        assert mark['name'].startswith('1') or mark['name'].startswith('2')
+    
+    # Test empty zones
+    empty_marks = get_marks_by_zone(all_marks, [])
+    assert len(empty_marks) == 0
+    
+    # Test invalid zones
+    invalid_marks = get_marks_by_zone(all_marks, ['X'])
+    assert len(invalid_marks) == 0
+
+def test_get_available_zones():
+    """Test getting list of available zones from marks"""
+    from app import get_available_zones, load_gpx_marks
+    
+    all_marks = load_gpx_marks()
+    zones = get_available_zones(all_marks)
+    
+    assert len(zones) > 0
+    assert all(isinstance(zone, str) for zone in zones)
+    assert all(len(zone) == 1 for zone in zones)  # Single character zones
+
+def test_marks_endpoint(client):
+    """Test the /marks endpoint that returns marks filtered by zones"""
+    response = client.get('/marks?zones=1,2')
+    assert response.status_code == 200
+    data = response.get_json()
+    
+    assert 'marks' in data
+    assert 'zones' in data
+    assert isinstance(data['marks'], list)
+    assert isinstance(data['zones'], list)
+    
+    # All returned marks should be from zones 1 or 2
+    for mark in data['marks']:
+        assert mark['name'].startswith('1') or mark['name'].startswith('2')
+
+def test_marks_endpoint_no_zones(client):
+    """Test the /marks endpoint with no zones specified"""
+    response = client.get('/marks')
+    assert response.status_code == 200
+    data = response.get_json()
+    
+    assert 'marks' in data
+    assert 'zones' in data
+    assert len(data['marks']) == 0  # No zones selected = no marks 
