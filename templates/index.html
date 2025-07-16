@@ -4,6 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>2025 Solent Racing Marks Calculator</title>
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <style>
         * {
             margin: 0;
@@ -491,6 +497,12 @@
             
             <div class="error" id="courseError" style="display: none;"></div>
 
+            <!-- Map Section -->
+            <div class="section" id="mapSection" style="display: none;">
+                <div class="section-title">Course Map</div>
+                <div id="map" style="height: 500px; border-radius: 12px; overflow: hidden; border: 2px solid red; background: #f0f0f0;"></div>
+            </div>
+
             <!-- Clear Course button: last element in .content -->
             <div style="margin: 24px auto 0 auto; text-align: center;">
                 <button type="button" class="btn btn-danger" id="clearCourseBtn" style="width: 20vw; max-width: 200px; min-width: 90px;">Clear Course</button>
@@ -510,6 +522,8 @@
                 const response = await fetch('/marks');
                 const data = await response.json();
                 allMarks = data.marks;
+                console.log('Loaded marks:', allMarks.length, 'marks');
+                console.log('First few marks:', allMarks.slice(0, 3));
                 updateDropdowns();
             } catch (error) {
                 console.error('Error loading marks:', error);
@@ -557,7 +571,21 @@
         });
 
         // Load marks when page loads
-        document.addEventListener('DOMContentLoaded', loadAllMarks);
+        document.addEventListener('DOMContentLoaded', function() {
+            loadAllMarks();
+            
+            // Test: Force map section to be visible for debugging
+            setTimeout(() => {
+                console.log('Testing map visibility...');
+                const mapSection = document.getElementById('mapSection');
+                if (mapSection) {
+                    mapSection.style.display = 'block';
+                    console.log('Map section made visible for testing');
+                } else {
+                    console.error('Map section not found!');
+                }
+            }, 2000);
+        });
 
         // Race Course functionality
         let courseMarks = [];
@@ -658,6 +686,284 @@
         function hideCourseError() {
             courseError.style.display = 'none';
         }
+
+        // Map functionality
+        let map = null;
+        let mapMarkers = {};
+        let routeLines = [];
+
+        // Initialize map
+        function initMap() {
+            if (map) return; // Already initialized
+            
+            console.log('Initializing map...');
+            
+            // Check if map container exists
+            const mapContainer = document.getElementById('map');
+            if (!mapContainer) {
+                console.error('Map container not found!');
+                return;
+            }
+            
+            // Check if Leaflet is loaded
+            if (typeof L === 'undefined') {
+                console.error('Leaflet library not loaded!');
+                return;
+            }
+            
+            map = L.map('map').setView([50.7, -1.5], 10);
+            
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors'
+            }).addTo(map);
+            
+            console.log('Map initialized successfully');
+            
+            // Test: Add a simple marker to verify map is working
+            const testMarker = L.marker([50.7, -1.5]).addTo(map);
+            testMarker.bindPopup('Test marker - map is working!');
+            console.log('Added test marker to verify map functionality');
+        }
+
+        // Add marks to map
+        function addMarksToMap() {
+            console.log('Adding marks to map...');
+            if (!map) initMap();
+            
+            // Clear existing markers
+            Object.values(mapMarkers).forEach(marker => map.removeLayer(marker));
+            mapMarkers = {};
+            
+            // Check if allMarks is available
+            if (!allMarks || allMarks.length === 0) {
+                console.error('No marks data available for map');
+                return;
+            }
+            
+            console.log('Adding', allMarks.length, 'marks to map');
+            
+            // Add all marks
+            let addedCount = 0;
+            allMarks.forEach(mark => {
+                if (!mark || !mark.lat || !mark.lon || !mark.name) {
+                    console.error('Invalid mark data:', mark);
+                    return;
+                }
+                
+                console.log('Adding mark:', mark.name, 'at', mark.lat, mark.lon);
+                
+                const marker = L.marker([mark.lat, mark.lon])
+                    .bindPopup(`
+                        <div style="text-align: center;">
+                            <h3 style="margin: 0 0 5px 0; color: #2c3e50;">${mark.name}</h3>
+                            <p style="margin: 0; color: #7f8c8d; font-size: 0.9em;">${mark.description || ''}</p>
+                        </div>
+                    `);
+                
+                marker.addTo(map);
+                mapMarkers[mark.name] = marker;
+                addedCount++;
+            });
+            
+            console.log('Successfully added', addedCount, 'marks to map');
+        }
+
+        // Calculate bearing between two points
+        function calculateBearing(lat1, lon1, lat2, lon2) {
+            const dLon = (lon2 - lon1) * Math.PI / 180;
+            const lat1Rad = lat1 * Math.PI / 180;
+            const lat2Rad = lat2 * Math.PI / 180;
+            
+            const y = Math.sin(dLon) * Math.cos(lat2Rad);
+            const x = Math.cos(lat1Rad) * Math.sin(lat2Rad) - Math.sin(lat1Rad) * Math.cos(lat2Rad) * Math.cos(dLon);
+            
+            let bearing = Math.atan2(y, x) * 180 / Math.PI;
+            bearing = (bearing + 360) % 360;
+            
+            return Math.round(bearing);
+        }
+
+        // Calculate distance between two points in nautical miles
+        function calculateDistance(lat1, lon1, lat2, lon2) {
+            const R = 3440.065; // Earth's radius in nautical miles
+            const dLat = (lat2 - lat1) * Math.PI / 180;
+            const dLon = (lon2 - lon1) * Math.PI / 180;
+            const lat1Rad = lat1 * Math.PI / 180;
+            const lat2Rad = lat2 * Math.PI / 180;
+            
+            const a = Math.sin(dLat/2)**2 + Math.cos(lat1Rad) * Math.cos(lat2Rad) * Math.sin(dLon/2)**2;
+            const c = 2 * Math.asin(Math.sqrt(a));
+            
+            return Math.round(R * c * 100) / 100;
+        }
+
+        // Draw route on map
+        function drawRouteOnMap(legs) {
+            console.log('Drawing route on map with legs:', legs);
+            if (!map) initMap();
+            
+            // Clear existing route and markers
+            routeLines.forEach(line => map.removeLayer(line));
+            routeLines = [];
+            Object.values(mapMarkers).forEach(marker => map.removeLayer(marker));
+            mapMarkers = {};
+            
+            // Check if allMarks is available
+            if (!allMarks || allMarks.length === 0) {
+                console.error('No marks data available for route drawing');
+                return;
+            }
+            
+            // Collect unique marks in the course
+            const courseMarkNames = new Set();
+            legs.forEach(leg => {
+                if (leg && leg.from && leg.from.name) courseMarkNames.add(leg.from.name);
+                if (leg && leg.to && leg.to.name) courseMarkNames.add(leg.to.name);
+            });
+            const courseMarks = allMarks.filter(m => courseMarkNames.has(m.name));
+            
+            // Add only course marks to the map, with labels
+            courseMarks.forEach(mark => {
+                if (!mark || !mark.lat || !mark.lon || !mark.name) return;
+                // Marker icon with label
+                const labelIcon = L.divIcon({
+                    className: 'mark-label-icon',
+                    html: `<div style="display: flex; align-items: center;">
+                        <div style="background: #667eea; color: white; border-radius: 50%; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 13px; border: 2px solid white; box-shadow: 0 2px 4px rgba(0,0,0,0.3);">${mark.name}</div>
+                        <span style="margin-left: 8px; font-size: 15px; font-weight: 600; color: #2c3e50; background: rgba(255,255,255,0.8); padding: 2px 8px; border-radius: 6px; border: 1px solid #e1e8ed;">${mark.name}</span>
+                    </div>`,
+                    iconSize: [80, 28],
+                    iconAnchor: [12, 12]
+                });
+                const marker = L.marker([mark.lat, mark.lon], { icon: labelIcon })
+                    .bindPopup(`
+                        <div style="text-align: center;">
+                            <h3 style="margin: 0 0 5px 0; color: #2c3e50;">${mark.name}</h3>
+                            <p style="margin: 0; color: #7f8c8d; font-size: 0.9em;">${mark.description || ''}</p>
+                        </div>
+                    `);
+                marker.addTo(map);
+                mapMarkers[mark.name] = marker;
+            });
+            
+            // Draw new route
+            legs.forEach(leg => {
+                if (!leg || !leg.from || !leg.to) return;
+                const mark1 = allMarks.find(m => m.name === leg.from.name);
+                const mark2 = allMarks.find(m => m.name === leg.to.name);
+                if (!mark1 || !mark2) return;
+                // Create route line
+                const line = L.polyline([[mark1.lat, mark1.lon], [mark2.lat, mark2.lon]], {
+                    color: '#e74c3c',
+                    weight: 3,
+                    opacity: 0.8
+                }).addTo(map);
+                // Add bearing label at midpoint
+                const midLat = (mark1.lat + mark2.lat) / 2;
+                const midLon = (mark1.lon + mark2.lon) / 2;
+                const bearingIcon = L.divIcon({
+                    className: 'bearing-label',
+                    html: `<div style="background: #e74c3c; color: white; padding: 1px 4px; border-radius: 2px; font-size: 8px; font-weight: bold; white-space: nowrap;">${leg.bearing}°</div>`,
+                    iconSize: [40, 12],
+                    iconAnchor: [20, 6]
+                });
+                const bearingMarker = L.marker([midLat, midLon], { icon: bearingIcon }).addTo(map);
+                // Add distance label
+                const distanceIcon = L.divIcon({
+                    className: 'distance-label',
+                    html: `<div style="background: #2c3e50; color: white; padding: 1px 4px; border-radius: 2px; font-size: 8px; font-weight: bold; white-space: nowrap;">${leg.distance}nm</div>`,
+                    iconSize: [50, 12],
+                    iconAnchor: [25, 18]
+                });
+                const distanceMarker = L.marker([midLat, midLon], { icon: distanceIcon }).addTo(map);
+                // Add arrowhead 75% along the line
+                const arrowLat = mark1.lat + (mark2.lat - mark1.lat) * 0.75;
+                const arrowLon = mark1.lon + (mark2.lon - mark1.lon) * 0.75;
+                const arrowIcon = L.divIcon({
+                    className: 'arrowhead-icon',
+                    html: `<svg width="24" height="24" viewBox="0 0 24 24" style="transform: rotate(${leg.bearing}deg);">
+                        <polygon points="12,3 21,21 12,16 3,21" fill="#e74c3c" />
+                    </svg>`,
+                    iconSize: [24, 24],
+                    iconAnchor: [12, 12]
+                });
+                const arrowMarker = L.marker([arrowLat, arrowLon], { icon: arrowIcon, interactive: false }).addTo(map);
+                // Add popup with route info
+                line.bindPopup(`
+                    <strong>${leg.from.name} → ${leg.to.name}</strong><br>
+                    Bearing: ${leg.bearing}°<br>
+                    Distance: ${leg.distance} nm
+                `);
+                routeLines.push(line);
+                routeLines.push(bearingMarker);
+                routeLines.push(distanceMarker);
+                routeLines.push(arrowMarker);
+            });
+            // Fit map to show all route marks
+            if (courseMarks.length > 0) {
+                const bounds = L.latLngBounds(courseMarks.map(mark => [mark.lat, mark.lon]));
+                map.fitBounds(bounds, { padding: [20, 20] });
+            }
+        }
+
+        // Show map section
+        function showMap() {
+            console.log('Showing map section...');
+            document.getElementById('mapSection').style.display = 'block';
+            // Small delay to ensure DOM is ready
+            setTimeout(() => {
+                console.log('Map section timeout - initializing map...');
+                if (!map) {
+                    initMap();
+                }
+                // Always add marks to map when showing
+                addMarksToMap();
+            }, 100);
+        }
+
+        // Hide map section
+        function hideMap() {
+            document.getElementById('mapSection').style.display = 'none';
+        }
+
+        // Update the showCourseResult function to include map
+        function showCourseResult(legs) {
+            console.log('Showing course result with legs:', legs);
+            courseLegsTableBody.innerHTML = '';
+            legs.forEach(leg => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td style="font-size: 1.3em; font-weight: 600;">${leg.from.name}</td>
+                    <td style="font-size: 1.3em; font-weight: 600;">${leg.to.name}</td>
+                    <td>${leg.bearing}°</td>
+                    <td>${leg.distance} nm</td>
+                `;
+                courseLegsTableBody.appendChild(tr);
+            });
+            courseResult.classList.add('show');
+            
+            // Show and update map
+            showMap();
+            // Small delay to ensure map is ready before drawing route
+            setTimeout(() => {
+                drawRouteOnMap(legs);
+            }, 200);
+        }
+
+        // Update the hideCourseResult function to hide map
+        function hideCourseResult() {
+            courseResult.classList.remove('show');
+            hideMap();
+        }
+
+        // Update the clearCourseBtn click handler
+        clearCourseBtn.addEventListener('click', function() {
+            courseMarks = [];
+            renderCourseList();
+            hideCourseResult();
+            hideCourseError();
+            hideMap();
+        });
     </script>
 </body>
 </html> 
