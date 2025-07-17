@@ -302,6 +302,86 @@
             color: #666;
             font-style: italic;
         }
+
+        .course-lozenges {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .course-lozenge {
+            display: inline-flex;
+            align-items: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.95em;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            border: 2px solid transparent;
+            position: relative;
+        }
+
+        .course-lozenge::after {
+            content: '×';
+            position: absolute;
+            top: -6px;
+            right: -6px;
+            background: rgba(255,255,255,0.9);
+            color: #e74c3c;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+            pointer-events: none;
+        }
+
+        .course-lozenge:hover::after {
+            opacity: 1;
+        }
+
+        .course-lozenge:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+            border-color: rgba(255,255,255,0.3);
+        }
+
+        .course-lozenge:active {
+            transform: translateY(0);
+        }
+
+        .course-lozenge.port {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+        }
+
+        .course-lozenge.starboard {
+            background: linear-gradient(135deg, #27ae60 0%, #229954 100%);
+        }
+
+        .course-arrow {
+            color: #667eea;
+            font-weight: bold;
+            font-size: 1.2em;
+            margin: 0 4px;
+            user-select: none;
+        }
+
+        .course-lozenge .rounding-text {
+            font-style: italic;
+            font-size: 0.85em;
+            opacity: 0.9;
+            margin-left: 4px;
+        }
         
         .course-table {
             width: 100%;
@@ -397,6 +477,21 @@
                 padding: 8px 4px; /* Reduced padding */
                 word-wrap: break-word;
                 max-width: 0; /* Allow text wrapping */
+            }
+
+            /* Course lozenges mobile optimizations */
+            .course-lozenges {
+                gap: 6px;
+            }
+
+            .course-lozenge {
+                padding: 6px 12px;
+                font-size: 0.9em;
+            }
+
+            .course-arrow {
+                font-size: 1.1em;
+                margin: 0 2px;
             }
             
             .course-table td small {
@@ -608,11 +703,51 @@
                 courseList.innerHTML = '<span class="empty">No marks added yet</span>';
                 courseList.classList.add('empty');
             } else {
-                const courseDisplay = courseMarks.map(mark => {
+                const lozengesContainer = document.createElement('div');
+                lozengesContainer.className = 'course-lozenges';
+                
+                courseMarks.forEach((mark, index) => {
+                    // Create lozenge
+                    const lozenge = document.createElement('div');
+                    lozenge.className = `course-lozenge ${mark.rounding === 'P' ? 'port' : 'starboard'}`;
+                    lozenge.dataset.index = index;
+                    
                     const roundingText = mark.rounding === 'P' ? '(port)' : '(starboard)';
-                    return `${mark.name} <em>${roundingText}</em>`;
-                }).join(', ');
-                courseList.innerHTML = courseDisplay;
+                    lozenge.innerHTML = `
+                        <span>${mark.name}</span>
+                        <span class="rounding-text">${roundingText}</span>
+                    `;
+                    
+                    // Add click handler for deletion
+                    lozenge.addEventListener('click', function() {
+                        const markIndex = parseInt(this.dataset.index);
+                        const markName = courseMarks[markIndex].name;
+                        const rounding = courseMarks[markIndex].rounding;
+                        
+                        if (confirm(`Remove ${markName} (${rounding === 'P' ? 'port' : 'starboard'}) from the course?`)) {
+                            courseMarks.splice(markIndex, 1);
+                            renderCourseList();
+                            // Hide results if we no longer have enough marks
+                            if (courseMarks.length < 2) {
+                                hideCourseResult();
+                                hideCourseError();
+                            }
+                        }
+                    });
+                    
+                    lozengesContainer.appendChild(lozenge);
+                    
+                    // Add arrow between lozenges (but not after the last one)
+                    if (index < courseMarks.length - 1) {
+                        const arrow = document.createElement('span');
+                        arrow.className = 'course-arrow';
+                        arrow.innerHTML = '→';
+                        lozengesContainer.appendChild(arrow);
+                    }
+                });
+                
+                courseList.innerHTML = '';
+                courseList.appendChild(lozengesContainer);
                 courseList.classList.remove('empty');
             }
         }
