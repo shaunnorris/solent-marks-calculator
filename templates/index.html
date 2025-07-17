@@ -673,6 +673,16 @@
         document.addEventListener('DOMContentLoaded', function() {
             loadAllMarks();
             
+            // Set Zone 2 as default selected
+            setTimeout(() => {
+                const zone2Checkbox = Array.from(zoneCheckboxes).find(cb => cb.value === '2');
+                if (zone2Checkbox) {
+                    zone2Checkbox.checked = true;
+                    updateDropdowns(); // Trigger dropdown update with Zone 2 selected
+                    console.log('Zone 2 activated by default');
+                }
+            }, 100);
+            
             // Test: Force map section to be visible for debugging
             setTimeout(() => {
                 console.log('Testing map visibility...');
