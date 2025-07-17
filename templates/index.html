@@ -457,6 +457,10 @@
                         <select id="courseMarkSelect">
                             <option value="">Choose a mark...</option>
                         </select>
+                        <select id="roundingSelect" style="width: auto; min-width: 100px;">
+                            <option value="S">Starboard (S)</option>
+                            <option value="P">Port (P)</option>
+                        </select>
                         <button type="button" class="btn btn-primary" id="addMarkBtn">Add</button>
                     </div>
                 </div>
@@ -597,21 +601,30 @@
         const courseError = document.getElementById('courseError');
         const courseLoading = document.getElementById('courseLoading');
         const courseLegsTableBody = document.getElementById('courseLegsTableBody');
+        const roundingSelect = document.getElementById('roundingSelect');
 
         function renderCourseList() {
             if (courseMarks.length === 0) {
                 courseList.innerHTML = '<span class="empty">No marks added yet</span>';
                 courseList.classList.add('empty');
             } else {
-                courseList.innerHTML = courseMarks.join(', ');
+                const courseDisplay = courseMarks.map(mark => {
+                    const roundingText = mark.rounding === 'P' ? '(port)' : '(starboard)';
+                    return `${mark.name} <em>${roundingText}</em>`;
+                }).join(', ');
+                courseList.innerHTML = courseDisplay;
                 courseList.classList.remove('empty');
             }
         }
 
         addMarkBtn.addEventListener('click', function() {
             const selected = courseMarkSelect.value;
+            const rounding = roundingSelect.value;
             if (!selected) return;
-            courseMarks.push(selected);
+            courseMarks.push({
+                name: selected,
+                rounding: rounding
+            });
             renderCourseList();
         });
 
@@ -634,7 +647,7 @@
                 const response = await fetch('/course', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ marks: courseMarks })
+                    body: JSON.stringify({ course: courseMarks })
                 });
                 const data = await response.json();
                 if (response.ok) {
@@ -814,21 +827,35 @@
                 return;
             }
             
-            // Collect unique marks in the course
-            const courseMarkNames = new Set();
+            // Collect unique marks in the course with rounding information
+            const courseMarksMap = new Map();
             legs.forEach(leg => {
-                if (leg && leg.from && leg.from.name) courseMarkNames.add(leg.from.name);
-                if (leg && leg.to && leg.to.name) courseMarkNames.add(leg.to.name);
+                if (leg && leg.from && leg.from.name) {
+                    courseMarksMap.set(leg.from.name, {
+                        ...allMarks.find(m => m.name === leg.from.name),
+                        rounding: leg.from.rounding
+                    });
+                }
+                if (leg && leg.to && leg.to.name) {
+                    courseMarksMap.set(leg.to.name, {
+                        ...allMarks.find(m => m.name === leg.to.name),
+                        rounding: leg.to.rounding
+                    });
+                }
             });
-            const courseMarks = allMarks.filter(m => courseMarkNames.has(m.name));
+            const courseMarks = Array.from(courseMarksMap.values());
             
             // Add only course marks to the map, with labels
             courseMarks.forEach(mark => {
                 if (!mark || !mark.lat || !mark.lon || !mark.name) return;
+                
+                // Determine color based on rounding direction
+                const backgroundColor = mark.rounding === 'P' ? '#e74c3c' : '#27ae60'; // Red for Port, Green for Starboard
+                
                 // Marker icon with label
                 const labelIcon = L.divIcon({
                     className: 'mark-label-icon',
-                    html: `<div style="background: #667eea; color: white; border-radius: 50%; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 13px; border: 2px solid white; box-shadow: 0 2px 4px rgba(0,0,0,0.3);">${mark.name}</div>`,
+                    html: `<div style="background: ${backgroundColor}; color: white; border-radius: 50%; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 13px; border: 2px solid white; box-shadow: 0 2px 4px rgba(0,0,0,0.3);">${mark.name}</div>`,
                     iconSize: [24, 24],
                     iconAnchor: [12, 12]
                 });
@@ -837,6 +864,7 @@
                         <div style="text-align: center;">
                             <h3 style="margin: 0 0 5px 0; color: #2c3e50;">${mark.name}</h3>
                             <p style="margin: 0; color: #7f8c8d; font-size: 0.9em;">${mark.description || ''}</p>
+                            <p style="margin: 5px 0 0 0; color: #e74c3c; font-weight: bold;">Rounding: ${mark.rounding === 'P' ? 'Port' : 'Starboard'}</p>
                         </div>
                     `);
                 marker.addTo(map);
@@ -928,10 +956,12 @@
             console.log('Showing course result with legs:', legs);
             courseLegsTableBody.innerHTML = '';
             legs.forEach(leg => {
+                const fromRounding = leg.from.rounding === 'P' ? '(port)' : '(starboard)';
+                const toRounding = leg.to.rounding === 'P' ? '(port)' : '(starboard)';
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
-                    <td style="font-size: 1.3em; font-weight: 600;">${leg.from.name}</td>
-                    <td style="font-size: 1.3em; font-weight: 600;">${leg.to.name}</td>
+                    <td style="font-size: 1.3em; font-weight: 600;">${leg.from.name} <em>${fromRounding}</em></td>
+                    <td style="font-size: 1.3em; font-weight: 600;">${leg.to.name} <em>${toRounding}</em></td>
                     <td>${leg.bearing}°</td>
                     <td>${leg.distance} nm</td>
                 `;

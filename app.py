@@ -116,24 +116,49 @@ def calculate():
 def course():
     """Calculate bearings and distances for a sequence of marks (race course)"""
     data = request.get_json()
-    mark_names = data.get('marks')
-    if not mark_names or not isinstance(mark_names, list) or len(mark_names) < 2:
+    course_data = data.get('course', [])  # Changed from 'marks' to 'course' to include rounding info
+    if not course_data or not isinstance(course_data, list) or len(course_data) < 2:
         return jsonify({'error': 'At least two marks must be provided'}), 400
 
     marks = load_gpx_marks()
     name_to_mark = {m['name']: m for m in marks}
+    
     try:
-        course_marks = [name_to_mark[name] for name in mark_names]
-    except KeyError:
-        return jsonify({'error': 'One or more marks not found'}), 400
+        # Extract mark names and rounding directions
+        course_marks = []
+        for item in course_data:
+            if isinstance(item, dict):
+                mark_name = item.get('name')
+                rounding = item.get('rounding', 'S')  # Default to Starboard if not specified
+            else:
+                # Backward compatibility: if item is just a string, treat as mark name with default rounding
+                mark_name = item
+                rounding = 'S'
+            
+            if mark_name not in name_to_mark:
+                return jsonify({'error': f'Mark {mark_name} not found'}), 400
+            
+            mark = name_to_mark[mark_name].copy()
+            mark['rounding'] = rounding
+            course_marks.append(mark)
+    except Exception as e:
+        return jsonify({'error': f'Invalid course data: {str(e)}'}), 400
 
     legs = []
     for i in range(len(course_marks) - 1):
         m1 = course_marks[i]
         m2 = course_marks[i+1]
         legs.append({
-            'from': {'name': m1['name'], 'description': m1['description']},
-            'to': {'name': m2['name'], 'description': m2['description']},
+            'from': {
+                'name': m1['name'], 
+                'description': m1['description'],
+                'rounding': m1['rounding']
+            },
+            'to': {
+                'name': m2['name'], 
+                'description': m2['description'],
+                'rounding': m2['rounding']
+            },
             'bearing': calculate_bearing(m1, m2),
             'distance': calculate_distance(m1, m2)
         })
