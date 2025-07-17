@@ -382,6 +382,23 @@
             opacity: 0.9;
             margin-left: 4px;
         }
+
+        /* Table-specific lozenge styling */
+        .course-table .course-lozenge {
+            cursor: default;
+            transform: none;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .course-table .course-lozenge:hover {
+            transform: none;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            border-color: transparent;
+        }
+
+        .course-table .course-lozenge::after {
+            display: none;
+        }
         
         .course-table {
             width: 100%;
@@ -498,6 +515,17 @@
                 font-size: 0.8em; /* Smaller description text */
                 display: block;
                 margin-top: 2px;
+            }
+
+            /* Table lozenges mobile optimizations */
+            .course-table .course-lozenge {
+                padding: 4px 8px;
+                font-size: 0.85em;
+            }
+
+            .course-table .course-lozenge .rounding-text {
+                font-size: 0.8em;
+                margin-left: 2px;
             }
             
             /* Section titles */
@@ -1101,12 +1129,25 @@
             console.log('Showing course result with legs:', legs);
             courseLegsTableBody.innerHTML = '';
             legs.forEach(leg => {
-                const fromRounding = leg.from.rounding === 'P' ? '(port)' : '(starboard)';
-                const toRounding = leg.to.rounding === 'P' ? '(port)' : '(starboard)';
+                const fromRounding = leg.from.rounding === 'P' ? '(P)' : '(S)';
+                const toRounding = leg.to.rounding === 'P' ? '(P)' : '(S)';
+                const fromClass = leg.from.rounding === 'P' ? 'port' : 'starboard';
+                const toClass = leg.to.rounding === 'P' ? 'port' : 'starboard';
+                
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
-                    <td style="font-size: 1.3em; font-weight: 600;">${leg.from.name} <em>${fromRounding}</em></td>
-                    <td style="font-size: 1.3em; font-weight: 600;">${leg.to.name} <em>${toRounding}</em></td>
+                    <td style="font-size: 1.3em; font-weight: 600;">
+                        <div class="course-lozenge ${fromClass}" style="display: inline-flex; margin: 0;">
+                            <span>${leg.from.name}</span>
+                            <span class="rounding-text">${fromRounding}</span>
+                        </div>
+                    </td>
+                    <td style="font-size: 1.3em; font-weight: 600;">
+                        <div class="course-lozenge ${toClass}" style="display: inline-flex; margin: 0;">
+                            <span>${leg.to.name}</span>
+                            <span class="rounding-text">${toRounding}</span>
+                        </div>
+                    </td>
                     <td>${leg.bearing}°</td>
                     <td>${leg.distance} nm</td>
                 `;
