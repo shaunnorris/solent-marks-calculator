@@ -828,11 +828,8 @@
                 // Marker icon with label
                 const labelIcon = L.divIcon({
                     className: 'mark-label-icon',
-                    html: `<div style="display: flex; align-items: center;">
-                        <div style="background: #667eea; color: white; border-radius: 50%; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 13px; border: 2px solid white; box-shadow: 0 2px 4px rgba(0,0,0,0.3);">${mark.name}</div>
-                        <span style="margin-left: 8px; font-size: 15px; font-weight: 600; color: #2c3e50; background: rgba(255,255,255,0.8); padding: 2px 8px; border-radius: 6px; border: 1px solid #e1e8ed;">${mark.name}</span>
-                    </div>`,
-                    iconSize: [80, 28],
+                    html: `<div style="background: #667eea; color: white; border-radius: 50%; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 13px; border: 2px solid white; box-shadow: 0 2px 4px rgba(0,0,0,0.3);">${mark.name}</div>`,
+                    iconSize: [24, 24],
                     iconAnchor: [12, 12]
                 });
                 const marker = L.marker([mark.lat, mark.lon], { icon: labelIcon })
@@ -864,16 +861,16 @@
                 const bearingIcon = L.divIcon({
                     className: 'bearing-label',
                     html: `<div style="background: #e74c3c; color: white; padding: 1px 4px; border-radius: 2px; font-size: 8px; font-weight: bold; white-space: nowrap;">${leg.bearing}°</div>`,
-                    iconSize: [40, 12],
-                    iconAnchor: [20, 6]
+                    iconSize: [25, 12],
+                    iconAnchor: [12, 6]
                 });
                 const bearingMarker = L.marker([midLat, midLon], { icon: bearingIcon }).addTo(map);
                 // Add distance label
                 const distanceIcon = L.divIcon({
                     className: 'distance-label',
                     html: `<div style="background: #2c3e50; color: white; padding: 1px 4px; border-radius: 2px; font-size: 8px; font-weight: bold; white-space: nowrap;">${leg.distance}nm</div>`,
-                    iconSize: [50, 12],
-                    iconAnchor: [25, 18]
+                    iconSize: [30, 12],
+                    iconAnchor: [15, 18]
                 });
                 const distanceMarker = L.marker([midLat, midLon], { icon: distanceIcon }).addTo(map);
                 // Add arrowhead 75% along the line
