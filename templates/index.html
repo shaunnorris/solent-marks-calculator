@@ -712,7 +712,7 @@
                     lozenge.className = `course-lozenge ${mark.rounding === 'P' ? 'port' : 'starboard'}`;
                     lozenge.dataset.index = index;
                     
-                    const roundingText = mark.rounding === 'P' ? '(port)' : '(starboard)';
+                    const roundingText = mark.rounding === 'P' ? '(P)' : '(S)';
                     lozenge.innerHTML = `
                         <span>${mark.name}</span>
                         <span class="rounding-text">${roundingText}</span>
@@ -724,7 +724,7 @@
                         const markName = courseMarks[markIndex].name;
                         const rounding = courseMarks[markIndex].rounding;
                         
-                        if (confirm(`Remove ${markName} (${rounding === 'P' ? 'port' : 'starboard'}) from the course?`)) {
+                        if (confirm(`Remove ${markName} (${rounding === 'P' ? 'P' : 'S'}) from the course?`)) {
                             courseMarks.splice(markIndex, 1);
                             renderCourseList();
                             // Hide results if we no longer have enough marks
