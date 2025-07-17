@@ -198,6 +198,12 @@
 <desc>Sconce</desc>
 </wpt>
 
+<wpt  lat="50.740317" lon="-1.507033">
+<name>2PL </name>
+<sym>Y</sym>
+<desc>Lymington Starting Platform</desc>
+</wpt>
+
 <wpt  lat="50.714333" lon="-1.49">
 <name>22 </name>
 <sym>Y</sym>
