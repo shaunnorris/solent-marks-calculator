@@ -508,6 +508,24 @@
                 text-overflow: ellipsis;
             }
             
+            .course-table {
+                font-size: 0.9em; /* Smaller font for mobile */
+            }
+            
+            .course-table th,
+            .course-table td {
+                padding: 8px 4px; /* Reduced padding for mobile */
+            }
+            
+            .course-table .course-lozenge {
+                font-size: 0.8em; /* Smaller lozenges for mobile */
+                padding: 4px 6px; /* Reduced padding */
+            }
+            
+            .course-table .course-lozenge .rounding-text {
+                font-size: 0.7em; /* Smaller rounding text */
+            }
+            
             .mark-input-row {
                 gap: 8px;
             }
@@ -1283,8 +1301,8 @@
                     className: 'leg-label',
                     html: `<div style="background: white; color: black; padding: 3px 6px; border-radius: 4px; font-size: 7px; font-weight: 600; text-align: center; border: 1px solid #3498db; box-shadow: 0 1px 3px rgba(0,0,0,0.2); line-height: 1.0; min-width: 50px;">
                         <div style="font-size: 8px; font-weight: 700; margin-bottom: 1px; color: #3498db;">Leg ${leg.leg_number || legIndex + 1}</div>
-                        <div style="font-size: 6px; margin-bottom: 1px;">${leg.from.name}→${leg.to.name}</div>
-                        <div style="font-size: 6px;">${leg.bearing}° ${leg.distance}nm</div>
+                        <div style="font-size: 8px; margin-bottom: 1px;">${leg.from.name}→${leg.to.name}</div>
+                        <div style="font-size: 8px;">${leg.bearing}° ${leg.distance}nm</div>
                     </div>`,
                     iconSize: [60, 45],
                     iconAnchor: [30, 22]
@@ -1399,21 +1417,21 @@
                 
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
-                    <td style="font-size: 1.1em; font-weight: 600; color: #3498db;">Leg ${leg.leg_number || legIndex + 1}</td>
-                    <td style="font-size: 1.3em; font-weight: 600;">
-                        <div class="course-lozenge ${fromClass}" style="display: inline-flex; margin: 0;">
+                    <td style="font-size: 0.9em; font-weight: 600; color: #3498db;">Leg ${leg.leg_number || legIndex + 1}</td>
+                    <td style="font-size: 1.0em; font-weight: 600;">
+                        <div class="course-lozenge ${fromClass}" style="display: inline-flex; margin: 0; font-size: 0.9em;">
                             <span>${leg.from.name}</span>
                             <span class="rounding-text">${fromRounding}</span>
                         </div>
                     </td>
-                    <td style="font-size: 1.3em; font-weight: 600;">
-                        <div class="course-lozenge ${toClass}" style="display: inline-flex; margin: 0;">
+                    <td style="font-size: 1.0em; font-weight: 600;">
+                        <div class="course-lozenge ${toClass}" style="display: inline-flex; margin: 0; font-size: 0.9em;">
                             <span>${leg.to.name}</span>
                             <span class="rounding-text">${toRounding}</span>
                         </div>
                     </td>
-                    <td>${leg.bearing}°</td>
-                    <td>${leg.distance} nm</td>
+                    <td style="font-size: 1.1em; font-weight: 600;">${leg.bearing}°</td>
+                    <td style="font-size: 1.1em; font-weight: 600;">${leg.distance} nm</td>
                 `;
                 courseLegsTableBody.appendChild(tr);
             });
