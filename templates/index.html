@@ -1015,9 +1015,91 @@
             return Math.round(R * c * 100) / 100;
         }
 
-        // Draw route on map
+        // Helper function to calculate offset point
+        function calculateOffsetPoint(lat1, lon1, lat2, lon2, offsetDistance) {
+            const bearing = calculateBearingFromCoords(lat1, lon1, lat2, lon2);
+            const perpBearing = bearing + 90; // Perpendicular bearing
+            
+            // Convert to radians
+            const lat1Rad = lat1 * Math.PI / 180;
+            const lon1Rad = lon1 * Math.PI / 180;
+            const perpBearingRad = perpBearing * Math.PI / 180;
+            
+            // Earth's radius in nautical miles
+            const R = 3440.065;
+            
+            // Calculate offset
+            const angularDistance = offsetDistance / R;
+            
+            const newLat = Math.asin(
+                Math.sin(lat1Rad) * Math.cos(angularDistance) +
+                Math.cos(lat1Rad) * Math.sin(angularDistance) * Math.cos(perpBearingRad)
+            );
+            
+            const newLon = lon1Rad + Math.atan2(
+                Math.sin(perpBearingRad) * Math.sin(angularDistance) * Math.cos(lat1Rad),
+                Math.cos(angularDistance) - Math.sin(lat1Rad) * Math.sin(newLat)
+            );
+            
+            return [newLat * 180 / Math.PI, newLon * 180 / Math.PI];
+        }
+
+        // Helper function to calculate bearing between coordinates
+        function calculateBearingFromCoords(lat1, lon1, lat2, lon2) {
+            const dLon = (lon2 - lon1) * Math.PI / 180;
+            const lat1Rad = lat1 * Math.PI / 180;
+            const lat2Rad = lat2 * Math.PI / 180;
+            
+            const y = Math.sin(dLon) * Math.cos(lat2Rad);
+            const x = Math.cos(lat1Rad) * Math.sin(lat2Rad) - Math.sin(lat1Rad) * Math.cos(lat2Rad) * Math.cos(dLon);
+            
+            let bearing = Math.atan2(y, x) * 180 / Math.PI;
+            bearing = (bearing + 360) % 360;
+            
+            return bearing;
+        }
+
+        // Helper function to create rounding curve around a mark
+        function createRoundingCurve(centerLat, centerLon, approachBearing, departureBearing, rounding, radius = 0.03) {
+            const points = [];
+            const steps = 40;
+            
+            // Determine curve direction based on rounding
+            let startAngle, endAngle;
+            if (rounding === 'P') {
+                // Port rounding: approach from right, leave to left
+                startAngle = approachBearing + 90;
+                endAngle = departureBearing - 90;
+            } else {
+                // Starboard rounding: approach from left, leave to right
+                startAngle = approachBearing - 90;
+                endAngle = departureBearing + 90;
+            }
+            
+            // Normalize angles
+            startAngle = (startAngle + 360) % 360;
+            endAngle = (endAngle + 360) % 360;
+            
+            // Ensure we go the right way around
+            if (rounding === 'P' && endAngle < startAngle) endAngle += 360;
+            if (rounding === 'S' && startAngle < endAngle) startAngle += 360;
+            
+            for (let i = 0; i <= steps; i++) {
+                const angle = startAngle + (endAngle - startAngle) * i / steps;
+                const angleRad = angle * Math.PI / 180;
+                
+                const lat = centerLat + radius * Math.cos(angleRad);
+                const lon = centerLon + radius * Math.sin(angleRad);
+                
+                points.push([lat, lon]);
+            }
+            
+            return points;
+        }
+
+        // Draw route on map with collision avoidance and rounding visualization
         function drawRouteOnMap(legs) {
-            console.log('Drawing route on map with legs:', legs);
+            console.log('Drawing enhanced route on map with legs:', legs);
             if (!map) initMap();
             
             // Clear existing route and markers
@@ -1157,12 +1239,93 @@
                 const mark1 = allMarks.find(m => m.name === leg.from.name);
                 const mark2 = allMarks.find(m => m.name === leg.to.name);
                 if (!mark1 || !mark2) return;
-                // Create route line
-                const line = L.polyline([[mark1.lat, mark1.lon], [mark2.lat, mark2.lon]], {
+                
+                // Create segment key for collision detection
+                const segmentKey = `${leg.from.name}-${leg.to.name}`;
+                const reverseKey = `${leg.to.name}-${leg.from.name}`;
+                
+                // Check if this segment or its reverse has been used
+                let offsetDistance = 0;
+                if (usedSegments.has(segmentKey) || usedSegments.has(reverseKey)) {
+                    // This is a collision - offset the line
+                    const existingCount = (usedSegments.get(segmentKey) || 0) + (usedSegments.get(reverseKey) || 0);
+                    offsetDistance = (existingCount + 1) * 0.005; // 0.005 degrees offset per collision
+                }
+                
+                // Update segment usage
+                usedSegments.set(segmentKey, (usedSegments.get(segmentKey) || 0) + 1);
+                
+                // Calculate route points with rounding
+                const routePoints = [];
+                
+                // Start point (with offset if needed)
+                let startLat = mark1.lat;
+                let startLon = mark1.lon;
+                let endLat = mark2.lat;
+                let endLon = mark2.lon;
+                
+                if (offsetDistance > 0) {
+                    // Apply offset to both start and end points
+                    const [offsetStartLat, offsetStartLon] = calculateOffsetPoint(mark1.lat, mark1.lon, mark2.lat, mark2.lon, offsetDistance);
+                    const [offsetEndLat, offsetEndLon] = calculateOffsetPoint(mark2.lat, mark2.lon, mark1.lat, mark1.lon, offsetDistance);
+                    startLat = offsetStartLat;
+                    startLon = offsetStartLon;
+                    endLat = offsetEndLat;
+                    endLon = offsetEndLon;
+                }
+                
+                // Create the route path
+                
+                // For now, let's start with a simple approach - just the straight line
+                // We'll add rounding curves in a separate implementation
+                routePoints.push([startLat, startLon]);
+                routePoints.push([endLat, endLon]);
+                
+                // Add rounding curves as separate polylines for better visibility
+                // Start mark rounding curve
+                const approachBearing = leg.bearing - 180; // Opposite of leg bearing
+                const departureBearing = leg.bearing;
+                const startRoundingCurve = createRoundingCurve(mark1.lat, mark1.lon, approachBearing, departureBearing, leg.from.rounding);
+                
+                if (startRoundingCurve.length > 0) {
+                    const roundingLine = L.polyline(startRoundingCurve, {
+                        color: '#e74c3c',
+                        weight: 3,
+                        opacity: 0.8
+                    }).addTo(map);
+                    routeLines.push(roundingLine);
+                }
+                
+                // End mark rounding curve (if there's a next leg)
+                const nextLeg = legs[legIndex + 1];
+                if (nextLeg) {
+                    const nextApproachBearing = leg.bearing;
+                    const nextDepartureBearing = nextLeg.bearing;
+                    const endRoundingCurve = createRoundingCurve(mark2.lat, mark2.lon, nextApproachBearing, nextDepartureBearing, leg.to.rounding);
+                    
+                    if (endRoundingCurve.length > 0) {
+                        const endRoundingLine = L.polyline(endRoundingCurve, {
+                            color: '#e74c3c',
+                            weight: 3,
+                            opacity: 0.8
+                        }).addTo(map);
+                        routeLines.push(endRoundingLine);
+                    }
+                }
+                
+                // Create route line with different style for offset lines
+                const lineStyle = offsetDistance > 0 ? {
+                    color: '#e74c3c',
+                    weight: 2,
+                    opacity: 0.6,
+                    dashArray: '5, 5'
+                } : {
                     color: '#e74c3c',
                     weight: 3,
                     opacity: 0.8
-                }).addTo(map);
+                };
+                
+                const line = L.polyline([[mark1.lat, mark1.lon], [mark2.lat, mark2.lon]], lineStyle).addTo(map);
                 // Add leg label positioned off the line to avoid overlap
                 const midLat = (mark1.lat + mark2.lat) / 2;
                 const midLon = (mark1.lon + mark2.lon) / 2;
@@ -1179,15 +1342,15 @@
                 
                 // Calculate offset position perpendicular to the actual course line
                 const courseBearingRad = Math.atan2(mark2.lat - mark1.lat, mark2.lon - mark1.lon);
-                let offsetDistance = 0.0015; // Base distance for tighter positioning
+                let labelOffsetDistance = 0.0015; // Base distance for tighter positioning
                 
                 // Adjust offset for repeated legs
                 if (isRepeated) {
-                    offsetDistance = 0.0015 + (legOccurrence * 0.001); // Increase offset for each occurrence
+                    labelOffsetDistance = 0.0015 + (legOccurrence * 0.001); // Increase offset for each occurrence
                 }
                 
-                const offsetLat = midLat + (offsetDistance * Math.cos(courseBearingRad + Math.PI/2));
-                const offsetLon = midLon + (offsetDistance * Math.sin(courseBearingRad + Math.PI/2));
+                const offsetLat = midLat + (labelOffsetDistance * Math.cos(courseBearingRad + Math.PI/2));
+                const offsetLon = midLon + (labelOffsetDistance * Math.sin(courseBearingRad + Math.PI/2));
                 
                 const legIcon = L.divIcon({
                     className: 'leg-label',
@@ -1221,12 +1384,15 @@
                     iconAnchor: [12, 12]
                 });
                 const arrowMarker = L.marker([arrowLat, arrowLon], { icon: arrowIcon, interactive: false }).addTo(map);
+                
                 // Add popup with route info
                 line.bindPopup(`
                     <strong>${leg.from.name} → ${leg.to.name}</strong><br>
                     Bearing: ${leg.bearing}°<br>
-                    Distance: ${leg.distance} nm
+                    Distance: ${leg.distance} nm<br>
+                    ${offsetDistance > 0 ? '<em>Offset route to avoid collision</em>' : ''}
                 `);
+                
                 routeLines.push(line);
                 routeLines.push(legMarker);
                 routeLines.push(connectingLine);
