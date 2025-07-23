@@ -641,6 +641,7 @@
                 <table class="course-table">
                     <thead>
                         <tr>
+                            <th>Leg</th>
                             <th>From</th>
                             <th>To</th>
                             <th>Bearing</th>
@@ -884,25 +885,7 @@
             calculateCourseBtn.disabled = false;
         }
         
-        function showCourseResult(legs) {
-            courseLegsTableBody.innerHTML = '';
-            legs.forEach(leg => {
-                const tr = document.createElement('tr');
-                
-                // Create mark names with tags if present
-                const fromMark = leg.from.tag ? `${leg.from.name} <span class="mark-tag ${leg.from.tag === 'Start' ? 'start-tag' : 'finish-tag'}">${leg.from.tag}</span>` : leg.from.name;
-                const toMark = leg.to.tag ? `${leg.to.name} <span class="mark-tag ${leg.to.tag === 'Start' ? 'start-tag' : 'finish-tag'}">${leg.to.tag}</span>` : leg.to.name;
-                
-                tr.innerHTML = `
-                    <td style="font-size: 1.3em; font-weight: 600;">${fromMark}</td>
-                    <td style="font-size: 1.3em; font-weight: 600;">${toMark}</td>
-                    <td>${leg.bearing}°</td>
-                    <td>${leg.distance} nm</td>
-                `;
-                courseLegsTableBody.appendChild(tr);
-            });
-            courseResult.classList.add('show');
-        }
+
         
         function hideCourseResult() {
             courseResult.classList.remove('show');
@@ -1100,21 +1083,34 @@
                         iconAnchor: [20, 8]
                     });
                     
+                    // Check if this mark has both Start and Finish tags (same mark)
+                    const hasBothTags = courseMarks.some(m => m.name === mark.name && m.tag && m.tag !== mark.tag);
+                    
                     // Position the tag offset from the main marker to avoid overlap
-                    // For Start tags, position above and to the right
-                    // For Finish tags, position below and to the left
                     let tagLat, tagLon;
-                    if (mark.tag === 'Start') {
-                        tagLat = mark.lat + 0.003;  // Above
-                        tagLon = mark.lon + 0.003;  // To the right
+                    if (hasBothTags) {
+                        // If mark has both tags, position them at different offsets
+                        if (mark.tag === 'Start') {
+                            tagLat = mark.lat + 0.004;  // Further above
+                            tagLon = mark.lon + 0.004;  // Further to the right
+                        } else {
+                            tagLat = mark.lat - 0.004;  // Further below
+                            tagLon = mark.lon - 0.004;  // Further to the left
+                        }
                     } else {
-                        tagLat = mark.lat - 0.003;  // Below
-                        tagLon = mark.lon - 0.003;  // To the left
+                        // Normal positioning for single tags
+                        if (mark.tag === 'Start') {
+                            tagLat = mark.lat + 0.003;  // Above
+                            tagLon = mark.lon + 0.003;  // To the right
+                        } else {
+                            tagLat = mark.lat - 0.003;  // Below
+                            tagLon = mark.lon - 0.003;  // To the left
+                        }
                     }
                     
                     const tagMarker = L.marker([tagLat, tagLon], { icon: tagIcon, interactive: false });
                     tagMarker.addTo(map);
-                    mapMarkers[`${mark.name}-tag`] = tagMarker;
+                    mapMarkers[`${mark.name}-tag-${mark.tag}`] = tagMarker;
                     
                     // Add connecting line from mark to tag
                     const connectingLine = L.polyline([[mark.lat, mark.lon], [tagLat, tagLon]], {
@@ -1124,12 +1120,12 @@
                         dashArray: '3,3'
                     });
                     connectingLine.addTo(map);
-                    mapMarkers[`${mark.name}-line`] = connectingLine;
+                    mapMarkers[`${mark.name}-line-${mark.tag}`] = connectingLine;
                 }
             });
             
             // Draw new route
-            legs.forEach(leg => {
+            legs.forEach((leg, legIndex) => {
                 if (!leg || !leg.from || !leg.to) return;
                 const mark1 = allMarks.find(m => m.name === leg.from.name);
                 const mark2 = allMarks.find(m => m.name === leg.to.name);
@@ -1140,24 +1136,52 @@
                     weight: 3,
                     opacity: 0.8
                 }).addTo(map);
-                // Add bearing label at midpoint
+                // Add leg label positioned off the line to avoid overlap
                 const midLat = (mark1.lat + mark2.lat) / 2;
                 const midLon = (mark1.lon + mark2.lon) / 2;
-                const bearingIcon = L.divIcon({
-                    className: 'bearing-label',
-                    html: `<div style="background: #e74c3c; color: white; padding: 1px 4px; border-radius: 2px; font-size: 8px; font-weight: bold; white-space: nowrap;">${leg.bearing}°</div>`,
-                    iconSize: [25, 12],
-                    iconAnchor: [12, 6]
+                
+                // Check if this leg route appears multiple times
+                const legRoute = `${leg.from.name}→${leg.to.name}`;
+                const repeatedLegs = legs.filter((l, i) => 
+                    `${l.from.name}→${l.to.name}` === legRoute
+                );
+                const isRepeated = repeatedLegs.length > 1;
+                const legOccurrence = legs.findIndex((l, i) => 
+                    `${l.from.name}→${l.to.name}` === legRoute && i >= legIndex
+                ) - legs.findIndex(l => `${l.from.name}→${l.to.name}` === legRoute);
+                
+                // Calculate offset position perpendicular to the actual course line
+                const courseBearingRad = Math.atan2(mark2.lat - mark1.lat, mark2.lon - mark1.lon);
+                let offsetDistance = 0.0015; // Base distance for tighter positioning
+                
+                // Adjust offset for repeated legs
+                if (isRepeated) {
+                    offsetDistance = 0.0015 + (legOccurrence * 0.001); // Increase offset for each occurrence
+                }
+                
+                const offsetLat = midLat + (offsetDistance * Math.cos(courseBearingRad + Math.PI/2));
+                const offsetLon = midLon + (offsetDistance * Math.sin(courseBearingRad + Math.PI/2));
+                
+                const legIcon = L.divIcon({
+                    className: 'leg-label',
+                    html: `<div style="background: white; color: black; padding: 3px 6px; border-radius: 4px; font-size: 7px; font-weight: 600; text-align: center; border: 1px solid #3498db; box-shadow: 0 1px 3px rgba(0,0,0,0.2); line-height: 1.0; min-width: 50px;">
+                        <div style="font-size: 8px; font-weight: 700; margin-bottom: 1px; color: #3498db;">Leg ${leg.leg_number}</div>
+                        <div style="font-size: 6px; margin-bottom: 1px;">${leg.from.name}→${leg.to.name}</div>
+                        <div style="font-size: 6px;">${leg.bearing}° ${leg.distance}nm</div>
+                    </div>`,
+                    iconSize: [60, 45],
+                    iconAnchor: [30, 22]
                 });
-                const bearingMarker = L.marker([midLat, midLon], { icon: bearingIcon }).addTo(map);
-                // Add distance label
-                const distanceIcon = L.divIcon({
-                    className: 'distance-label',
-                    html: `<div style="background: #2c3e50; color: white; padding: 1px 4px; border-radius: 2px; font-size: 8px; font-weight: bold; white-space: nowrap;">${leg.distance}nm</div>`,
-                    iconSize: [30, 12],
-                    iconAnchor: [15, 18]
+                const legMarker = L.marker([offsetLat, offsetLon], { icon: legIcon, interactive: false }).addTo(map);
+                
+                // Add connecting line from route to leg label
+                const connectingLine = L.polyline([[midLat, midLon], [offsetLat, offsetLon]], {
+                    color: '#3498db',
+                    weight: 1,
+                    opacity: 0.4,
+                    dashArray: '2,2'
                 });
-                const distanceMarker = L.marker([midLat, midLon], { icon: distanceIcon }).addTo(map);
+                connectingLine.addTo(map);
                 // Add arrowhead 75% along the line
                 const arrowLat = mark1.lat + (mark2.lat - mark1.lat) * 0.75;
                 const arrowLon = mark1.lon + (mark2.lon - mark1.lon) * 0.75;
@@ -1177,8 +1201,8 @@
                     Distance: ${leg.distance} nm
                 `);
                 routeLines.push(line);
-                routeLines.push(bearingMarker);
-                routeLines.push(distanceMarker);
+                routeLines.push(legMarker);
+                routeLines.push(connectingLine);
                 routeLines.push(arrowMarker);
             });
             // Fit map to show all route marks
@@ -1218,8 +1242,13 @@
                 const fromClass = leg.from.rounding === 'P' ? 'port' : 'starboard';
                 const toClass = leg.to.rounding === 'P' ? 'port' : 'starboard';
                 
+                // Create mark names with tags if present
+                const fromMark = leg.from.tag ? `${leg.from.name} <span class="mark-tag ${leg.from.tag === 'Start' ? 'start-tag' : 'finish-tag'}">${leg.from.tag}</span>` : `${leg.from.name} ${fromRounding}`;
+                const toMark = leg.to.tag ? `${leg.to.name} <span class="mark-tag ${leg.to.tag === 'Start' ? 'start-tag' : 'finish-tag'}">${leg.to.tag}</span>` : `${leg.to.name} ${toRounding}`;
+                
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
+                    <td style="font-size: 1.1em; font-weight: 600; color: #3498db;">Leg ${leg.leg_number}</td>
                     <td style="font-size: 1.3em; font-weight: 600;">
                         <div class="course-lozenge ${fromClass}" style="display: inline-flex; margin: 0;">
                             <span>${leg.from.name}</span>

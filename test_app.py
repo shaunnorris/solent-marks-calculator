@@ -62,11 +62,13 @@ def test_course_marks_tagged_with_start_and_finish(client):
     # Should have 2 legs for 3 marks
     assert len(legs) == 2
     
-    # First leg should have 'Start' tag on the 'from' mark
+    # First leg should have leg_number 1 and 'Start' tag on the 'from' mark
+    assert legs[0]['leg_number'] == 1
     assert legs[0]['from']['name'] == '1A'
     assert legs[0]['from']['tag'] == 'Start'
     
-    # Last leg should have 'Finish' tag on the 'to' mark
+    # Second leg should have leg_number 2 and 'Finish' tag on the 'to' mark
+    assert legs[1]['leg_number'] == 2
     assert legs[1]['to']['name'] == '3A'
     assert legs[1]['to']['tag'] == 'Finish'
     
@@ -91,6 +93,9 @@ def test_course_with_two_marks_both_tagged(client):
     
     # Should have 1 leg for 2 marks
     assert len(legs) == 1
+    
+    # First leg should have leg_number 1
+    assert legs[0]['leg_number'] == 1
     
     # First mark should be 'Start'
     assert legs[0]['from']['name'] == '1A'
@@ -189,4 +194,49 @@ def test_map_preserves_port_starboard_colors(client):
     assert 'tagLat = mark.lat + 0.003' in html  # Start tags above
     assert 'tagLat = mark.lat - 0.003' in html  # Finish tags below
     assert 'connectingLine' in html
-    assert 'dashArray' in html 
+    assert 'dashArray' in html
+
+def test_frontend_includes_leg_number_functionality(client):
+    """Test that the frontend includes leg number functionality in table and map"""
+    response = client.get('/')
+    assert response.status_code == 200
+    
+    html = response.data.decode('utf-8')
+    
+    # Check that table includes leg number column
+    assert '<th>Leg</th>' in html
+    assert 'Leg ${leg.leg_number}' in html
+    
+    # Check that map includes leg labels with 3-line format
+    assert 'leg-label' in html
+    assert 'Leg ${leg.leg_number}' in html
+    assert '${leg.from.name}→${leg.to.name}' in html
+    assert '${leg.bearing}° ${leg.distance}nm' in html
+    
+    # Check that leg labels are positioned off the line with connecting lines
+    assert 'courseBearingRad' in html
+    assert 'offsetDistance' in html
+    assert 'offsetLat' in html
+    assert 'offsetLon' in html
+    assert 'connectingLine' in html
+    assert 'interactive: false' in html 
+
+def test_frontend_handles_repeated_legs():
+    """Test that repeated legs are handled correctly to avoid overlapping labels"""
+    with app.test_client() as client:
+        response = client.get('/')
+        assert response.status_code == 200
+        
+        html = response.data.decode('utf-8')
+        
+        # Check that the repeated leg logic is included
+        assert 'repeatedLegs' in html
+        assert 'legOccurrence' in html
+        assert 'isRepeated' in html
+        
+        # Check that the offset calculation logic is present
+        assert 'offsetDistance = 0.0015 + (legOccurrence * 0.001)' in html
+        
+        # Verify the leg route comparison logic
+        assert 'legRoute = `${leg.from.name}→${leg.to.name}`' in html
+        assert 'legs.filter((l, i) =>' in html 
