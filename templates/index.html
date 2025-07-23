@@ -1084,7 +1084,10 @@
                     });
                     
                     // Check if this mark has both Start and Finish tags (same mark)
-                    const hasBothTags = courseMarks.some(m => m.name === mark.name && m.tag && m.tag !== mark.tag);
+                    const marksWithSameName = courseMarks.filter(m => m.name === mark.name);
+                    const hasBothTags = marksWithSameName.length > 1 && 
+                        marksWithSameName.some(m => m.tag === 'Start') && 
+                        marksWithSameName.some(m => m.tag === 'Finish');
                     
                     // Position the tag offset from the main marker to avoid overlap
                     let tagLat, tagLon;

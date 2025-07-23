@@ -240,3 +240,21 @@ def test_frontend_handles_repeated_legs():
         # Verify the leg route comparison logic
         assert 'legRoute = `${leg.from.name}→${leg.to.name}`' in html
         assert 'legs.filter((l, i) =>' in html 
+
+def test_frontend_handles_overlapping_start_finish_tags():
+    """Test that overlapping Start/Finish tags are detected and positioned correctly"""
+    with app.test_client() as client:
+        response = client.get('/')
+        assert response.status_code == 200
+        
+        html = response.data.decode('utf-8')
+        
+        # Check that the overlapping tag detection logic is included
+        assert 'marksWithSameName' in html
+        assert 'hasBothTags' in html
+        assert 'tag === \'Start\'' in html
+        assert 'tag === \'Finish\'' in html
+        
+        # Check that the different positioning logic is present
+        assert 'tagLat = mark.lat + 0.004' in html  # Further offset for overlapping tags
+        assert 'tagLat = mark.lat + 0.003' in html  # Normal offset for single tags 
