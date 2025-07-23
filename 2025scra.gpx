@@ -240,6 +240,12 @@
 <desc>Harwoods</desc>
 </wpt>
 
+<wpt  lat="50.7666" lon="-1.3009">
+<name>3SQ </name>
+<sym>C</sym>
+<desc>Royal Yacht Squadron</desc>
+</wpt>
+
 <wpt  lat="50.754" lon="-1.4015">
 <name>3A </name>
 <sym>R</sym>
