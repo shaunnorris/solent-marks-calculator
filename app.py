@@ -154,6 +154,7 @@ def course():
         to_tag = 'Finish' if i == len(course_marks) - 2 else None
         
         legs.append({
+            'leg_number': i + 1,
             'from': {
                 'name': m1['name'], 
                 'description': m1['description'],
