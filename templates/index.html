@@ -382,6 +382,14 @@
             opacity: 0.9;
             margin-left: 4px;
         }
+        
+        .course-lozenge .mark-tag {
+            font-size: 0.6em;
+            padding: 1px 4px;
+            margin-left: 6px;
+            border-radius: 8px;
+            font-weight: 800;
+        }
 
         /* Table-specific lozenge styling */
         .course-table .course-lozenge {
@@ -418,6 +426,27 @@
         .course-table td {
             padding: 12px 8px;
             border-bottom: 1px solid #eee;
+        }
+        
+        .mark-tag {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.7em;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-left: 8px;
+            vertical-align: middle;
+        }
+        
+        .start-tag {
+            background: #3498db;
+            color: white;
+        }
+        
+        .finish-tag {
+            background: #2980b9;
+            color: white;
         }
         
         .divider {
@@ -751,9 +780,19 @@
                     lozenge.dataset.index = index;
                     
                     const roundingText = mark.rounding === 'P' ? '(P)' : '(S)';
+                    
+                    // Determine tag for this mark
+                    let tagHtml = '';
+                    if (index === 0) {
+                        tagHtml = '<span class="mark-tag start-tag">Start</span>';
+                    } else if (index === courseMarks.length - 1) {
+                        tagHtml = '<span class="mark-tag finish-tag">Finish</span>';
+                    }
+                    
                     lozenge.innerHTML = `
                         <span>${mark.name}</span>
                         <span class="rounding-text">${roundingText}</span>
+                        ${tagHtml}
                     `;
                     
                     // Add click handler for deletion
@@ -849,9 +888,14 @@
             courseLegsTableBody.innerHTML = '';
             legs.forEach(leg => {
                 const tr = document.createElement('tr');
+                
+                // Create mark names with tags if present
+                const fromMark = leg.from.tag ? `${leg.from.name} <span class="mark-tag ${leg.from.tag === 'Start' ? 'start-tag' : 'finish-tag'}">${leg.from.tag}</span>` : leg.from.name;
+                const toMark = leg.to.tag ? `${leg.to.name} <span class="mark-tag ${leg.to.tag === 'Start' ? 'start-tag' : 'finish-tag'}">${leg.to.tag}</span>` : leg.to.name;
+                
                 tr.innerHTML = `
-                    <td style="font-size: 1.3em; font-weight: 600;">${leg.from.name}</td>
-                    <td style="font-size: 1.3em; font-weight: 600;">${leg.to.name}</td>
+                    <td style="font-size: 1.3em; font-weight: 600;">${fromMark}</td>
+                    <td style="font-size: 1.3em; font-weight: 600;">${toMark}</td>
                     <td>${leg.bearing}°</td>
                     <td>${leg.distance} nm</td>
                 `;
@@ -1000,19 +1044,21 @@
                 return;
             }
             
-            // Collect unique marks in the course with rounding information
+            // Collect unique marks in the course with rounding information and tags
             const courseMarksMap = new Map();
             legs.forEach(leg => {
                 if (leg && leg.from && leg.from.name) {
                     courseMarksMap.set(leg.from.name, {
                         ...allMarks.find(m => m.name === leg.from.name),
-                        rounding: leg.from.rounding
+                        rounding: leg.from.rounding,
+                        tag: leg.from.tag
                     });
                 }
                 if (leg && leg.to && leg.to.name) {
                     courseMarksMap.set(leg.to.name, {
                         ...allMarks.find(m => m.name === leg.to.name),
-                        rounding: leg.to.rounding
+                        rounding: leg.to.rounding,
+                        tag: leg.to.tag
                     });
                 }
             });
@@ -1025,7 +1071,7 @@
                 // Determine color based on rounding direction
                 const backgroundColor = mark.rounding === 'P' ? '#e74c3c' : '#27ae60'; // Red for Port, Green for Starboard
                 
-                // Marker icon with label
+                // Marker icon with label (keeping original port/starboard colors)
                 const labelIcon = L.divIcon({
                     className: 'mark-label-icon',
                     html: `<div style="background: ${backgroundColor}; color: white; border-radius: 50%; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 13px; border: 2px solid white; box-shadow: 0 2px 4px rgba(0,0,0,0.3);">${mark.name}</div>`,
@@ -1038,10 +1084,48 @@
                             <h3 style="margin: 0 0 5px 0; color: #2c3e50;">${mark.name}</h3>
                             <p style="margin: 0; color: #7f8c8d; font-size: 0.9em;">${mark.description || ''}</p>
                             <p style="margin: 5px 0 0 0; color: #e74c3c; font-weight: bold;">Rounding: ${mark.rounding === 'P' ? 'Port' : 'Starboard'}</p>
+                            ${mark.tag ? `<p style="margin: 5px 0 0 0; color: ${mark.tag === 'Start' ? '#3498db' : '#2980b9'}; font-weight: bold;">${mark.tag}</p>` : ''}
                         </div>
                     `);
                 marker.addTo(map);
                 mapMarkers[mark.name] = marker;
+                
+                // Add separate blue tag marker if this mark has a tag
+                if (mark.tag) {
+                    const tagColor = mark.tag === 'Start' ? '#3498db' : '#2980b9';
+                    const tagIcon = L.divIcon({
+                        className: 'mark-tag-icon',
+                        html: `<div style="background: ${tagColor}; color: white; border-radius: 4px; padding: 2px 6px; font-size: 10px; font-weight: bold; border: 1px solid white; box-shadow: 0 1px 3px rgba(0,0,0,0.3);">${mark.tag}</div>`,
+                        iconSize: [40, 16],
+                        iconAnchor: [20, 8]
+                    });
+                    
+                    // Position the tag offset from the main marker to avoid overlap
+                    // For Start tags, position above and to the right
+                    // For Finish tags, position below and to the left
+                    let tagLat, tagLon;
+                    if (mark.tag === 'Start') {
+                        tagLat = mark.lat + 0.003;  // Above
+                        tagLon = mark.lon + 0.003;  // To the right
+                    } else {
+                        tagLat = mark.lat - 0.003;  // Below
+                        tagLon = mark.lon - 0.003;  // To the left
+                    }
+                    
+                    const tagMarker = L.marker([tagLat, tagLon], { icon: tagIcon, interactive: false });
+                    tagMarker.addTo(map);
+                    mapMarkers[`${mark.name}-tag`] = tagMarker;
+                    
+                    // Add connecting line from mark to tag
+                    const connectingLine = L.polyline([[mark.lat, mark.lon], [tagLat, tagLon]], {
+                        color: tagColor,
+                        weight: 2,
+                        opacity: 0.6,
+                        dashArray: '3,3'
+                    });
+                    connectingLine.addTo(map);
+                    mapMarkers[`${mark.name}-line`] = connectingLine;
+                }
             });
             
             // Draw new route

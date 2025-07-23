@@ -148,16 +148,23 @@ def course():
     for i in range(len(course_marks) - 1):
         m1 = course_marks[i]
         m2 = course_marks[i+1]
+        
+        # Determine tags for marks
+        from_tag = 'Start' if i == 0 else None
+        to_tag = 'Finish' if i == len(course_marks) - 2 else None
+        
         legs.append({
             'from': {
                 'name': m1['name'], 
                 'description': m1['description'],
-                'rounding': m1['rounding']
+                'rounding': m1['rounding'],
+                'tag': from_tag
             },
             'to': {
                 'name': m2['name'], 
                 'description': m2['description'],
-                'rounding': m2['rounding']
+                'rounding': m2['rounding'],
+                'tag': to_tag
             },
             'bearing': calculate_bearing(m1, m2),
             'distance': calculate_distance(m1, m2)
