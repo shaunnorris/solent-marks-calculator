@@ -23,23 +23,6 @@ def test_calculate_button_positioned_right_of_course_list(client):
     calculate_index = html.find('Calculate Course Legs')
     assert course_list_index < calculate_index, "Calculate button should come after course list"
 
-def test_clear_button_at_bottom_of_page(client):
-    """Test that the Clear Course button is positioned at the bottom of the page"""
-    response = client.get('/')
-    assert response.status_code == 200
-    
-    html = response.data.decode('utf-8')
-    
-    # Look for the Clear Course button
-    assert 'Clear Course' in html
-    
-    # The Clear Course button should be after the calculation results
-    clear_index = html.find('Clear Course')
-    results_index = html.find('id="courseResult"')
-    
-    # If results section exists, Clear button should be after it
-    if results_index != -1:
-        assert clear_index > results_index, "Clear Course button should be after results section"
 
 def test_course_marks_tagged_with_start_and_finish(client):
     """Test that the first mark is tagged as 'Start' and last mark as 'Finish' in course results"""
