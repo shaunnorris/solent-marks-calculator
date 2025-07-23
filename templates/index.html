@@ -449,6 +449,11 @@
             color: white;
         }
         
+        .start-finish-tag {
+            background: #3498db;
+            color: white;
+        }
+        
         .divider {
             height: 1px;
             background: #e1e8ed;
@@ -1260,8 +1265,34 @@
                 const toClass = leg.to.rounding === 'P' ? 'port' : 'starboard';
                 
                 // Create mark names with tags if present
-                const fromMark = leg.from.tag ? `${leg.from.name} <span class="mark-tag ${leg.from.tag === 'Start' ? 'start-tag' : 'finish-tag'}">${leg.from.tag}</span>` : `${leg.from.name} ${fromRounding}`;
-                const toMark = leg.to.tag ? `${leg.to.name} <span class="mark-tag ${leg.to.tag === 'Start' ? 'start-tag' : 'finish-tag'}">${leg.to.tag}</span>` : `${leg.to.name} ${toRounding}`;
+                // Check if this mark has both Start and Finish tags
+                const allMarksInCourse = legs.flatMap(l => [l.from, l.to]);
+                const fromMarksWithSameName = allMarksInCourse.filter(m => m.name === leg.from.name);
+                const toMarksWithSameName = allMarksInCourse.filter(m => m.name === leg.to.name);
+                const fromHasStartTag = fromMarksWithSameName.some(m => m.tag === 'Start');
+                const fromHasFinishTag = fromMarksWithSameName.some(m => m.tag === 'Finish');
+                const toHasStartTag = toMarksWithSameName.some(m => m.tag === 'Start');
+                const toHasFinishTag = toMarksWithSameName.some(m => m.tag === 'Finish');
+                
+                let fromMark, toMark;
+                
+                // Handle combined tags for from mark
+                if (fromHasStartTag && fromHasFinishTag) {
+                    fromMark = `${leg.from.name} <span class="mark-tag start-finish-tag">Start/Finish</span>`;
+                } else if (leg.from.tag) {
+                    fromMark = `${leg.from.name} <span class="mark-tag ${leg.from.tag === 'Start' ? 'start-tag' : 'finish-tag'}">${leg.from.tag}</span>`;
+                } else {
+                    fromMark = `${leg.from.name} ${fromRounding}`;
+                }
+                
+                // Handle combined tags for to mark
+                if (toHasStartTag && toHasFinishTag) {
+                    toMark = `${leg.to.name} <span class="mark-tag start-finish-tag">Start/Finish</span>`;
+                } else if (leg.to.tag) {
+                    toMark = `${leg.to.name} <span class="mark-tag ${leg.to.tag === 'Start' ? 'start-tag' : 'finish-tag'}">${leg.to.tag}</span>`;
+                } else {
+                    toMark = `${leg.to.name} ${toRounding}`;
+                }
                 
                 const tr = document.createElement('tr');
                 tr.innerHTML = `

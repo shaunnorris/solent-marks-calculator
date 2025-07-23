@@ -261,3 +261,22 @@ def test_frontend_handles_combined_start_finish_tags():
         # Check that positioning logic is present
         assert 'tagLat = mark.lat + 0.003' in html  # Start tags above
         assert 'tagLat = mark.lat - 0.003' in html  # Finish tags below 
+
+def test_table_shows_combined_start_finish_tags():
+    """Test that the table shows combined Start/Finish tags when a mark has both tags"""
+    with app.test_client() as client:
+        response = client.get('/')
+        assert response.status_code == 200
+        
+        html = response.data.decode('utf-8')
+        
+        # Check that the combined tag logic is included in table rendering
+        assert 'start-finish-tag' in html
+        assert 'Start/Finish' in html
+        assert 'fromHasStartTag' in html
+        assert 'fromHasFinishTag' in html
+        assert 'toHasStartTag' in html
+        assert 'toHasFinishTag' in html
+        
+        # Check that the CSS for combined tags is included
+        assert '.start-finish-tag' in html 
