@@ -61,16 +61,27 @@ fi
 
 # Step 4: Install dependencies
 echo "📦 Step 4: Installing dependencies..."
-python3 -m pip install -r requirements.txt
+
+# Create virtual environment if it doesn't exist
+if [ ! -d "venv" ]; then
+    echo "📦 Creating virtual environment..."
+    python3 -m venv venv
+fi
+
+# Activate virtual environment and install dependencies
+echo "📦 Installing dependencies in virtual environment..."
+source venv/bin/activate
+pip install -r requirements.txt
 
 # Check if we need to install gunicorn
 if ! python3 -c "import gunicorn" 2>/dev/null; then
     echo "📦 Installing gunicorn..."
-    python3 -m pip install gunicorn
+    pip install gunicorn
 fi
 
 # Step 5: Test the application locally
 echo "🧪 Step 5: Testing application locally..."
+source venv/bin/activate
 python3 -c "
 import xml.etree.ElementTree as ET
 try:
@@ -107,7 +118,7 @@ User=www-data
 Group=www-data
 WorkingDirectory=$APP_DIR
 Environment=PATH=$APP_DIR/venv/bin
-ExecStart=$APP_DIR/venv/bin/gunicorn --config gunicorn.conf.py app:app
+ExecStart=$APP_DIR/venv/bin/gunicorn --bind 0.0.0.0:8000 app:app
 Restart=always
 RestartSec=10
 
