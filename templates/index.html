@@ -1073,8 +1073,40 @@
                 marker.addTo(map);
                 mapMarkers[mark.name] = marker;
                 
-                // Add separate blue tag marker if this mark has a tag
-                if (mark.tag) {
+                // Check if this mark has both Start and Finish tags
+                const marksWithSameName = courseMarks.filter(m => m.name === mark.name);
+                const hasStartTag = marksWithSameName.some(m => m.tag === 'Start');
+                const hasFinishTag = marksWithSameName.some(m => m.tag === 'Finish');
+                
+                // Create combined tag if mark has both Start and Finish tags
+                if (hasStartTag && hasFinishTag) {
+                    const combinedTagIcon = L.divIcon({
+                        className: 'mark-tag-icon',
+                        html: `<div style="background: #3498db; color: white; border-radius: 4px; padding: 2px 6px; font-size: 10px; font-weight: bold; border: 1px solid white; box-shadow: 0 1px 3px rgba(0,0,0,0.3);">Start/Finish</div>`,
+                        iconSize: [60, 16],
+                        iconAnchor: [30, 8]
+                    });
+                    
+                    // Position combined tag above and to the right
+                    const tagLat = mark.lat + 0.003;
+                    const tagLon = mark.lon + 0.003;
+                    
+                    const tagMarker = L.marker([tagLat, tagLon], { icon: combinedTagIcon, interactive: false });
+                    tagMarker.addTo(map);
+                    mapMarkers[`${mark.name}-tag-combined`] = tagMarker;
+                    
+                    // Add connecting line from mark to tag
+                    const connectingLine = L.polyline([[mark.lat, mark.lon], [tagLat, tagLon]], {
+                        color: '#3498db',
+                        weight: 2,
+                        opacity: 0.6,
+                        dashArray: '3,3'
+                    });
+                    connectingLine.addTo(map);
+                    mapMarkers[`${mark.name}-line-combined`] = connectingLine;
+                }
+                // Add individual tag if mark has only one tag
+                else if (mark.tag) {
                     const tagColor = mark.tag === 'Start' ? '#3498db' : '#2980b9';
                     const tagIcon = L.divIcon({
                         className: 'mark-tag-icon',
@@ -1083,32 +1115,14 @@
                         iconAnchor: [20, 8]
                     });
                     
-                    // Check if this mark has both Start and Finish tags (same mark)
-                    const marksWithSameName = courseMarks.filter(m => m.name === mark.name);
-                    const hasBothTags = marksWithSameName.length > 1 && 
-                        marksWithSameName.some(m => m.tag === 'Start') && 
-                        marksWithSameName.some(m => m.tag === 'Finish');
-                    
-                    // Position the tag offset from the main marker to avoid overlap
+                    // Position individual tags
                     let tagLat, tagLon;
-                    if (hasBothTags) {
-                        // If mark has both tags, position them at different offsets
-                        if (mark.tag === 'Start') {
-                            tagLat = mark.lat + 0.004;  // Further above
-                            tagLon = mark.lon + 0.004;  // Further to the right
-                        } else {
-                            tagLat = mark.lat - 0.004;  // Further below
-                            tagLon = mark.lon - 0.004;  // Further to the left
-                        }
+                    if (mark.tag === 'Start') {
+                        tagLat = mark.lat + 0.003;  // Start tags above
+                        tagLon = mark.lon + 0.003;  // Start tags to the right
                     } else {
-                        // Normal positioning for single tags
-                        if (mark.tag === 'Start') {
-                            tagLat = mark.lat + 0.003;  // Above
-                            tagLon = mark.lon + 0.003;  // To the right
-                        } else {
-                            tagLat = mark.lat - 0.003;  // Below
-                            tagLon = mark.lon - 0.003;  // To the left
-                        }
+                        tagLat = mark.lat - 0.003;  // Finish tags below
+                        tagLon = mark.lon - 0.003;  // Finish tags to the left
                     }
                     
                     const tagMarker = L.marker([tagLat, tagLon], { icon: tagIcon, interactive: false });
