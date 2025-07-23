@@ -1032,30 +1032,35 @@
                 return;
             }
             
-            // Collect unique marks in the course with rounding information and tags
-            const courseMarksMap = new Map();
+            // Collect all marks in the course with rounding information and tags
+            const courseMarks = [];
             legs.forEach(leg => {
                 if (leg && leg.from && leg.from.name) {
-                    courseMarksMap.set(leg.from.name, {
+                    courseMarks.push({
                         ...allMarks.find(m => m.name === leg.from.name),
                         rounding: leg.from.rounding,
                         tag: leg.from.tag
                     });
                 }
                 if (leg && leg.to && leg.to.name) {
-                    courseMarksMap.set(leg.to.name, {
+                    courseMarks.push({
                         ...allMarks.find(m => m.name === leg.to.name),
                         rounding: leg.to.rounding,
                         tag: leg.to.tag
                     });
                 }
             });
-            const courseMarks = Array.from(courseMarksMap.values());
             
             // Add only course marks to the map, with labels
+            // First, create a map of unique marks to avoid duplicates
+            const uniqueMarks = new Map();
             courseMarks.forEach(mark => {
                 if (!mark || !mark.lat || !mark.lon || !mark.name) return;
-                
+                uniqueMarks.set(mark.name, mark);
+            });
+            
+            // Now process unique marks and add tags
+            uniqueMarks.forEach((mark, markName) => {
                 // Determine color based on rounding direction
                 const backgroundColor = mark.rounding === 'P' ? '#e74c3c' : '#27ae60'; // Red for Port, Green for Starboard
                 
