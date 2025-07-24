@@ -24,6 +24,7 @@ fi
 
 # Step 2: Rsync only production files to app dir
 rsync -av --delete \
+    --exclude 'venv/' \
     --exclude 'test_app.py' \
     --exclude 'dev/' \
     --exclude '__pycache__/' \
