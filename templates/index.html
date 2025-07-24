@@ -611,6 +611,66 @@
             -ms-user-select: none;
             user-select: none;
         }
+
+        @media (max-width: 600px) {
+            .course-table-wrapper {
+                width: 100%;
+            }
+            .course-table {
+                width: 100%;
+                font-size: 0.7em;
+            }
+            .course-table th {
+                font-size: 0.7em;
+                padding: 2px 1px;
+                word-break: break-word;
+                white-space: normal;
+            }
+            .course-table td {
+                padding: 2px 1px;
+                word-break: break-word;
+                white-space: normal;
+            }
+            .course-table th:first-child, .course-table td:first-child {
+                padding: 2px 1px;
+                min-width: 20px;
+                max-width: 25px;
+                width: 25px;
+            }
+            .course-table .course-lozenge {
+                font-size: 0.4em;
+                padding: 1px 2px;
+                min-width: 0;
+                max-width: 60px;
+                white-space: normal;
+            }
+            .course-table th:nth-child(2), .course-table td:nth-child(2),
+            .course-table th:nth-child(3), .course-table td:nth-child(3) {
+                max-width: 80px;
+                width: 80px;
+            }
+            .course-table th:nth-child(4), .course-table td:nth-child(4),
+            .course-table th:nth-child(5), .course-table td:nth-child(5) {
+                max-width: 60px;
+                width: 60px;
+            }
+            
+            /* Mobile button styling */
+            button {
+                font-size: 0.7em;
+                padding: 6px 8px;
+            }
+            .btn-primary, .btn-secondary, .btn-danger {
+                font-size: 0.55em;
+                padding: 8px 6px;
+                line-height: 1.2;
+                white-space: pre-line;
+                height: auto;
+                min-height: 44px;
+                min-width: 120px !important;
+                width: 30vw !important;
+            }
+        }
     </style>
 </head>
 <body>
@@ -676,7 +736,7 @@
                 </div>
                 <!-- Calculate button directly under course list, not in flex row -->
                 <div style="margin: 16px auto 0 auto; text-align: center;">
-                    <button type="button" class="btn btn-primary" id="calculateCourseBtn" style="width: 20vw; max-width: 200px; min-width: 90px;">Calculate Course Legs</button>
+                    <button type="button" class="btn btn-primary" id="calculateCourseBtn" style="width: 20vw; max-width: 200px; min-width: 90px;">Calculate<br>Course Legs</button>
                 </div>
                 
                 <!-- Remove Clear Course button from here -->
@@ -689,25 +749,27 @@
 
             <div class="result" id="courseResult">
                 <h3>Course Legs</h3>
-                <table class="course-table">
-                    <thead>
-                        <tr>
-                            <th>Leg</th>
-                            <th>From</th>
-                            <th>To</th>
-                            <th>Bearing</th>
-                            <th>Distance</th>
-                        </tr>
-                    </thead>
-                    <tbody id="courseLegsTableBody"></tbody>
-                </table>
+                <div class="course-table-wrapper">
+                    <table class="course-table">
+                        <thead>
+                            <tr>
+                                <th>Leg</th>
+                                <th>From</th>
+                                <th>To</th>
+                                <th>Bearing</th>
+                                <th>Distance</th>
+                            </tr>
+                        </thead>
+                        <tbody id="courseLegsTableBody"></tbody>
+                    </table>
+                </div>
             </div>
             
             <div class="error" id="courseError" style="display: none;"></div>
 
             <!-- Clear Course button: after results section -->
             <div style="margin: 24px auto 0 auto; text-align: center;">
-                <button type="button" class="btn btn-danger" id="clearCourseBtn" style="width: 20vw; max-width: 200px; min-width: 90px;">Clear Course</button>
+                <button type="button" class="btn btn-danger" id="clearCourseBtn" style="width: 20vw; max-width: 200px; min-width: 90px;">Clear<br>Course</button>
             </div>
 
             <!-- Map Section -->
@@ -890,6 +952,10 @@
                 rounding: rounding
             });
             renderCourseList();
+            
+            // Reset dropdowns to default values
+            courseMarkSelect.value = '';
+            roundingSelect.value = '';
         });
 
         clearCourseBtn.addEventListener('click', function() {
