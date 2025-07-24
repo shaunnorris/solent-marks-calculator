@@ -749,19 +749,30 @@
 
             <div class="result" id="courseResult">
                 <h3>Course Legs</h3>
-                <div class="course-table-wrapper">
-                    <table class="course-table">
-                        <thead>
-                            <tr>
-                                <th>Leg</th>
-                                <th>From</th>
-                                <th>To</th>
-                                <th>Bearing</th>
-                                <th>Distance</th>
-                            </tr>
-                        </thead>
-                        <tbody id="courseLegsTableBody"></tbody>
-                    </table>
+                <div id="courseLegsExport">
+                    <!-- Linked list of course marks -->
+                    <div id="courseLinkedList" style="margin-bottom:10px; text-align:center; font-size:1.1em;"></div>
+                    <div class="course-table-wrapper">
+                        <table class="course-table" id="courseLegsTable">
+                            <thead>
+                                <tr>
+                                    <th>Leg</th>
+                                    <th>From</th>
+                                    <th>To</th>
+                                    <th>Bearing</th>
+                                    <th>Distance</th>
+                                </tr>
+                            </thead>
+                            <tbody id="courseLegsTableBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+                <!-- Share button below table -->
+                <div style="text-align:center; margin-top:8px;">
+                    <button id="shareLegChartBtn" style="background:none;border:none;padding:0;cursor:pointer;">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+                    </button>
+                    <a id="downloadLegChartLink" style="display:none;">Download Image</a>
                 </div>
             </div>
             
@@ -780,6 +791,8 @@
         </div> <!-- end .content -->
     </div>
 
+    <!-- Add html2canvas CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
     <script>
         // Zone filtering functionality
         let allMarks = [];
@@ -879,6 +892,20 @@
         const courseLegsTableBody = document.getElementById('courseLegsTableBody');
         const roundingSelect = document.getElementById('roundingSelect');
 
+        function renderCourseLinkedList() {
+            const container = document.getElementById('courseLinkedList');
+            if (!container) return;
+            if (!courseMarks || courseMarks.length === 0) {
+                container.innerHTML = '';
+                return;
+            }
+            const items = courseMarks.map(mark => {
+                const rounding = mark.rounding === 'P' ? '(P)' : '(S)';
+                return `<span style="display:inline-block;padding:2px 8px;border-radius:12px;background:#e0e7ef;margin:0 2px;">${mark.name} <span style='color:#888;'>${rounding}</span></span>`;
+            });
+            container.innerHTML = items.join('<span style="font-size:1.2em;color:#3498db;vertical-align:middle;">&#8594;</span>');
+        }
+
         function renderCourseList() {
             if (courseMarks.length === 0) {
                 courseList.innerHTML = '<span class="empty">No marks added yet</span>';
@@ -918,6 +945,7 @@
                         if (confirm(`Remove ${markName} (${rounding === 'P' ? 'P' : 'S'}) from the course?`)) {
                             courseMarks.splice(markIndex, 1);
                             renderCourseList();
+                            renderCourseLinkedList(); // Update linked list
                             // Hide results if we no longer have enough marks
                             if (courseMarks.length < 2) {
                                 hideCourseResult();
@@ -940,6 +968,7 @@
                 courseList.innerHTML = '';
                 courseList.appendChild(lozengesContainer);
                 courseList.classList.remove('empty');
+                renderCourseLinkedList(); // Update linked list
             }
         }
 
@@ -961,6 +990,7 @@
         clearCourseBtn.addEventListener('click', function() {
             courseMarks = [];
             renderCourseList();
+            renderCourseLinkedList(); // Update linked list
             hideCourseResult();
             hideCourseError();
         });
@@ -1559,9 +1589,39 @@
         clearCourseBtn.addEventListener('click', function() {
             courseMarks = [];
             renderCourseList();
+            renderCourseLinkedList(); // Update linked list
             hideCourseResult();
             hideCourseError();
             hideMap();
+        });
+
+        document.getElementById('shareLegChartBtn').addEventListener('click', async function() {
+            const exportDiv = document.getElementById('courseLegsExport');
+            if (!exportDiv) return;
+            html2canvas(exportDiv, {backgroundColor: '#fff'}).then(async function(canvas) {
+                canvas.toBlob(async function(blob) {
+                    if (navigator.canShare && navigator.canShare({ files: [new File([blob], 'course-legs.png', {type: blob.type})] })) {
+                        try {
+                            await navigator.share({
+                                files: [new File([blob], 'course-legs.png', {type: blob.type})],
+                                title: 'Course Legs',
+                                text: 'Here is the course legs chart.'
+                            });
+                        } catch (err) {
+                            // User cancelled or error
+                        }
+                    } else {
+                        // Fallback: offer download
+                        const url = URL.createObjectURL(blob);
+                        const link = document.getElementById('downloadLegChartLink');
+                        link.href = url;
+                        link.download = 'course-legs.png';
+                        link.style.display = 'inline-block';
+                        link.textContent = 'Download Image';
+                        setTimeout(() => { URL.revokeObjectURL(url); }, 60000);
+                    }
+                }, 'image/png');
+            });
         });
     </script>
 </body>
