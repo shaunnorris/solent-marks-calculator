@@ -396,6 +396,19 @@
             cursor: default;
             transform: none;
             box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            font-size: 0.75em; /* Reduced by 2 font points */
+            padding: 4px 10px; /* More compact */
+        }
+
+        /* Leg label in table */
+        .course-table th:first-child, .course-table td:first-child {
+            font-size: 0.7em; /* Reduced by another 2 font points */
+            padding: 6px 4px;
+            min-width: 32px;
+            text-align: center;
+            background: #fff;
+            color: #000;
+            border-radius: 6px;
         }
 
         .course-table .course-lozenge:hover {
@@ -509,17 +522,17 @@
             }
             
             .course-table {
-                font-size: 0.9em; /* Smaller font for mobile */
+                font-size: 0.8em; /* Smaller font for mobile */
             }
             
             .course-table th,
             .course-table td {
-                padding: 8px 4px; /* Reduced padding for mobile */
+                padding: 6px 2px; /* Reduced padding for mobile */
             }
             
             .course-table .course-lozenge {
-                font-size: 0.8em; /* Smaller lozenges for mobile */
-                padding: 4px 6px; /* Reduced padding */
+                font-size: 0.45em; /* Even smaller for mobile */
+                padding: 1px 4px;
             }
             
             .course-table .course-lozenge .rounding-text {
@@ -538,12 +551,12 @@
             
             /* Course table mobile optimizations */
             .course-table {
-                font-size: 0.9em; /* Smaller font for mobile */
+                font-size: 0.8em; /* Smaller font for mobile */
             }
             
             .course-table th,
             .course-table td {
-                padding: 8px 4px; /* Reduced padding */
+                padding: 6px 2px; /* Reduced padding */
                 word-wrap: break-word;
                 max-width: 0; /* Allow text wrapping */
             }
@@ -614,9 +627,23 @@
                 <div class="zone-filter">
                     <div class="zone-checkboxes">
                         {% for zone in zones %}
-                        <label class="zone-checkbox">
-                            <input type="checkbox" value="{{ zone }}" class="zone-cb">
-                            <span>{{ zone }}</span>
+                        <label class="zone-checkbox" style="flex-direction:column;align-items:center;">
+                            <span style="display:flex;align-items:center;">
+                                <input type="checkbox" value="{{ zone }}" class="zone-cb">
+                                <span>{{ zone }}</span>
+                            </span>
+                            {% set zone_labels = {
+                                '1': 'Western Approaches',
+                                '2': 'West Solent',
+                                '3': 'Mid Solent (W)',
+                                '4': 'Mid Solent (E)',
+                                '5': 'East Solent',
+                                '6': 'Eastern Approaches',
+                                '7': 'Southampton Water'
+                            } %}
+                            {% if zone in zone_labels %}
+                                <small style="font-size:6pt;line-height:1.1;display:block;text-align:center;margin-top:2px;">{{ zone_labels[zone] }}</small>
+                            {% endif %}
                         </label>
                         {% endfor %}
                     </div>
@@ -630,9 +657,10 @@
                     <label for="courseMarkSelect">Add Mark to Course:</label>
                     <div class="mark-input-row">
                         <select id="courseMarkSelect">
-                            <option value="">Choose a mark...</option>
+                            <option value="">Mark</option>
                         </select>
                         <select id="roundingSelect" style="width: auto; min-width: 100px;">
+                            <option value="" selected disabled>Rounding</option>
                             <option value="S">Starboard (S)</option>
                             <option value="P">Port (P)</option>
                         </select>
@@ -730,7 +758,7 @@
             
             // Update course dropdown
             const currentValue = courseMarkSelect.value;
-            courseMarkSelect.innerHTML = '<option value="">Choose a mark...</option>';
+            courseMarkSelect.innerHTML = '<option value="">Mark</option>';
             
             filteredMarks.forEach(mark => {
                 const option = document.createElement('option');
@@ -1417,7 +1445,7 @@
                 
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
-                    <td style="font-size: 0.9em; font-weight: 600; color: #3498db;">Leg ${leg.leg_number || legIndex + 1}</td>
+                    <td>Leg ${leg.leg_number || legIndex + 1}</td>
                     <td style="font-size: 1.0em; font-weight: 600;">
                         <div class="course-lozenge ${fromClass}" style="display: inline-flex; margin: 0; font-size: 0.9em;">
                             <span>${leg.from.name}</span>
