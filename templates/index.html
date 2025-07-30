@@ -391,24 +391,27 @@
             font-weight: 800;
         }
 
-        /* Table-specific lozenge styling */
+        /* Table-specific lozenge styling - simplified */
         .course-table .course-lozenge {
             cursor: default;
             transform: none;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            box-shadow: none;
             font-size: 0.75em; /* Reduced by 2 font points */
-            padding: 4px 10px; /* More compact */
-            background: white !important;
+            padding: 0;
+            background: transparent !important;
             color: black !important;
-            border: 2px solid black !important;
+            border: none !important;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
         }
 
         /* Override port/starboard colors for table lozenges */
         .course-table .course-lozenge.port,
         .course-table .course-lozenge.starboard {
-            background: white !important;
+            background: transparent !important;
             color: black !important;
-            border: 2px solid black !important;
+            border: none !important;
         }
 
         /* Override port/starboard colors for course linked list lozenges */
@@ -558,10 +561,10 @@
             
             .course-table .course-lozenge {
                 font-size: 0.45em; /* Even smaller for mobile */
-                padding: 1px 4px;
-                background: white !important;
+                padding: 0;
+                background: transparent !important;
                 color: black !important;
-                border: 2px solid black !important;
+                border: none !important;
             }
             
             .course-table .course-lozenge .rounding-text {
@@ -613,19 +616,19 @@
 
             /* Table lozenges mobile optimizations */
             .course-table .course-lozenge {
-                padding: 4px 8px;
+                padding: 0;
                 font-size: 0.85em;
-                background: white !important;
+                background: transparent !important;
                 color: black !important;
-                border: 2px solid black !important;
+                border: none !important;
             }
 
             /* Override port/starboard colors for table lozenges on mobile */
             .course-table .course-lozenge.port,
             .course-table .course-lozenge.starboard {
-                background: white !important;
+                background: transparent !important;
                 color: black !important;
-                border: 2px solid black !important;
+                border: none !important;
             }
 
             /* Override port/starboard colors for course linked list lozenges on mobile */
@@ -636,12 +639,14 @@
                 border: 2px solid black !important;
             }
 
-            /* General styling for course linked list lozenges on mobile */
-            #courseLinkedList .course-lozenge {
-                background: white !important;
-                color: black !important;
-                border: 2px solid black !important;
-            }
+                    /* General styling for course linked list lozenges on mobile */
+        #courseLinkedList .course-lozenge {
+            background: white !important;
+            color: black !important;
+            border: 2px solid black !important;
+        }
+
+
 
             .course-table .course-lozenge .rounding-text {
                 font-size: 0.8em;
@@ -861,6 +866,8 @@
                         </table>
                     </div>
                 </div>
+                
+
                 <!-- Share button below table -->
                 <div style="text-align:center; margin-top:8px;">
                     <button id="shareLegChartBtn" style="background:none;border:none;padding:0;cursor:pointer;">
@@ -1700,8 +1707,9 @@
         });
 
         document.getElementById('shareLegChartBtn').addEventListener('click', async function() {
-            const exportDiv = document.getElementById('courseLegsExport');
+            const exportDiv = document.getElementById('courseLegsTable');
             if (!exportDiv) return;
+            
             html2canvas(exportDiv, {backgroundColor: '#fff'}).then(async function(canvas) {
                 canvas.toBlob(async function(blob) {
                     if (navigator.canShare && navigator.canShare({ files: [new File([blob], 'course-legs.png', {type: blob.type})] })) {
