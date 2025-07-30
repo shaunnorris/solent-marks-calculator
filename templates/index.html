@@ -398,6 +398,32 @@
             box-shadow: 0 1px 3px rgba(0,0,0,0.1);
             font-size: 0.75em; /* Reduced by 2 font points */
             padding: 4px 10px; /* More compact */
+            background: white !important;
+            color: black !important;
+            border: 2px solid black !important;
+        }
+
+        /* Override port/starboard colors for table lozenges */
+        .course-table .course-lozenge.port,
+        .course-table .course-lozenge.starboard {
+            background: white !important;
+            color: black !important;
+            border: 2px solid black !important;
+        }
+
+        /* Override port/starboard colors for course linked list lozenges */
+        #courseLinkedList .course-lozenge.port,
+        #courseLinkedList .course-lozenge.starboard {
+            background: white !important;
+            color: black !important;
+            border: 2px solid black !important;
+        }
+
+        /* General styling for course linked list lozenges */
+        #courseLinkedList .course-lozenge {
+            background: white !important;
+            color: black !important;
+            border: 2px solid black !important;
         }
 
         /* Leg label in table */
@@ -533,6 +559,9 @@
             .course-table .course-lozenge {
                 font-size: 0.45em; /* Even smaller for mobile */
                 padding: 1px 4px;
+                background: white !important;
+                color: black !important;
+                border: 2px solid black !important;
             }
             
             .course-table .course-lozenge .rounding-text {
@@ -586,6 +615,32 @@
             .course-table .course-lozenge {
                 padding: 4px 8px;
                 font-size: 0.85em;
+                background: white !important;
+                color: black !important;
+                border: 2px solid black !important;
+            }
+
+            /* Override port/starboard colors for table lozenges on mobile */
+            .course-table .course-lozenge.port,
+            .course-table .course-lozenge.starboard {
+                background: white !important;
+                color: black !important;
+                border: 2px solid black !important;
+            }
+
+            /* Override port/starboard colors for course linked list lozenges on mobile */
+            #courseLinkedList .course-lozenge.port,
+            #courseLinkedList .course-lozenge.starboard {
+                background: white !important;
+                color: black !important;
+                border: 2px solid black !important;
+            }
+
+            /* General styling for course linked list lozenges on mobile */
+            #courseLinkedList .course-lozenge {
+                background: white !important;
+                color: black !important;
+                border: 2px solid black !important;
             }
 
             .course-table .course-lozenge .rounding-text {
@@ -604,6 +659,46 @@
             }
         }
         
+        /* Toggle switch styling */
+        .rounding-toggle {
+            display: inline-flex;
+            align-items: center;
+            background: #e1e8ed;
+            border-radius: 20px;
+            padding: 4px;
+            cursor: pointer;
+            user-select: none;
+            border: 2px solid #ccc;
+            transition: all 0.3s ease;
+            min-width: 80px;
+            height: 32px;
+        }
+
+        .rounding-toggle:hover {
+            border-color: #3498db;
+        }
+
+        .rounding-toggle .toggle-option {
+            flex: 1;
+            text-align: center;
+            padding: 6px 12px;
+            border-radius: 16px;
+            font-weight: 600;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+            color: #666;
+        }
+
+        .rounding-toggle .toggle-option.active {
+            background: #3498db;
+            color: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .rounding-toggle .toggle-option:not(.active) {
+            background: transparent;
+        }
+
         /* Prevent text selection on buttons */
         .btn, .zone-checkbox, .remove-btn {
             -webkit-user-select: none;
@@ -719,11 +814,10 @@
                         <select id="courseMarkSelect">
                             <option value="">Mark</option>
                         </select>
-                        <select id="roundingSelect" style="width: auto; min-width: 100px;">
-                            <option value="" selected disabled>Rounding</option>
-                            <option value="S">Starboard (S)</option>
-                            <option value="P">Port (P)</option>
-                        </select>
+                        <div class="rounding-toggle" id="roundingToggle">
+                            <div class="toggle-option active" data-value="P">P</div>
+                            <div class="toggle-option" data-value="S">S</div>
+                        </div>
                         <button type="button" class="btn btn-primary" id="addMarkBtn">Add</button>
                     </div>
                 </div>
@@ -890,7 +984,8 @@
         const courseError = document.getElementById('courseError');
         const courseLoading = document.getElementById('courseLoading');
         const courseLegsTableBody = document.getElementById('courseLegsTableBody');
-        const roundingSelect = document.getElementById('roundingSelect');
+        const roundingToggle = document.getElementById('roundingToggle');
+        let currentRounding = 'P'; // Default to Port
 
         function renderCourseLinkedList() {
             const container = document.getElementById('courseLinkedList');
@@ -972,19 +1067,28 @@
             }
         }
 
+        // Toggle switch functionality
+        roundingToggle.addEventListener('click', function() {
+            const options = this.querySelectorAll('.toggle-option');
+            options.forEach(option => {
+                option.classList.toggle('active');
+            });
+            // Toggle between P and S
+            currentRounding = currentRounding === 'P' ? 'S' : 'P';
+        });
+
         addMarkBtn.addEventListener('click', function() {
             const selected = courseMarkSelect.value;
-            const rounding = roundingSelect.value;
             if (!selected) return;
             courseMarks.push({
                 name: selected,
-                rounding: rounding
+                rounding: currentRounding
             });
             renderCourseList();
             
-            // Reset dropdowns to default values
+            // Reset mark dropdown to default value
             courseMarkSelect.value = '';
-            roundingSelect.value = '';
+            // Keep the toggle switch as is - no need to reset
         });
 
         clearCourseBtn.addEventListener('click', function() {
