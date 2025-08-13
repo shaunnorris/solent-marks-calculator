@@ -496,6 +496,169 @@
             color: white;
         }
         
+        /* Modern Course Cards Styling */
+        .course-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border: 1px solid #e1e8ed;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .course-card:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            transform: translateY(-1px);
+        }
+        
+        .course-card .mark-circle {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.4em;
+            color: white;
+            flex-shrink: 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .course-card .mark-circle.start {
+            background: #3498db;
+        }
+        
+        .course-card .mark-circle.port {
+            background: #e74c3c;
+        }
+        
+        .course-card .mark-circle.starboard {
+            background: #27ae60;
+        }
+        
+        .course-card .mark-circle.finish {
+            background: #2980b9;
+        }
+        
+        .course-card .mark-info {
+            flex: 1;
+            min-width: 0;
+        }
+        
+        .course-card .mark-details-line {
+            font-size: 0.95em;
+            color: #2c3e50;
+            margin-bottom: 8px;
+            line-height: 1.3;
+            font-weight: 500;
+        }
+        
+        .course-card .mark-details {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 8px;
+            font-size: 0.9em;
+            color: #7f8c8d;
+        }
+        
+        .course-card .mark-details .bearing {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .course-card .mark-details .distance {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .course-card .mark-details .compass-icon {
+            width: 16px;
+            height: 16px;
+            background: #7f8c8d;
+            border-radius: 50%;
+            position: relative;
+        }
+        
+        .course-card .mark-details .compass-icon::after {
+            content: '↑';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 10px;
+            font-weight: bold;
+        }
+        
+        .course-card .mark-details .arrow-icon {
+            color: #7f8c8d;
+            font-weight: bold;
+            font-size: 1em;
+        }
+        
+        .course-card .rounding-instruction {
+            font-size: 0.75em;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: #e74c3c;
+            letter-spacing: 0.5px;
+            margin-top: 4px;
+        }
+        
+        .course-card .start-finish-label {
+            font-size: 0.75em;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: #3498db;
+            letter-spacing: 0.5px;
+            margin-top: 4px;
+        }
+        
+
+        
+        /* Mobile optimizations for course cards */
+        @media (max-width: 600px) {
+            .course-card {
+                padding: 16px;
+                margin-bottom: 12px;
+                gap: 16px;
+            }
+            
+            .course-card .mark-circle {
+                width: 60px;
+                height: 60px;
+                font-size: 1.2em;
+            }
+            
+            .course-card .mark-details-line {
+                font-size: 0.85em;
+            }
+            
+            .course-card .mark-details {
+                font-size: 0.8em;
+                gap: 10px;
+            }
+            
+            .course-card .mark-details .compass-icon {
+                width: 14px;
+                height: 14px;
+            }
+            
+            .course-card .rounding-instruction,
+            .course-card .start-finish-label {
+                font-size: 0.65em;
+            }
+        }
+        
         .divider {
             height: 1px;
             background: #e1e8ed;
@@ -849,25 +1012,10 @@
             <div class="result" id="courseResult">
                 <h3>Course Legs</h3>
                 <div id="courseLegsExport">
-                    <!-- Linked list of course marks -->
-                    <div id="courseLinkedList" style="margin-bottom:10px; text-align:center; font-size:1.1em;"></div>
-                    <div class="course-table-wrapper">
-                        <table class="course-table" id="courseLegsTable">
-                            <thead>
-                                <tr>
-                                    <th>Leg</th>
-                                    <th>From</th>
-                                    <th>To</th>
-                                    <th>Bearing</th>
-                                    <th>Distance</th>
-                                </tr>
-                            </thead>
-                            <tbody id="courseLegsTableBody"></tbody>
-                        </table>
-                    </div>
+                    <!-- Modern card-based course display -->
+                    <div id="courseCardsContainer" style="margin-bottom: 20px;"></div>
                 </div>
                 
-
                 <!-- Share button below table -->
                 <div style="text-align:center; margin-top:8px;">
                     <button id="shareLegChartBtn" style="background:none;border:none;padding:0;cursor:pointer;">
@@ -990,23 +1138,11 @@
         const courseResult = document.getElementById('courseResult');
         const courseError = document.getElementById('courseError');
         const courseLoading = document.getElementById('courseLoading');
-        const courseLegsTableBody = document.getElementById('courseLegsTableBody');
+
         const roundingToggle = document.getElementById('roundingToggle');
         let currentRounding = 'P'; // Default to Port
 
-        function renderCourseLinkedList() {
-            const container = document.getElementById('courseLinkedList');
-            if (!container) return;
-            if (!courseMarks || courseMarks.length === 0) {
-                container.innerHTML = '';
-                return;
-            }
-            const items = courseMarks.map(mark => {
-                const rounding = mark.rounding === 'P' ? '(P)' : '(S)';
-                return `<span style="display:inline-block;padding:2px 8px;border-radius:12px;background:#e0e7ef;margin:0 2px;">${mark.name} <span style='color:#888;'>${rounding}</span></span>`;
-            });
-            container.innerHTML = items.join('<span style="font-size:1.2em;color:#3498db;vertical-align:middle;">&#8594;</span>');
-        }
+
 
         function renderCourseList() {
             if (courseMarks.length === 0) {
@@ -1047,7 +1183,6 @@
                         if (confirm(`Remove ${markName} (${rounding === 'P' ? 'P' : 'S'}) from the course?`)) {
                             courseMarks.splice(markIndex, 1);
                             renderCourseList();
-                            renderCourseLinkedList(); // Update linked list
                             // Hide results if we no longer have enough marks
                             if (courseMarks.length < 2) {
                                 hideCourseResult();
@@ -1070,7 +1205,6 @@
                 courseList.innerHTML = '';
                 courseList.appendChild(lozengesContainer);
                 courseList.classList.remove('empty');
-                renderCourseLinkedList(); // Update linked list
             }
         }
 
@@ -1099,12 +1233,25 @@
         });
 
         clearCourseBtn.addEventListener('click', function() {
+            clearCourse();
+        });
+        
+
+        
+        // Function to clear the course
+        function clearCourse() {
             courseMarks = [];
             renderCourseList();
-            renderCourseLinkedList(); // Update linked list
             hideCourseResult();
             hideCourseError();
-        });
+            hideMap();
+            
+            // Clear the cards display
+            const courseCardsContainer = document.getElementById('courseCardsContainer');
+            if (courseCardsContainer) {
+                courseCardsContainer.innerHTML = '';
+            }
+        }
 
         calculateCourseBtn.addEventListener('click', async function() {
             hideCourseResult();
@@ -1153,6 +1300,7 @@
         
         function hideCourseResult() {
             courseResult.classList.remove('show');
+            hideMap();
         }
         
         function showCourseError(message) {
@@ -1609,76 +1757,73 @@
             console.log('Showing course result with legs:', legs);
             console.log('First leg object:', legs[0]);
             console.log('Leg number check:', legs[0]?.leg_number);
-            courseLegsTableBody.innerHTML = '';
+            
+            // Clear the cards display
+            const courseCardsContainer = document.getElementById('courseCardsContainer');
+            courseCardsContainer.innerHTML = '';
             
             // Calculate total distance
             const totalDistance = legs.reduce((sum, leg) => sum + leg.distance, 0);
             
+            // Create a list of all unique marks in order
+            const allMarks = [];
+            
+            // Add the first mark (start)
+            if (legs.length > 0) {
+                allMarks.push({
+                    name: legs[0].from.name,
+                    description: legs[0].from.description,
+                    symbol: legs[0].from.symbol,
+                    rounding: legs[0].from.rounding,
+                    tag: 'Start',
+                    isStart: true,
+                    isFinish: false
+                });
+            }
+            
+            // Add all destination marks with their leg information
             legs.forEach((leg, legIndex) => {
-                const fromRounding = leg.from.rounding === 'P' ? '(P)' : '(S)';
-                const toRounding = leg.to.rounding === 'P' ? '(P)' : '(S)';
-                const fromClass = leg.from.rounding === 'P' ? 'port' : 'starboard';
-                const toClass = leg.to.rounding === 'P' ? 'port' : 'starboard';
-                
-                // Create mark names with tags if present
-                // Check if this mark has both Start and Finish tags
-                const allMarksInCourse = legs.flatMap(l => [l.from, l.to]);
-                const fromMarksWithSameName = allMarksInCourse.filter(m => m.name === leg.from.name);
-                const toMarksWithSameName = allMarksInCourse.filter(m => m.name === leg.to.name);
-                const fromHasStartTag = fromMarksWithSameName.some(m => m.tag === 'Start');
-                const fromHasFinishTag = fromMarksWithSameName.some(m => m.tag === 'Finish');
-                const toHasStartTag = toMarksWithSameName.some(m => m.tag === 'Start');
-                const toHasFinishTag = toMarksWithSameName.some(m => m.tag === 'Finish');
-                
-                let fromMark, toMark;
-                
-                // Handle combined tags for from mark
-                if (fromHasStartTag && fromHasFinishTag) {
-                    fromMark = `${leg.from.name} <span class="mark-tag start-finish-tag">Start/Finish</span>`;
-                } else if (leg.from.tag) {
-                    fromMark = `${leg.from.name} <span class="mark-tag ${leg.from.tag === 'Start' ? 'start-tag' : 'finish-tag'}">${leg.from.tag}</span>`;
-                } else {
-                    fromMark = `${leg.from.name} ${fromRounding}`;
-                }
-                
-                // Handle combined tags for to mark
-                if (toHasStartTag && toHasFinishTag) {
-                    toMark = `${leg.to.name} <span class="mark-tag start-finish-tag">Start/Finish</span>`;
-                } else if (leg.to.tag) {
-                    toMark = `${leg.to.name} <span class="mark-tag ${leg.to.tag === 'Start' ? 'start-tag' : 'finish-tag'}">${leg.to.tag}</span>`;
-                } else {
-                    toMark = `${leg.to.name} ${toRounding}`;
-                }
-                
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td>Leg ${leg.leg_number || legIndex + 1}</td>
-                    <td style="font-size: 1.0em; font-weight: 600;">
-                        <div class="course-lozenge ${fromClass}" style="display: inline-flex; margin: 0; font-size: 0.9em;">
-                            <span>${leg.from.name}</span>
-                            <span class="rounding-text">${fromRounding}</span>
-                        </div>
-                    </td>
-                    <td style="font-size: 1.0em; font-weight: 600;">
-                        <div class="course-lozenge ${toClass}" style="display: inline-flex; margin: 0; font-size: 0.9em;">
-                            <span>${leg.to.name}</span>
-                            <span class="rounding-text">${toRounding}</span>
-                        </div>
-                    </td>
-                    <td style="font-size: 1.1em; font-weight: 600;">${leg.bearing}°</td>
-                    <td style="font-size: 1.1em; font-weight: 600;">${leg.distance} nm</td>
-                `;
-                courseLegsTableBody.appendChild(tr);
+                const isFinish = legIndex === legs.length - 1;
+                allMarks.push({
+                    name: leg.to.name,
+                    description: leg.to.description,
+                    symbol: leg.to.symbol,
+                    rounding: leg.to.rounding,
+                    tag: isFinish ? 'Finish' : null,
+                    isStart: false,
+                    isFinish: isFinish,
+                    bearing: leg.bearing,
+                    distance: leg.distance
+                });
             });
             
-            // Add summary row with total distance
-            const summaryTr = document.createElement('tr');
-            summaryTr.style.cssText = 'background-color: #f8f9fa; border-top: 2px solid #dee2e6; font-weight: bold;';
-            summaryTr.innerHTML = `
-                <td colspan="4" style="text-align: right; font-size: 1.2em; color: #2c3e50;">Total Race Distance:</td>
-                <td style="font-size: 1.2em; color: #2c3e50; font-weight: 700;">${totalDistance.toFixed(1)} nm</td>
+            // Create cards for each mark
+            allMarks.forEach((mark, index) => {
+                const markClass = mark.rounding === 'P' ? 'port' : 'starboard';
+                const specialType = mark.isStart ? 'start' : (mark.isFinish ? 'finish' : null);
+                
+                const card = createMarkCard(
+                    mark.name,
+                    markClass,
+                    mark.rounding,
+                    mark.bearing,
+                    mark.distance,
+                    mark.isStart,
+                    mark.isFinish,
+                    specialType,
+                    mark.description,
+                    mark.symbol
+                );
+                courseCardsContainer.appendChild(card);
+            });
+            
+            // Add total distance to cards view
+            const totalCard = document.createElement('div');
+            totalCard.style.cssText = 'background: #f8f9fa; border: 2px solid #dee2e6; border-radius: 12px; padding: 16px; margin-top: 16px; text-align: center;';
+            totalCard.innerHTML = `
+                <div style="font-size: 1.2em; font-weight: 700; color: #2c3e50;">Total Race Distance: ${totalDistance.toFixed(1)} nm</div>
             `;
-            courseLegsTableBody.appendChild(summaryTr);
+            courseCardsContainer.appendChild(totalCard);
             
             courseResult.classList.add('show');
             
@@ -1689,6 +1834,60 @@
                 drawRouteOnMap(legs);
             }, 200);
         }
+        
+        // Function to create individual mark cards
+        function createMarkCard(markName, markClass, rounding, bearing, distance, hasStartTag, hasFinishTag, specialType, description, symbol) {
+            const card = document.createElement('div');
+            card.className = 'course-card';
+            
+            // Determine circle class and content
+            let circleClass = markClass;
+            let circleContent = markName; // Always show the mark designation code
+            
+            if (specialType === 'start') {
+                circleClass = 'start';
+            } else if (specialType === 'finish') {
+                circleClass = 'finish';
+            }
+            
+            // Determine label text
+            let labelText = '';
+            if (hasStartTag && hasFinishTag) {
+                labelText = 'Start/Finish';
+            } else if (hasStartTag) {
+                labelText = 'Start';
+            } else if (hasFinishTag) {
+                labelText = 'Finish';
+            } else if (bearing && distance && rounding) {
+                labelText = `ROUND TO ${rounding === 'P' ? 'PORT' : 'STARBOARD'}`;
+            }
+            
+            const labelClass = (hasStartTag || hasFinishTag) ? 'start-finish-label' : 'rounding-instruction';
+            
+            card.innerHTML = `
+                <div class="mark-circle ${circleClass}">${circleContent}</div>
+                <div class="mark-info">
+                    <div class="mark-details-line">
+                        ${description ? description : ''}${description && symbol ? ' (Colour ' : ''}${symbol ? symbol : ''}${description && symbol ? ')' : ''}
+                    </div>
+                    ${bearing && distance ? `
+                        <div class="mark-details">
+                            <div class="bearing">
+                                <div class="compass-icon"></div>
+                                ${bearing}°
+                            </div>
+                            <div class="distance">
+                                <span class="arrow-icon">→</span>
+                                ${distance} nm
+                            </div>
+                        </div>
+                    ` : ''}
+                    ${labelText ? `<div class="${labelClass}">${labelText}</div>` : ''}
+                </div>
+            `;
+            
+            return card;
+        }
 
         // Update the hideCourseResult function to hide map
         function hideCourseResult() {
@@ -1696,18 +1895,9 @@
             hideMap();
         }
 
-        // Update the clearCourseBtn click handler
-        clearCourseBtn.addEventListener('click', function() {
-            courseMarks = [];
-            renderCourseList();
-            renderCourseLinkedList(); // Update linked list
-            hideCourseResult();
-            hideCourseError();
-            hideMap();
-        });
-
+        // Update the share functionality to work with cards
         document.getElementById('shareLegChartBtn').addEventListener('click', async function() {
-            const exportDiv = document.getElementById('courseLegsTable');
+            const exportDiv = document.getElementById('courseCardsContainer');
             if (!exportDiv) return;
             
             html2canvas(exportDiv, {backgroundColor: '#fff'}).then(async function(canvas) {
@@ -1737,4 +1927,4 @@
         });
     </script>
 </body>
-</html> 
+</html>

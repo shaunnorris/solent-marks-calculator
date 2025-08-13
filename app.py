@@ -25,13 +25,16 @@ def load_gpx_marks():
         
         name_elem = wpt.find('gpx:name', ns)
         desc_elem = wpt.find('gpx:desc', ns)
+        sym_elem = wpt.find('gpx:sym', ns)
         
         name = name_elem.text.strip() if name_elem is not None and name_elem.text is not None else ''
         desc = desc_elem.text.strip() if desc_elem is not None and desc_elem.text is not None else ''
+        symbol = sym_elem.text.strip() if sym_elem is not None and sym_elem.text is not None else ''
         
         marks.append({
             'name': name,
             'description': desc,
+            'symbol': symbol,
             'lat': lat,
             'lon': lon
         })
@@ -158,12 +161,14 @@ def course():
             'from': {
                 'name': m1['name'], 
                 'description': m1['description'],
+                'symbol': m1['symbol'],
                 'rounding': m1['rounding'],
                 'tag': from_tag
             },
             'to': {
                 'name': m2['name'], 
                 'description': m2['description'],
+                'symbol': m2['symbol'],
                 'rounding': m2['rounding'],
                 'tag': to_tag
             },

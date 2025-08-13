@@ -16,7 +16,7 @@ echo "🔄 Updating Solent Marks Calculator in $(pwd)..."
 # Pull latest changes
 echo "📥 Pulling latest changes..."
 git fetch origin
-git reset --hard origin/main
+git pull origin/main
 
 # Restart the service
 echo "🔄 Restarting service..."

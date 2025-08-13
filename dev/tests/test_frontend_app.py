@@ -142,21 +142,20 @@ def test_frontend_includes_comprehensive_tag_display(client):
     assert 'padding: 1px 4px' in html
 
 def test_course_leg_table_tag_display(client):
-    """Test that the course leg table properly displays tags with correct CSS classes"""
+    """Test that the course leg cards properly display tags with correct CSS classes"""
     response = client.get('/')
     assert response.status_code == 200
     
     html = response.data.decode('utf-8')
     
-    # Check that the table rendering includes proper tag logic
-    assert 'leg.from.tag === \'Start\'' in html
-    assert 'leg.to.tag === \'Start\'' in html
-    assert 'start-tag' in html
-    assert 'finish-tag' in html
+    # Check that the card rendering includes proper tag logic
+    assert 'hasStartTag' in html
+    assert 'hasFinishTag' in html
+    assert 'start-finish-tag' in html
+    assert 'Start/Finish' in html
     
-    # Check that the table uses the correct CSS classes
-    assert 'mark-tag ${leg.from.tag === \'Start\'' in html
-    assert 'mark-tag ${leg.to.tag === \'Start\'' in html
+    # Check that the CSS for combined tags is included
+    assert '.start-finish-tag' in html
 
 def test_map_preserves_port_starboard_colors(client):
     """Test that the map preserves port/starboard colors while adding separate blue tags"""
@@ -181,14 +180,14 @@ def test_map_preserves_port_starboard_colors(client):
     assert 'dashArray' in html
 
 def test_frontend_includes_leg_number_functionality(client):
-    """Test that the frontend includes leg number functionality in table and map"""
+    """Test that the frontend includes leg number functionality in cards and map"""
     response = client.get('/')
     assert response.status_code == 200
     
     html = response.data.decode('utf-8')
     
-    # Check that table includes leg number column
-    assert '<th>Leg</th>' in html
+    # Check that cards include leg number labels
+    assert 'Leg ${leg.leg_number || legIndex + 1}' in html
     
     # Check that map includes leg labels with 3-line format
     assert 'leg-label' in html
@@ -199,7 +198,7 @@ def test_frontend_includes_leg_number_functionality(client):
     assert 'offsetLat' in html
     assert 'offsetLon' in html
     assert 'connectingLine' in html
-    assert 'interactive: false' in html 
+    assert 'interactive: false' in html
 
 def test_frontend_handles_repeated_legs():
     """Test that repeated legs are handled correctly to avoid overlapping labels"""
@@ -243,20 +242,15 @@ def test_frontend_handles_combined_start_finish_tags():
         assert 'tagLat = mark.lat - 0.003' in html  # Finish tags below 
 
 def test_table_shows_combined_start_finish_tags():
-    """Test that the table shows combined Start/Finish tags when a mark has both tags"""
+    """Test that the cards show combined Start/Finish tags when a mark has both tags"""
     with app.test_client() as client:
         response = client.get('/')
         assert response.status_code == 200
         
         html = response.data.decode('utf-8')
         
-        # Check that the combined tag logic is included in table rendering
+        # Check that the combined tag logic is included in card rendering
         assert 'start-finish-tag' in html
         assert 'Start/Finish' in html
-        assert 'fromHasStartTag' in html
-        assert 'fromHasFinishTag' in html
-        assert 'toHasStartTag' in html
-        assert 'toHasFinishTag' in html
-        
-        # Check that the CSS for combined tags is included
-        assert '.start-finish-tag' in html 
+        assert 'isStart' in html
+        assert 'isFinish' in html 
