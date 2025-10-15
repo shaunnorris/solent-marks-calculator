@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Mark Lookup - Solent Marks Calculator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 10px;
+            font-size: 19px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            padding: 15px 20px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 1.6em;
+            margin: 0;
+            font-weight: 700;
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .section {
+            margin-bottom: 30px;
+        }
+        
+        .section-title {
+            font-size: 1.6em;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #e1e8ed;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .dropdowns-row {
+            display: flex !important;
+            flex-direction: row !important;
+            gap: 15px;
+            width: 100%;
+        }
+        
+        .dropdowns-row .form-group {
+            flex: 1;
+            margin-bottom: 0;
+            min-width: 0;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #2c3e50;
+            font-size: 1.1em;
+        }
+        
+        select {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e1e8ed;
+            border-radius: 12px;
+            font-size: 19px;
+            background: white;
+            transition: border-color 0.3s ease;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 15px center;
+            background-size: 16px;
+            padding-right: 45px;
+        }
+        
+        select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        .btn {
+            width: 100%;
+            padding: 18px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.3em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .btn:active {
+            transform: scale(0.98);
+        }
+        
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        
+        .zone-filter {
+            background: #f8f9fa;
+            border-radius: 15px;
+            border-left: 5px solid #667eea;
+            margin-bottom: 25px;
+            overflow: hidden;
+        }
+        
+        .zone-filter-header {
+            padding: 15px 20px;
+            cursor: pointer;
+            user-select: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.2s ease;
+        }
+        
+        .zone-filter-header:hover {
+            background: #e9ecef;
+        }
+        
+        .zone-filter-header:active {
+            transform: scale(0.99);
+        }
+        
+        .zone-filter-toggle {
+            font-size: 1.2em;
+            transition: transform 0.3s ease;
+        }
+        
+        .zone-filter-toggle.expanded {
+            transform: rotate(180deg);
+        }
+        
+        .zone-filter-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            padding: 0 20px;
+        }
+        
+        .zone-filter-content.expanded {
+            max-height: 500px;
+            padding: 0 20px 20px 20px;
+        }
+        
+        .zone-checkboxes {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+            gap: 12px;
+        }
+        
+        .zone-checkbox {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            padding: 12px;
+            background: white;
+            border: 2px solid #e1e8ed;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            min-height: 50px;
+        }
+        
+        .zone-checkbox:active {
+            transform: scale(0.95);
+        }
+        
+        .zone-checkbox input[type="checkbox"] {
+            margin-right: 8px;
+            transform: scale(1.3);
+            accent-color: #667eea;
+        }
+        
+        .zone-checkbox input[type="checkbox"]:checked + span {
+            font-weight: 600;
+            color: #667eea;
+        }
+        
+        .zone-checkbox:has(input[type="checkbox"]:checked) {
+            border-color: #667eea;
+            background: #f0f4ff;
+        }
+        
+        .result {
+            margin-top: 30px;
+            padding: 30px 20px;
+            background: #f8f9fa;
+            border-radius: 15px;
+            border-left: 5px solid #667eea;
+            display: none;
+        }
+        
+        .result.show {
+            display: block;
+            animation: slideUp 0.3s ease;
+        }
+        
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .results-row {
+            display: flex !important;
+            flex-direction: row !important;
+            gap: 20px;
+            width: 100%;
+        }
+        
+        .result-item {
+            flex: 1;
+            text-align: center;
+            min-width: 0;
+        }
+        
+        .result-large {
+            font-size: 3.5em;
+            font-weight: 700;
+            color: #2c3e50;
+            margin: 15px 0;
+        }
+        
+        .result-label {
+            font-size: 1.2em;
+            color: #7f8c8d;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+        
+        .result-unit {
+            font-size: 0.6em;
+            color: #95a5a6;
+        }
+        
+        .error {
+            background: #fee;
+            color: #c33;
+            padding: 15px;
+            border-radius: 12px;
+            margin-top: 20px;
+            border-left: 5px solid #c33;
+            display: none;
+        }
+        
+        .error.show {
+            display: block;
+        }
+        
+        @media (max-width: 600px) {
+            body {
+                font-size: 16px;
+                padding: 5px;
+            }
+            
+            .container {
+                border-radius: 15px;
+            }
+            
+            .header {
+                padding: 12px 15px;
+            }
+            
+            .header h1 {
+                font-size: 1.3em;
+                margin: 0;
+            }
+            
+            .content {
+                padding: 15px;
+            }
+            
+            .section {
+                margin-bottom: 20px;
+            }
+            
+            .section-title {
+                font-size: 1.3em;
+                margin-bottom: 12px;
+            }
+            
+            .form-group {
+                margin-bottom: 15px;
+            }
+            
+            label {
+                font-size: 1em;
+                margin-bottom: 6px;
+            }
+            
+            select {
+                padding: 12px;
+                font-size: 16px;
+            }
+            
+            .btn {
+                padding: 14px;
+                font-size: 1.1em;
+            }
+            
+            .zone-filter-header {
+                padding: 12px 15px;
+                font-size: 0.95em;
+            }
+            
+            .zone-checkboxes {
+                grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
+                gap: 8px;
+            }
+            
+            .zone-checkbox {
+                padding: 8px;
+                min-height: 40px;
+                font-size: 0.9em;
+            }
+            
+            .dropdowns-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            .results-row {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .result {
+                padding: 20px 15px;
+                margin-top: 20px;
+            }
+            
+            .result-label {
+                font-size: 0.95em;
+                margin-bottom: 6px;
+            }
+            
+            .result-large {
+                font-size: 2.5em;
+                margin: 10px 0;
+            }
+            
+            .result-unit {
+                font-size: 0.65em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Mark Lookup Calculator</h1>
+        </div>
+        
+        <div class="content">
+            <!-- Zone Filter Section -->
+            <div class="section">
+                <div class="zone-filter">
+                    <div class="zone-filter-header" onclick="toggleZones()">
+                        <span style="font-weight: 600; color: #2c3e50;">Filter by Zone (Optional)</span>
+                        <span class="zone-filter-toggle" id="zoneToggle">▼</span>
+                    </div>
+                    <div class="zone-filter-content" id="zoneFilterContent">
+                        <div class="zone-checkboxes">
+                            {% for zone in zones %}
+                            <label class="zone-checkbox" style="flex-direction:column;align-items:center;">
+                                <span style="display:flex;align-items:center;">
+                                    <input type="checkbox" value="{{ zone }}" class="zone-cb">
+                                    <span>{{ zone }}</span>
+                                </span>
+                                {% set zone_labels = {
+                                    '1': 'Western Approaches',
+                                    '2': 'West Solent',
+                                    '3': 'Mid Solent (W)',
+                                    '4': 'Mid Solent (E)',
+                                    '5': 'East Solent',
+                                    '6': 'Eastern Approaches',
+                                    '7': 'Southampton Water'
+                                } %}
+                                {% if zone in zone_labels %}
+                                    <small style="font-size:6pt;line-height:1.1;display:block;text-align:center;margin-top:2px;">{{ zone_labels[zone] }}</small>
+                                {% endif %}
+                            </label>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lookup Section -->
+            <div class="section">
+                <div class="section-title">Calculate Route</div>
+                
+                <div class="dropdowns-row">
+                    <div class="form-group">
+                        <select id="fromMark">
+                            <option value="">From</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <select id="toMark">
+                            <option value="">To</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <button type="button" class="btn" id="calculateBtn">Calculate</button>
+                
+                <div class="error" id="error"></div>
+                
+                <div class="result" id="result">
+                    <div class="results-row">
+                        <div class="result-item">
+                            <div class="result-label">Bearing</div>
+                            <div class="result-large" id="bearingResult">---<span class="result-unit">°</span></div>
+                        </div>
+                        
+                        <div class="result-item">
+                            <div class="result-label">Distance</div>
+                            <div class="result-large" id="distanceResult">---<span class="result-unit">nm</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Toggle zone filter visibility
+        function toggleZones() {
+            const content = document.getElementById('zoneFilterContent');
+            const toggle = document.getElementById('zoneToggle');
+            content.classList.toggle('expanded');
+            toggle.classList.toggle('expanded');
+        }
+        
+        // Zone filtering functionality
+        let allMarks = [];
+        const zoneCheckboxes = document.querySelectorAll('.zone-cb');
+        const fromMarkSelect = document.getElementById('fromMark');
+        const toMarkSelect = document.getElementById('toMark');
+        const calculateBtn = document.getElementById('calculateBtn');
+        const resultDiv = document.getElementById('result');
+        const errorDiv = document.getElementById('error');
+        const bearingResult = document.getElementById('bearingResult');
+        const distanceResult = document.getElementById('distanceResult');
+
+        // Load all marks on page load
+        async function loadAllMarks() {
+            try {
+                const response = await fetch('/marks');
+                const data = await response.json();
+                allMarks = data.marks;
+                updateDropdowns();
+            } catch (error) {
+                console.error('Error loading marks:', error);
+            }
+        }
+
+        // Update dropdowns based on selected zones
+        async function updateDropdowns() {
+            const selectedZones = Array.from(zoneCheckboxes)
+                .filter(cb => cb.checked)
+                .map(cb => cb.value);
+            
+            let filteredMarks = [];
+            if (selectedZones.length > 0) {
+                const zonesParam = selectedZones.join(',');
+                try {
+                    const response = await fetch(`/marks?zones=${zonesParam}`);
+                    const data = await response.json();
+                    filteredMarks = data.marks;
+                } catch (error) {
+                    console.error('Error filtering marks:', error);
+                }
+            } else {
+                // No zones selected - show all marks
+                filteredMarks = allMarks;
+            }
+            
+            // Save current selections
+            const currentFrom = fromMarkSelect.value;
+            const currentTo = toMarkSelect.value;
+            
+            // Update both dropdowns
+            fromMarkSelect.innerHTML = '<option value="">From</option>';
+            toMarkSelect.innerHTML = '<option value="">To</option>';
+            
+            filteredMarks.forEach(mark => {
+                const optionFrom = document.createElement('option');
+                optionFrom.value = mark.name;
+                optionFrom.textContent = `${mark.name} - ${mark.description}`;
+                optionFrom.dataset.shortName = mark.name.split(' - ')[0];
+                fromMarkSelect.appendChild(optionFrom);
+                
+                const optionTo = document.createElement('option');
+                optionTo.value = mark.name;
+                optionTo.textContent = `${mark.name} - ${mark.description}`;
+                optionTo.dataset.shortName = mark.name.split(' - ')[0];
+                toMarkSelect.appendChild(optionTo);
+            });
+            
+            // Restore selections if still valid
+            if (currentFrom && filteredMarks.some(m => m.name === currentFrom)) {
+                fromMarkSelect.value = currentFrom;
+                updateSelectDisplay(fromMarkSelect);
+            }
+            if (currentTo && filteredMarks.some(m => m.name === currentTo)) {
+                toMarkSelect.value = currentTo;
+                updateSelectDisplay(toMarkSelect);
+            }
+        }
+        
+        // Function to update the display of selected option to show short name
+        function updateSelectDisplay(selectElement) {
+            const selectedOption = selectElement.options[selectElement.selectedIndex];
+            if (selectedOption && selectedOption.value) {
+                const shortName = selectedOption.value.split(' - ')[0];
+                // Store the full text temporarily
+                if (!selectedOption.dataset.fullText) {
+                    selectedOption.dataset.fullText = selectedOption.textContent;
+                }
+                // Show short name when selected
+                selectedOption.textContent = shortName;
+            }
+        }
+        
+        // Function to restore full text when dropdown opens
+        function restoreFullText(selectElement) {
+            Array.from(selectElement.options).forEach(option => {
+                if (option.dataset.fullText) {
+                    option.textContent = option.dataset.fullText;
+                }
+            });
+        }
+        
+        // Add change listeners to both dropdowns
+        fromMarkSelect.addEventListener('change', function() {
+            updateSelectDisplay(this);
+        });
+        
+        toMarkSelect.addEventListener('change', function() {
+            updateSelectDisplay(this);
+        });
+        
+        // Restore full text when opening dropdown
+        fromMarkSelect.addEventListener('focus', function() {
+            restoreFullText(this);
+        });
+        
+        toMarkSelect.addEventListener('focus', function() {
+            restoreFullText(this);
+        });
+        
+        // Update display again when closing dropdown
+        fromMarkSelect.addEventListener('blur', function() {
+            updateSelectDisplay(this);
+        });
+        
+        toMarkSelect.addEventListener('blur', function() {
+            updateSelectDisplay(this);
+        });
+
+        // Add event listeners for zone checkboxes
+        zoneCheckboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', updateDropdowns);
+        });
+
+        // Calculate button handler
+        calculateBtn.addEventListener('click', async function() {
+            const fromMark = fromMarkSelect.value;
+            const toMark = toMarkSelect.value;
+            
+            // Hide previous results/errors
+            resultDiv.classList.remove('show');
+            errorDiv.classList.remove('show');
+            
+            if (!fromMark || !toMark) {
+                errorDiv.textContent = 'Please select both starting and destination marks';
+                errorDiv.classList.add('show');
+                return;
+            }
+            
+            try {
+                const response = await fetch('/lookup/calculate', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ from_mark: fromMark, to_mark: toMark })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    bearingResult.innerHTML = `${data.bearing}<span class="result-unit">°</span>`;
+                    distanceResult.innerHTML = `${data.distance}<span class="result-unit">nm</span>`;
+                    resultDiv.classList.add('show');
+                } else {
+                    errorDiv.textContent = data.error || 'An error occurred';
+                    errorDiv.classList.add('show');
+                }
+            } catch (error) {
+                errorDiv.textContent = 'Network error: ' + error.message;
+                errorDiv.classList.add('show');
+            }
+        });
+
+        // Load marks when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            loadAllMarks();
+            
+            // Set Zone 2 as default but keep filter collapsed
+            setTimeout(() => {
+                const zone2Checkbox = Array.from(zoneCheckboxes).find(cb => cb.value === '2');
+                if (zone2Checkbox) {
+                    zone2Checkbox.checked = true;
+                    // DO NOT expand the zone filter - keep it collapsed
+                    updateDropdowns();
+                }
+            }, 100);
+        });
+    </script>
+</body>
+</html>
+

@@ -16,6 +16,11 @@ COPY requirements.txt .
 # Install Python dependencies
 RUN pip install --no-cache-dir --user -r requirements.txt
 
+# Copy application files for testing
+COPY app.py .
+COPY 2025scra.gpx .
+COPY templates ./templates/
+
 # Stage 2: Production stage
 FROM python:3.12-slim
 

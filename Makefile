@@ -7,29 +7,29 @@ help: ## Show this help message
 	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z_-]+:.*?## / {printf "  %-15s %s\n", $$1, $$2}' $(MAKEFILE_LIST)
 
 build: ## Build Docker images
-	docker-compose build
+	sg docker -c "docker compose build"
 
 up: ## Start services in detached mode
-	docker-compose up -d
+	sg docker -c "docker compose up -d"
 
 down: ## Stop and remove containers
-	docker-compose down
+	sg docker -c "docker compose down"
 
 restart: ## Restart all services
-	docker-compose restart
+	sg docker -c "docker compose restart"
 
 logs: ## Follow logs from all services
-	docker-compose logs -f
+	sg docker -c "docker compose logs -f"
 
 logs-web: ## Follow logs from web service only
-	docker-compose logs -f web
+	sg docker -c "docker compose logs -f web"
 
 logs-nginx: ## Follow logs from nginx service only
-	docker-compose logs -f nginx
+	sg docker -c "docker compose logs -f nginx"
 
-test: ## Run tests in Docker container
-	docker build -t solent-marks-test --target builder .
-	docker run --rm solent-marks-test pytest dev/tests/test_app.py -v
+test: ## Run all tests in Docker container
+	sg docker -c "docker build -t solent-marks-test --target builder . -q"
+	sg docker -c "docker run --rm -v $(PWD)/dev:/app/dev -e PYTHONPATH=/app solent-marks-test /root/.local/bin/pytest dev/tests/ -v"
 
 test-local: ## Run tests locally (requires dependencies installed)
 	python3 -m pytest dev/tests/test_app.py -v

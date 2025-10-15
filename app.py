@@ -86,7 +86,42 @@ def index():
     zones = get_available_zones(marks)
     return render_template('index.html', marks=marks, zones=zones)
 
+@app.route('/lookup')
+def lookup():
+    """Lookup page - simple bearing and distance calculator"""
+    marks = load_gpx_marks()
+    zones = get_available_zones(marks)
+    return render_template('lookup.html', marks=marks, zones=zones)
 
+
+
+@app.route('/lookup/calculate', methods=['POST'])
+def lookup_calculate():
+    """Calculate bearing and distance for lookup page"""
+    data = request.get_json()
+    from_mark_name = data.get('from_mark')
+    to_mark_name = data.get('to_mark')
+    
+    if not from_mark_name or not to_mark_name:
+        return jsonify({'error': 'Both from_mark and to_mark are required'}), 400
+    
+    marks = load_gpx_marks()
+    
+    # Find the selected marks
+    from_mark = next((m for m in marks if m['name'] == from_mark_name), None)
+    to_mark = next((m for m in marks if m['name'] == to_mark_name), None)
+    
+    if not from_mark or not to_mark:
+        return jsonify({'error': 'One or both marks not found'}), 400
+    
+    # Calculate bearing and distance
+    bearing = calculate_bearing(from_mark, to_mark)
+    distance = calculate_distance(from_mark, to_mark)
+    
+    return jsonify({
+        'bearing': bearing,
+        'distance': distance
+    })
 
 @app.route('/calculate', methods=['POST'])
 def calculate():

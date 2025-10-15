@@ -17,17 +17,26 @@ This file contains project-specific context and user preferences for AI agents w
 - Be concise, avoid over-explaining basic concepts
 
 ### Development Workflow
-- Follows red/green/demo/commit workflow
-- Test-driven development with pytest
+- **Inspired by XP (Extreme Programming)** - Kent Beck-style programming practices
+- Follows **red/green/demo/commit** workflow
+- **Test-Driven Development (TDD)** and **Behavior-Driven Development (BDD)** with pytest
+- **ALWAYS write tests BEFORE writing functionality code**
+- All tests must ALWAYS pass - no exceptions
 - Always run tests after edits
 - Fix warnings at root cause, don't silence them
 - Include linting in standard test runs
 - Make tests pass or adjust/remove if no longer needed
 
 ### Testing Preferences
+- **Red-Green-Refactor Loop (XP-style):**
+  1. **RED**: Write a failing test first
+  2. **GREEN**: Write minimal code to make the test pass
+  3. **REFACTOR**: Improve code quality while keeping tests green
+  4. Commit after green, commit again after refactor
 - Unit test Python functions directly with pytest (not Flask endpoints)
-- Follow red/green/refactor loops
-- Write tests first when possible
+- Write tests FIRST, then implement functionality
+- Manual acceptance testing in browser after automated tests pass
+- Eventually automate acceptance tests
 
 ## Project-Specific Notes
 
@@ -48,6 +57,14 @@ This file contains project-specific context and user preferences for AI agents w
 - Docker for containerization
 - Nginx for reverse proxy
 - GPX data files for racing marks
+- pytest for testing
+
+### Development Environment
+- **Always use Docker for development and testing**
+- Run tests in Docker container: `make test`
+- No local virtual environment needed - dependencies encapsulated in Docker
+- Consistent environment across dev/test/prod
+- Test image built from Dockerfile using multi-stage build
 
 ## Installation Commands
 
