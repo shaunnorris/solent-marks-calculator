@@ -1,5 +1,5 @@
 # Multi-stage Dockerfile for Solent Marks Calculator
-# Stage 1: Build stage
+# Stage 1: Builder stage (includes tests for CI/CD)
 FROM python:3.12-slim as builder
 
 WORKDIR /app
@@ -16,13 +16,13 @@ COPY requirements.txt .
 # Install Python dependencies
 RUN pip install --no-cache-dir --user -r requirements.txt
 
-# Copy application files for testing
+# Copy application files for testing (dev/ only used in CI, not in final image)
 COPY app.py .
 COPY 2025scra.gpx .
 COPY templates ./templates/
 COPY dev ./dev/
 
-# Stage 2: Production stage
+# Stage 2: Production stage (lean, no tests or dev files)
 FROM python:3.12-slim
 
 # Create non-root user for security
