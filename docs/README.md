@@ -66,6 +66,7 @@ make update       # Pull latest and rebuild
 ```
 
 📖 **See [DOCKER_DEPLOYMENT.md](DOCKER_DEPLOYMENT.md) for comprehensive Docker deployment guide**
+🔒 **See [SSL-SETUP.md](SSL-SETUP.md) for HTTPS/SSL configuration with auto-renewal**
 
 ### Traditional Deployment (Systemd)
 
