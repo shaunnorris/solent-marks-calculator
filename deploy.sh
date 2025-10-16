@@ -36,12 +36,13 @@ if [ -f "$DEPLOY_DIR/.configured" ]; then
     echo ""
     echo "What would you like to do?"
     echo "1) Update to latest version"
-    echo "2) Reconfigure SSL"
-    echo "3) Restart services"
-    echo "4) View logs"
-    echo "5) Exit"
+    echo "2) Reconfigure (regenerate configs with saved settings)"
+    echo "3) Full reconfigure (re-enter all settings)"
+    echo "4) Restart services"
+    echo "5) View logs"
+    echo "6) Exit"
     echo ""
-    read -p "Enter choice [1-5]: " choice
+    read -p "Enter choice [1-6]: " choice
     
     case $choice in
         1)
@@ -53,20 +54,37 @@ if [ -f "$DEPLOY_DIR/.configured" ]; then
             echo "✅ Update complete!"
             ;;
         2)
-            rm "$DEPLOY_DIR/.configured"
-            echo "🔄 Reconfiguring SSL..."
-            exec "$0" "$@"
+            echo ""
+            echo "🔄 Reconfiguring with saved settings..."
+            # Keep .configured but regenerate configs
+            if [ -f "$DEPLOY_DIR/.domain" ]; then
+                SAVED_DOMAIN=$(cat "$DEPLOY_DIR/.domain")
+                SAVED_EMAIL=$(cat "$DEPLOY_DIR/.email" 2>/dev/null || echo "")
+                rm "$DEPLOY_DIR/.configured"
+                # The script will re-run and use the saved values as defaults
+                DOMAIN_NAME="$SAVED_DOMAIN" EMAIL="$SAVED_EMAIL" exec "$0" "$@"
+            else
+                echo "❌ No saved configuration found"
+                exit 1
+            fi
             ;;
         3)
+            rm "$DEPLOY_DIR/.configured"
+            rm "$DEPLOY_DIR/.domain" 2>/dev/null || true
+            rm "$DEPLOY_DIR/.email" 2>/dev/null || true
+            echo "🔄 Full reconfiguration..."
+            exec "$0" "$@"
+            ;;
+        4)
             echo "🔄 Restarting services..."
             docker compose restart
             echo "✅ Services restarted!"
             ;;
-        4)
+        5)
             echo "📋 Viewing logs (Ctrl+C to exit)..."
             docker compose logs -f
             ;;
-        5)
+        6)
             exit 0
             ;;
         *)
