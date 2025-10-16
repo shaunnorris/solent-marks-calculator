@@ -10,6 +10,32 @@ services:
     environment:
       - PYTHONUNBUFFERED=1
 
+  umami:
+    image: ghcr.io/umami-software/umami:postgresql-latest
+    container_name: bearings-analytics
+    restart: unless-stopped
+    networks:
+      - app-network
+    environment:
+      DATABASE_URL: postgresql://umami:umami@umami-db:5432/umami
+      DATABASE_TYPE: postgresql
+      APP_SECRET: ${UMAMI_SECRET:-change-me-in-production}
+    depends_on:
+      - umami-db
+
+  umami-db:
+    image: postgres:15-alpine
+    container_name: bearings-analytics-db
+    restart: unless-stopped
+    networks:
+      - app-network
+    environment:
+      POSTGRES_DB: umami
+      POSTGRES_USER: umami
+      POSTGRES_PASSWORD: umami
+    volumes:
+      - umami-data:/var/lib/postgresql/data
+
   nginx:
     image: nginx:alpine
     container_name: bearings-nginx
@@ -25,8 +51,12 @@ services:
       - app-network
     depends_on:
       - web
+      - umami
 
 networks:
   app-network:
     driver: bridge
+
+volumes:
+  umami-data:
 

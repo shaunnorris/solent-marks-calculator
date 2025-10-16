@@ -93,6 +93,12 @@ def course_page():
     zones = get_available_zones(marks)
     return render_template('index.html', marks=marks, zones=zones)
 
+
+@app.route('/privacy')
+def privacy():
+    """Privacy policy page"""
+    return render_template('privacy.html')
+
 @app.route('/lookup')
 def lookup():
     """Lookup page - simple bearing and distance calculator"""
