@@ -1,1094 +1,2916 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<gpx xmlns="http://www.topografix.com/GPX/1/1" version="1.1" creator="Philip Gage" >
-<wpt  lat="50.606833" lon="-1.935">
-<name>1A </name>
-<sym>R</sym>
-<desc>Peveril Ledge</desc>
-</wpt>
-
-<wpt  lat="50.654833" lon="-1.919">
-<name>1B </name>
-<sym>G</sym>
-<desc>Poole Bar No 1</desc>
-</wpt>
-
-<wpt  lat="50.671833" lon="-1.900333">
-<name>1C </name>
-<sym>Y</sym>
-<desc>Stoneways Marine</desc>
-</wpt>
-
-<wpt  lat="50.684667" lon="-1.904333">
-<name>1D </name>
-<sym>Y</sym>
-<desc>The Rig Shop</desc>
-</wpt>
-
-<wpt  lat="50.691667" lon="-1.693333">
-<name>1E </name>
-<sym>Y</sym>
-<desc>Ledge Buoy</desc>
-</wpt>
-
-<wpt  lat="50.637333" lon="-1.649667">
-<name>1F </name>
-<sym>RW</sym>
-<desc>Needles Fairway</desc>
-</wpt>
-
-<wpt  lat="50.654833" lon="-1.625333">
-<name>1G </name>
-<sym>R</sym>
-<desc>South West Shingles</desc>
-</wpt>
-
-<wpt  lat="50.6605" lon="-1.614667">
-<name>1H </name>
-<sym>YBY</sym>
-<desc>Bridge</desc>
-</wpt>
-
-<wpt  lat="50.672833" lon="-1.600833">
-<name>1J </name>
-<sym>R</sym>
-<desc>Shingles Elbow</desc>
-</wpt>
-
-<wpt  lat="50.7115" lon="-1.592">
-<name>1K </name>
-<sym>G</sym>
-<desc>North Head</desc>
-</wpt>
-
-<wpt  lat="50.662167" lon="-1.591667">
-<name>1L </name>
-<sym>RW</sym>
-<desc>Needles Lighthouse</desc>
-</wpt>
-
-<wpt  lat="50.691333" lon="-1.559167">
-<name>1M </name>
-<sym>G</sym>
-<desc>Warden</desc>
-</wpt>
-
-<wpt  lat="50.699333" lon="-1.556833">
-<name>1N </name>
-<sym>BYB</sym>
-<desc>North East Shingles</desc>
-</wpt>
-
-<wpt  lat="50.676333" lon="-1.9205">
-<name>11 </name>
-<sym>R</sym>
-<desc>East Hook</desc>
-</wpt>
-
-<wpt  lat="50.71" lon="-1.68">
-<name>12 </name>
-<sym>Y</sym>
-<desc>MB/EYE Marine/Christchurch SC</desc>
-</wpt>
-
-<wpt  lat="50.657667" lon="-1.92">
-<name>13 </name>
-<sym>Y</sym>
-<desc>Parkstone YC</desc>
-</wpt>
-
-<wpt  lat="50.712833" lon="-1.5405">
-<name>2A </name>
-<sym>Y</sym>
-<desc>Embley School</desc>
-</wpt>
-
-<wpt  lat="50.723" lon="-1.525667">
-<name>2B </name>
-<sym>Y</sym>
-<desc>Dunford Construction</desc>
-</wpt>
-
-<wpt  lat="50.7305" lon="-1.514333">
-<name>2C </name>
-<sym>Y</sym>
-<desc>Colten</desc>
-</wpt>
-
-<wpt  lat="50.736167" lon="-1.501667">
-<name>2D </name>
-<sym>Y</sym>
-<desc>Lymington Yacht Haven</desc>
-</wpt>
-
-<wpt  lat="50.7415" lon="-1.488667">
-<name>2E </name>
-<sym>Y</sym>
-<desc>Circle Marine Insurance</desc>
-</wpt>
-
-<wpt  lat="50.736667" lon="-1.487">
-<name>2F </name>
-<sym>Y</sym>
-<desc>Berthon</desc>
-</wpt>
-
-<wpt  lat="50.7465" lon="-1.4745">
-<name>2G </name>
-<sym>Y</sym>
-<desc>Bridgeworks WAN Acceleration</desc>
-</wpt>
-
-<wpt  lat="50.738333" lon="-1.469333">
-<name>2H </name>
-<sym>Y</sym>
-<desc>Draycott Chartered Surveyors</desc>
-</wpt>
-
-<wpt  lat="50.751833" lon="-1.455667">
-<name>2J </name>
-<sym>Y</sym>
-<desc>Zwerver</desc>
-</wpt>
-
-<wpt  lat="50.747167" lon="-1.434833">
-<name>2K </name>
-<sym>Y</sym>
-<desc>Greetings Fintech</desc>
-</wpt>
-
-<wpt  lat="50.719" lon="-1.5325">
-<name>2L </name>
-<sym>Y</sym>
-<desc>Royal Lymington YC</desc>
-</wpt>
-
-<wpt  lat="50.757167" lon="-1.4315">
-<name>2R </name>
-<sym>Y</sym>
-<desc>Powder Byrne</desc>
-</wpt>
-
-<wpt  lat="50.718333" lon="-1.514167">
-<name>2T </name>
-<sym>R</sym>
-<desc>Lymington Bank</desc>
-</wpt>
-
-<wpt  lat="50.727833" lon="-1.491667">
-<name>2U </name>
-<sym>Y</sym>
-<desc>Tuakana Construction</desc>
-</wpt>
-
-<wpt  lat="50.737167" lon="-1.456167">
-<name>2X </name>
-<sym>R</sym>
-<desc>Solent Bank</desc>
-</wpt>
-
-<wpt  lat="50.7095" lon="-1.509833">
-<name>21 </name>
-<sym>G</sym>
-<desc>Black Rock</desc>
-</wpt>
-
-<wpt  lat="50.708833" lon="-1.523833">
-<name>20 </name>
-<sym>BY</sym>
-<desc>Sconce</desc>
-</wpt>
-
-<wpt  lat="50.740317" lon="-1.507033">
-<name>2PL </name>
-<sym>Y</sym>
-<desc>Lymington Starting Platform</desc>
-</wpt>
-
-<wpt  lat="50.714333" lon="-1.49">
-<name>22 </name>
-<sym>Y</sym>
-<desc>Charles Stanley</desc>
-</wpt>
-
-<wpt  lat="50.714333" lon="-1.473667">
-<name>24 </name>
-<sym>Y</sym>
-<desc>Now Students</desc>
-</wpt>
-
-<wpt  lat="50.719167" lon="-1.458167">
-<name>25 </name>
-<sym>Y</sym>
-<desc>Jeremy Rogers Contessa</desc>
-</wpt>
-
-<wpt  lat="50.731167" lon="-1.436333">
-<name>26 </name>
-<sym>G</sym>
-<desc>Hamstead Ledge</desc>
-</wpt>
-
-<wpt  lat="50.716167" lon="-1.469333">
-<name>27 </name>
-<sym>Y</sym>
-<desc>Adam Harding-Doneney</desc>
-</wpt>
-
-<wpt  lat="50.712167" lon="-1.478167">
-<name>28 </name>
-<sym>Y</sym>
-<desc>Harwoods</desc>
-</wpt>
-
-<wpt  lat="50.7666" lon="-1.3009">
-<name>3SQ </name>
-<sym>C</sym>
-<desc>Royal Yacht Squadron</desc>
-</wpt>
-
-<wpt  lat="50.754" lon="-1.4015">
-<name>3A </name>
-<sym>R</sym>
-<desc>West Lepe</desc>
-</wpt>
-
-<wpt  lat="50.739333" lon="-1.396667">
-<name>3B </name>
-<sym>Y</sym>
-<desc>Newtown East</desc>
-</wpt>
-
-<wpt  lat="50.760667" lon="-1.385333">
-<name>3C </name>
-<sym>Y</sym>
-<desc>Craft insure</desc>
-</wpt>
-
-<wpt  lat="50.741833" lon="-1.384">
-<name>3D </name>
-<sym>G</sym>
-<desc>Salt Mead</desc>
-</wpt>
-
-<wpt  lat="50.768833" lon="-1.369833">
-<name>3E </name>
-<sym>Y</sym>
-<desc>The Boss</desc>
-</wpt>
-
-<wpt  lat="50.745333" lon="-1.365833">
-<name>3F </name>
-<sym>Y</sym>
-<desc>Monex Marine</desc>
-</wpt>
-
-<wpt  lat="50.776333" lon="-1.357667">
-<name>3G </name>
-<sym>Y</sym>
-<desc>Cowes Week 2026</desc>
-</wpt>
-
-<wpt  lat="50.7655" lon="-1.351167">
-<name>3H </name>
-<sym>R</sym>
-<desc>East Lepe</desc>
-</wpt>
-
-<wpt  lat="50.779667" lon="-1.344">
-<name>3K </name>
-<sym>YB</sym>
-<desc>Lepe Spit</desc>
-</wpt>
-
-<wpt  lat="50.7585" lon="-1.343167">
-<name>3L </name>
-<sym>G</sym>
-<desc>Gurnard Ledge</desc>
-</wpt>
-
-<wpt  lat="50.7845" lon="-1.331333">
-<name>3N </name>
-<sym>Y</sym>
-<desc>MDL Marinas *</desc>
-</wpt>
-
-<wpt  lat="50.761333" lon="-1.333">
-<name>3P </name>
-<sym>Y</sym>
-<desc>Cowes Yacht Haven</desc>
-</wpt>
-
-<wpt  lat="50.766167" lon="-1.324167">
-<name>3Q </name>
-<sym>Y</sym>
-<desc>Polly's Challenge</desc>
-</wpt>
-
-<wpt  lat="50.784333" lon="-1.323667">
-<name>3R </name>
-<sym>R</sym>
-<desc>North East Gurnard #</desc>
-</wpt>
-
-<wpt  lat="50.796833" lon="-1.320833">
-<name>3S </name>
-<sym>Y</sym>
-<desc>TeamO *</desc>
-</wpt>
-
-<wpt  lat="50.768333" lon="-1.3145">
-<name>3T </name>
-<sym>Y</sym>
-<desc>CHS</desc>
-</wpt>
-
-<wpt  lat="50.770333" lon="-1.314">
-<name>3U </name>
-<sym>BY</sym>
-<desc>Gurnard</desc>
-</wpt>
-
-<wpt  lat="50.786667" lon="-1.310833">
-<name>3V </name>
-<sym>YBY</sym>
-<desc>West Bramble #</desc>
-</wpt>
-
-<wpt  lat="50.786667" lon="-1.309167">
-<name>3W </name>
-<sym>Y</sym>
-<desc>Williams Shipping *</desc>
-</wpt>
-
-<wpt  lat="50.768333" lon="-1.307167">
-<name>3X </name>
-<sym>Y</sym>
-<desc>Island Sailing Club</desc>
-</wpt>
-
-<wpt  lat="50.7905" lon="-1.297333">
-<name>3Y </name>
-<sym>Y</sym>
-<desc>West Knoll</desc>
-</wpt>
-
-<wpt  lat="50.771833" lon="-1.295833">
-<name>3Z </name>
-<sym>Y</sym>
-<desc>Trinity House Buoy</desc>
-</wpt>
-
-<wpt  lat="50.783" lon="-1.295333">
-<name>31 </name>
-<sym>G</sym>
-<desc>South Bramble</desc>
-</wpt>
-
-<wpt  lat="50.785333" lon="-1.295333">
-<name>30 </name>
-<sym>Y</sym>
-<desc>RORC *</desc>
-</wpt>
-
-<wpt  lat="50.7735" lon="-1.292667">
-<name>33 </name>
-<sym>BY</sym>
-<desc>Prince Consort</desc>
-</wpt>
-
-<wpt  lat="50.769167" lon="-1.286667">
-<name>34 </name>
-<sym>Y</sym>
-<desc>Cowes Corinthian</desc>
-</wpt>
-
-<wpt  lat="50.77" lon="-1.295833">
-<name>39 </name>
-<sym>Y</sym>
-<desc>Snowden</desc>
-</wpt>
-
-<wpt  lat="50.8175" lon="-1.294167">
-<name>4A </name>
-<sym>G</sym>
-<desc>Reach #</desc>
-</wpt>
-
-<wpt  lat="50.825833" lon="-1.293667">
-<name>4B </name>
-<sym>Y</sym>
-<desc>Coronation</desc>
-</wpt>
-
-<wpt  lat="50.820167" lon="-1.291">
-<name>4C </name>
-<sym>Y</sym>
-<desc>Fumesy*</desc>
-</wpt>
-
-<wpt  lat="50.807333" lon="-1.283833">
-<name>4D </name>
-<sym>BY</sym>
-<desc>Calshot #</desc>
-</wpt>
-
-<wpt  lat="50.7945" lon="-1.283333">
-<name>4E </name>
-<sym>Y</sym>
-<desc>Jane *</desc>
-</wpt>
-
-<wpt  lat="50.786667" lon="-1.283333">
-<name>4F </name>
-<sym>Y</sym>
-<desc>Royal Thames</desc>
-</wpt>
-
-<wpt  lat="50.824167" lon="-1.281833">
-<name>4G </name>
-<sym>Y</sym>
-<desc>Chieftain Training*</desc>
-</wpt>
-
-<wpt  lat="50.799333" lon="-1.2805">
-<name>4H </name>
-<sym>G</sym>
-<desc>East Knoll</desc>
-</wpt>
-
-<wpt  lat="50.8105" lon="-1.276">
-<name>4J </name>
-<sym>Y</sym>
-<desc>hamblewinterseries.com *</desc>
-</wpt>
-
-<wpt  lat="50.769167" lon="-1.2775">
-<name>4K </name>
-<sym>Y</sym>
-<desc>Royal London YC</desc>
-</wpt>
-
-<wpt  lat="50.817167" lon="-1.274833">
-<name>4L </name>
-<sym>Y</sym>
-<desc>William *</desc>
-</wpt>
-
-<wpt  lat="50.801167" lon="-1.266667">
-<name>4M </name>
-<sym>R</sym>
-<desc>Hill Head</desc>
-</wpt>
-
-<wpt  lat="50.787833" lon="-1.265">
-<name>4N </name>
-<sym>Y</sym>
-<desc>Ben F Wood</desc>
-</wpt>
-
-<wpt  lat="50.774667" lon="-1.263167">
-<name>4P </name>
-<sym>YBY</sym>
-<desc>West Ryde Middle</desc>
-</wpt>
-
-<wpt  lat="50.807667" lon="-1.262">
-<name>4Q </name>
-<sym>Y</sym>
-<desc>John Fisher*</desc>
-</wpt>
-
-<wpt  lat="50.819667" lon="-1.261833">
-<name>4R </name>
-<sym>Y</sym>
-<desc>Darling Buoy *</desc>
-</wpt>
-
-<wpt  lat="50.814333" lon="-1.257167">
-<name>4S </name>
-<sym>Y</sym>
-<desc>Royal Southern*</desc>
-</wpt>
-
-<wpt  lat="50.766167" lon="-1.2585">
-<name>4T </name>
-<sym>R</sym>
-<desc>Norris #</desc>
-</wpt>
-
-<wpt  lat="50.773833" lon="-1.2515">
-<name>4U </name>
-<sym>Y</sym>
-<desc>Goodall Roofing</desc>
-</wpt>
-
-<wpt  lat="50.802167" lon="-1.244">
-<name>4V </name>
-<sym>Y</sym>
-<desc>Hamble Yacht Services</desc>
-</wpt>
-
-<wpt  lat="50.788833" lon="-1.243167">
-<name>4W </name>
-<sym>Y</sym>
-<desc>Ancasta</desc>
-</wpt>
-
-<wpt  lat="50.758833" lon="-1.239833">
-<name>4X </name>
-<sym>Y</sym>
-<desc>Colette</desc>
-</wpt>
-
-<wpt  lat="50.776833" lon="-1.2385">
-<name>4Y </name>
-<sym>R</sym>
-<desc>North Ryde Middle</desc>
-</wpt>
-
-<wpt  lat="50.768833" lon="-1.236">
-<name>4Z </name>
-<sym>G</sym>
-<desc>South Ryde Middle</desc>
-</wpt>
-
-<wpt  lat="50.787167" lon="-1.227333">
-<name>41 </name>
-<sym>BYB</sym>
-<desc>East Bramble</desc>
-</wpt>
-
-<wpt  lat="50.794333" lon="-1.2275">
-<name>40 </name>
-<sym>Y</sym>
-<desc>Haven Knox Johnson Specialist</desc>
-</wpt>
-
-<wpt  lat="50.758167" lon="-1.2225">
-<name>42 </name>
-<sym>R</sym>
-<desc>Peel Bank</desc>
-</wpt>
-
-<wpt  lat="50.769333" lon="-1.218167">
-<name>43 </name>
-<sym>Y</sym>
-<desc>Little Ship Club</desc>
-</wpt>
-
-<wpt  lat="50.7885" lon="-1.201667">
-<name>44 </name>
-<sym>Y</sym>
-<desc>Royal Yacht Squadron</desc>
-</wpt>
-
-<wpt  lat="50.7655" lon="-1.201667">
-<name>45 </name>
-<sym>YB</sym>
-<desc>South East Ryde Middle</desc>
-</wpt>
-
-<wpt  lat="50.770167" lon="-1.198">
-<name>46 </name>
-<sym>R</sym>
-<desc>North East Ryde Middle</desc>
-</wpt>
-
-<wpt  lat="50.795" lon="-1.254167">
-<name>47 </name>
-<sym>Y</sym>
-<desc>Contessa 32 Class</desc>
-</wpt>
-
-<wpt  lat="50.8035" lon="-1.278">
-<name>48 </name>
-<sym>Y</sym>
-<desc>Paul Heys *</desc>
-</wpt>
-
-<wpt  lat="50.773333" lon="-1.226333">
-<name>49 </name>
-<sym>Y</sym>
-<desc>250th Anniversary</desc>
-</wpt>
-
-<wpt  lat="50.7505" lon="-1.198167">
-<name>5A </name>
-<sym>Y</sym>
-<desc>Quarr</desc>
-</wpt>
-
-<wpt  lat="50.758167" lon="-1.186833">
-<name>5B </name>
-<sym>R</sym>
-<desc>Mother Bank</desc>
-</wpt>
-
-<wpt  lat="50.776167" lon="-1.1825">
-<name>5C </name>
-<sym>G</sym>
-<desc>Browndown</desc>
-</wpt>
-
-<wpt  lat="50.753" lon="-1.160833">
-<name>5D </name>
-<sym>Y</sym>
-<desc>Kemps Quay</desc>
-</wpt>
-
-<wpt  lat="50.771" lon="-1.146">
-<name>5E </name>
-<sym>Y</sym>
-<desc>Warsash Sailing Club</desc>
-</wpt>
-
-<wpt  lat="50.7555" lon="-1.137167">
-<name>5F </name>
-<sym>BY</sym>
-<desc>North Sturbridge</desc>
-</wpt>
-
-<wpt  lat="50.773667" lon="-1.131667">
-<name>5G </name>
-<sym>Y</sym>
-<desc>Baker Trayte Marine</desc>
-</wpt>
-
-<wpt  lat="50.780333" lon="-1.1225">
-<name>5H </name>
-<sym>Y</sym>
-<desc>Portsmouth SC</desc>
-</wpt>
-
-<wpt  lat="50.776833" lon="-1.1215">
-<name>5J </name>
-<sym>Y</sym>
-<desc>KB Dry Stack</desc>
-</wpt>
-
-<wpt  lat="50.784667" lon="-1.113">
-<name>5K </name>
-<sym>Y</sym>
-<desc>Yola</desc>
-</wpt>
-
-<wpt  lat="50.7685" lon="-1.108667">
-<name>5M </name>
-<sym>Y</sym>
-<desc>Gleeds </desc>
-</wpt>
-
-<wpt  lat="50.763333" lon="-1.103333">
-<name>5N </name>
-<sym>Y</sym>
-<desc>Mary Rose</desc>
-</wpt>
-
-<wpt  lat="50.772667" lon="-1.101333">
-<name>5P </name>
-<sym>Y</sym>
-<desc>Naomi House and Jacksplace</desc>
-</wpt>
-
-<wpt  lat="50.757333" lon="-1.091">
-<name>5Q </name>
-<sym>YB</sym>
-<desc>Outer Spit �</desc>
-</wpt>
-
-<wpt  lat="50.776667" lon="-1.164167">
-<name>51 </name>
-<sym>Y</sym>
-<desc>SBSC Central @</desc>
-</wpt>
-
-<wpt  lat="50.780167" lon="-1.173333">
-<name>50 </name>
-<sym>Y</sym>
-<desc>Fairhall West @</desc>
-</wpt>
-
-<wpt  lat="50.74" lon="-1.095">
-<name>6A </name>
-<sym>B</sym>
-<desc>No Man's Land Fort</desc>
-</wpt>
-
-<wpt  lat="50.750167" lon="-1.072333">
-<name>6B </name>
-<sym>B</sym>
-<desc>Horse Sand Fort</desc>
-</wpt>
-
-<wpt  lat="50.731167" lon="-1.0665">
-<name>6C </name>
-<sym>R</sym>
-<desc>Warner</desc>
-</wpt>
-
-<wpt  lat="50.737667" lon="-1.064667">
-<name>6D </name>
-<sym>G</sym>
-<desc>Horse Elbow</desc>
-</wpt>
-
-<wpt  lat="50.669333" lon="-1.060833">
-<name>6E </name>
-<sym>YBY</sym>
-<desc>West Princessa</desc>
-</wpt>
-
-<wpt  lat="50.685833" lon="-1.046833">
-<name>6F </name>
-<sym>BYB</sym>
-<desc>Bembridge Ledge Buoy</desc>
-</wpt>
-
-<wpt  lat="50.722667" lon="-1.040167">
-<name>6G </name>
-<sym>R</sym>
-<desc>St Helens Buoy</desc>
-</wpt>
-
-<wpt  lat="50.728167" lon="-1.031333">
-<name>6H </name>
-<sym>G</sym>
-<desc>Dean Elbow</desc>
-</wpt>
-
-<wpt  lat="50.714333" lon="-1.013333">
-<name>6J </name>
-<sym>R</sym>
-<desc>Nab East</desc>
-</wpt>
-
-<wpt  lat="50.7205" lon="-1.003833">
-<name>6K </name>
-<sym>G</sym>
-<desc>Horse Tail</desc>
-</wpt>
-
-<wpt  lat="50.751667" lon="-1.001667">
-<name>6L </name>
-<sym>YB</sym>
-<desc>Winner</desc>
-</wpt>
-
-<wpt  lat="50.7105" lon="-0.9915">
-<name>6M </name>
-<sym>R</sym>
-<desc>Nab End</desc>
-</wpt>
-
-<wpt  lat="50.7165" lon="-0.986167">
-<name>6N </name>
-<sym>G</sym>
-<desc>Dean Tail</desc>
-</wpt>
-
-<wpt  lat="50.697333" lon="-0.974833">
-<name>6P </name>
-<sym>BYB</sym>
-<desc>New Grounds</desc>
-</wpt>
-
-<wpt  lat="50.668" lon="-0.9525">
-<name>6R </name>
-<sym>B</sym>
-<desc>Nab Tower</desc>
-</wpt>
-
-<wpt  lat="50.6405" lon="-0.961667">
-<name>6S </name>
-<sym>BYB</sym>
-<desc>Outer Nab No 2</desc>
-</wpt>
-
-<wpt  lat="50.8845" lon="-1.402667">
-<name>7A </name>
-<sym>R</sym>
-<desc>Gymp</desc>
-</wpt>
-
-<wpt  lat="50.8805" lon="-1.396833">
-<name>7B </name>
-<sym>R</sym>
-<desc>Hythe Knock</desc>
-</wpt>
-
-<wpt  lat="50.883333" lon="-1.390667">
-<name>7C </name>
-<sym>G</sym>
-<desc>No 1 Swinging</desc>
-</wpt>
-
-<wpt  lat="50.8785" lon="-1.387667">
-<name>7D </name>
-<sym>G</sym>
-<desc>Weston Shelf</desc>
-</wpt>
-
-<wpt  lat="50.882667" lon="-1.384333">
-<name>7F </name>
-<sym>Y</sym>
-<desc>Jib *</desc>
-</wpt>
-
-<wpt  lat="50.875833" lon="-1.381667">
-<name>7H </name>
-<sym>G</sym>
-<desc>Moorhead</desc>
-</wpt>
-
-<wpt  lat="50.87" lon="-1.380833">
-<name>7J </name>
-<sym>R</sym>
-<desc>Deans Elbow</desc>
-</wpt>
-
-<wpt  lat="50.871833" lon="-1.378833">
-<name>7K </name>
-<sym>G</sym>
-<desc>NW Netley</desc>
-</wpt>
-
-<wpt  lat="50.877667" lon="-1.373667">
-<name>7L </name>
-<sym>Y</sym>
-<desc>Hovercraft 4</desc>
-</wpt>
-
-<wpt  lat="50.862667" lon="-1.371333">
-<name>7N </name>
-<sym>Y</sym>
-<desc>SWSA/HSC</desc>
-</wpt>
-
-<wpt  lat="50.873833" lon="-1.366833">
-<name>7P </name>
-<sym>Y</sym>
-<desc>Hovercraft 3</desc>
-</wpt>
-
-<wpt  lat="50.867167" lon="-1.3635">
-<name>7Q </name>
-<sym>G</sym>
-<desc>Netley</desc>
-</wpt>
-
-<wpt  lat="50.859833" lon="-1.360833">
-<name>7R </name>
-<sym>R</sym>
-<desc>Lains Lake</desc>
-</wpt>
-
-<wpt  lat="50.856667" lon="-1.359833">
-<name>7S </name>
-<sym>R</sym>
-<desc>Deans Lake</desc>
-</wpt>
-
-<wpt  lat="50.870167" lon="-1.359667">
-<name>7T </name>
-<sym>Y</sym>
-<desc>Hovercraft 2</desc>
-</wpt>
-
-<wpt  lat="50.861333" lon="-1.358667">
-<name>7U </name>
-<sym>G</sym>
-<desc>Hound</desc>
-</wpt>
-
-<wpt  lat="50.8665" lon="-1.352667">
-<name>7V </name>
-<sym>Y</sym>
-<desc>Hovercraft 1</desc>
-</wpt>
-
-<wpt  lat="50.858833" lon="-1.347">
-<name>7W </name>
-<sym>G</sym>
-<desc>After Barn</desc>
-</wpt>
-
-<wpt  lat="50.850333" lon="-1.342333">
-<name>7Y </name>
-<sym>R</sym>
-<desc>Cadland</desc>
-</wpt>
-
-<wpt  lat="50.851833" lon="-1.339667">
-<name>7Z </name>
-<sym>G</sym>
-<desc>Greenland</desc>
-</wpt>
-
-<wpt  lat="50.826" lon="-1.315667">
-<name>71 </name>
-<sym>Y</sym>
-<desc>Mark *</desc>
-</wpt>
-
-<wpt  lat="50.8435" lon="-1.320667">
-<name>70 </name>
-<sym>Y</sym>
-<desc>Cathead *</desc>
-</wpt>
-
-<wpt  lat="50.835833" lon="-1.311">
-<name>72 </name>
-<sym>YB</sym>
-<desc>Hamble Point</desc>
-</wpt>
-
-<wpt  lat="50.83" lon="-1.301167">
-<name>73 </name>
-<sym>G</sym>
-<desc>Bald Head</desc>
-</wpt>
-
-<wpt  lat="50.827667" lon="-1.293167">
-<name>74 </name>
-<sym>Y</sym>
-<desc>Sposa *</desc>
-</wpt>
-
-<wpt  lat="50.8805" lon="-1.399667">
-<name>75 </name>
-<sym>Y</sym>
-<desc>Magazine *</desc>
-</wpt>
-
-<wpt  lat="50.8765" lon="-1.390833">
-<name>76 </name>
-<sym>R</sym>
-<desc>Test</desc>
-</wpt>
-
-<wpt  lat="50.840333" lon="-1.319833">
-<name>77 </name>
-<sym>G</sym>
-<desc>Fawley Deep</desc>
-</wpt>
-
-<wpt  lat="50.825333" lon="-1.305">
-<name>78 </name>
-<sym>G</sym>
-<desc>Hook #</desc>
-</wpt>
-
-<wpt lat="50.707833" lon="-1.507167">
-<name>23</name>
-<sym>Y</sym>
-<desc>Harbour</desc>
-</wpt>
-
-<wpt lat="50.712000" lon="-1.495000">
-<name>29</name>
-<sym>Y</sym>
-<desc>R Sol YC ODM</desc>
-</wpt>
-
-<wpt lat="50.710667" lon="-1.498000">
-<name>2HE</name>
-<sym>R</sym>
-<desc>East Fairway Bouy</desc>
-</wpt>
-
-<wpt lat="50.710500" lon="-1.487667">
-<name>2#</name>
-<sym>Y</sym>
-<desc>Towers</desc>
-</wpt>
-
-<wpt lat="50.733167" lon="-1.516500">
-<name>2♠</name>
-<sym>Y</sym>
-<desc>Spade</desc>
-</wpt>
-
-<wpt lat="50.738000" lon="-1.511000">
-<name>2🌰</name>
-<sym>Y</sym>
-<desc>Acorn/Oakhaven</desc>
-</wpt>
-
-<wpt lat="50.741833" lon="-1.500000">
-<name>2S</name>
-<sym>Y</sym>
-<desc>East Mark</desc>
-</wpt>
-
-<wpt lat="50.738500" lon="-1.513500">
-<name>2Y</name>
-<sym>B</sym>
-<desc>Black &amp; Orange</desc>
-</wpt>
-
-<wpt lat="50.741833" lon="-1.509333">
-<name>2Z</name>
-<sym>B</sym>
-<desc>Black &amp; White</desc>
-</wpt>
-
-<wpt lat="50.748667" lon="-1.495000">
-<name>2π</name>
-<sym>Y</sym>
-<desc>Pylewell Inner</desc>
-</wpt>
-
-<wpt lat="50.729667" lon="-1.525500">
-<name>2+</name>
-<sym>Y</sym>
-<desc>Plus Mark</desc>
-</wpt>
-
-<wpt lat="50.743167" lon="-1.515333">
-<name>2@</name>
-<sym>Y</sym>
-<desc>West Reach</desc>
-</wpt>
-
-<wpt lat="50.722000" lon="-1.535500">
-<name>2V1</name>
-<sym>Y</sym>
-<desc>Inshore of Mark L</desc>
-</wpt>
-
-<wpt lat="50.722167" lon="-1.512500">
-<name>2V2</name>
-<sym>Y</sym>
-<desc>between Marks C &amp; T</desc>
-</wpt>
-
-<wpt lat="50.734333" lon="-1.506667">
-<name>2V3</name>
-<sym>Y</sym>
-<desc>South of Jack in Basket</desc>
-</wpt>
-
-<wpt lat="50.747833" lon="-1.487667">
-<name>2V4</name>
-<sym>Y</sym>
-<desc>North of Mark E</desc>
-</wpt>
-
-<wpt lat="50.744833" lon="-1.482500">
-<name>2V5</name>
-<sym>Y</sym>
-<desc>Between Marks E &amp; G</desc>
-</wpt>
-
-<wpt lat="50.740167" lon="-1.477500">
-<name>2V6</name>
-<sym>Y</sym>
-<desc>Between Marks F &amp; G</desc>
-</wpt>
-
-<wpt lat="50.749667" lon="-1.465500">
-<name>2V7</name>
-<sym>Y</sym>
-<desc>Between Marks G &amp; J</desc>
-</wpt>
-</gpx>
+<?xml version='1.0' encoding='UTF-8'?>
+<ns0:gpx xmlns:ns0="http://www.topografix.com/GPX/1/1" version="1.1" creator="Philip Gage">
+  
+
+  <ns0:wpt lat="50.606833" lon="-1.935">
+    
+
+    <ns0:name>1A </ns0:name>
+    
+
+    <ns0:sym>R</ns0:sym>
+    
+
+    <ns0:desc>Peveril Ledge</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.654833" lon="-1.919">
+    
+
+    <ns0:name>1B </ns0:name>
+    
+
+    <ns0:sym>G</ns0:sym>
+    
+
+    <ns0:desc>Poole Bar No 1</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.671833" lon="-1.900333">
+    
+
+    <ns0:name>1C </ns0:name>
+    
+
+    <ns0:sym>Y</ns0:sym>
+    
+
+    <ns0:desc>Stoneways Marine</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.684667" lon="-1.904333">
+    
+
+    <ns0:name>1D </ns0:name>
+    
+
+    <ns0:sym>Y</ns0:sym>
+    
+
+    <ns0:desc>The Rig Shop</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.691667" lon="-1.693333">
+    
+
+    <ns0:name>1E </ns0:name>
+    
+
+    <ns0:sym>Y</ns0:sym>
+    
+
+    <ns0:desc>Ledge Buoy</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.637333" lon="-1.649667">
+    
+
+    <ns0:name>1F </ns0:name>
+    
+
+    <ns0:sym>RW</ns0:sym>
+    
+
+    <ns0:desc>Needles Fairway</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.654833" lon="-1.625333">
+    
+
+    <ns0:name>1G </ns0:name>
+    
+
+    <ns0:sym>R</ns0:sym>
+    
+
+    <ns0:desc>South West Shingles</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.6605" lon="-1.614667">
+    
+
+    <ns0:name>1H </ns0:name>
+    
+
+    <ns0:sym>YBY</ns0:sym>
+    
+
+    <ns0:desc>Bridge</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.672833" lon="-1.600833">
+    
+
+    <ns0:name>1J </ns0:name>
+    
+
+    <ns0:sym>R</ns0:sym>
+    
+
+    <ns0:desc>Shingles Elbow</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.7115" lon="-1.592">
+    
+
+    <ns0:name>1K </ns0:name>
+    
+
+    <ns0:sym>G</ns0:sym>
+    
+
+    <ns0:desc>North Head</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.662167" lon="-1.591667">
+    
+
+    <ns0:name>1L </ns0:name>
+    
+
+    <ns0:sym>RW</ns0:sym>
+    
+
+    <ns0:desc>Needles Lighthouse</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.691333" lon="-1.559167">
+    
+
+    <ns0:name>1M </ns0:name>
+    
+
+    <ns0:sym>G</ns0:sym>
+    
+
+    <ns0:desc>Warden</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.699333" lon="-1.556833">
+    
+
+    <ns0:name>1N </ns0:name>
+    
+
+    <ns0:sym>BYB</ns0:sym>
+    
+
+    <ns0:desc>North East Shingles</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.676333" lon="-1.9205">
+    
+
+    <ns0:name>11 </ns0:name>
+    
+
+    <ns0:sym>R</ns0:sym>
+    
+
+    <ns0:desc>East Hook</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.71" lon="-1.68">
+    
+
+    <ns0:name>12 </ns0:name>
+    
+
+    <ns0:sym>Y</ns0:sym>
+    
+
+    <ns0:desc>MB/EYE Marine/Christchurch SC</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.657667" lon="-1.92">
+    
+
+    <ns0:name>13 </ns0:name>
+    
+
+    <ns0:sym>Y</ns0:sym>
+    
+
+    <ns0:desc>Parkstone YC</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.712833" lon="-1.5405">
+    
+
+    <ns0:name>2A </ns0:name>
+    
+
+    <ns0:sym>Y</ns0:sym>
+    
+
+    <ns0:desc>Embley School</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.723" lon="-1.525667">
+    
+
+    <ns0:name>2B </ns0:name>
+    
+
+    <ns0:sym>Y</ns0:sym>
+    
+
+    <ns0:desc>Dunford Construction</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.7305" lon="-1.514333">
+    
+
+    <ns0:name>2C </ns0:name>
+    
+
+    <ns0:sym>Y</ns0:sym>
+    
+
+    <ns0:desc>Colten</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.736167" lon="-1.501667">
+    
+
+    <ns0:name>2D </ns0:name>
+    
+
+    <ns0:sym>Y</ns0:sym>
+    
+
+    <ns0:desc>Lymington Yacht Haven</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.7415" lon="-1.488667">
+    
+
+    <ns0:name>2E </ns0:name>
+    
+
+    <ns0:sym>Y</ns0:sym>
+    
+
+    <ns0:desc>Circle Marine Insurance</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.736667" lon="-1.487">
+    
+
+    <ns0:name>2F </ns0:name>
+    
+
+    <ns0:sym>Y</ns0:sym>
+    
+
+    <ns0:desc>Berthon</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.7465" lon="-1.4745">
+    
+
+    <ns0:name>2G </ns0:name>
+    
+
+    <ns0:sym>Y</ns0:sym>
+    
+
+    <ns0:desc>Bridgeworks WAN Acceleration</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.738333" lon="-1.469333">
+    
+
+    <ns0:name>2H </ns0:name>
+    
+
+    <ns0:sym>Y</ns0:sym>
+    
+
+    <ns0:desc>Draycott Chartered Surveyors</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.751833" lon="-1.455667">
+    
+
+    <ns0:name>2J </ns0:name>
+    
+
+    <ns0:sym>Y</ns0:sym>
+    
+
+    <ns0:desc>Zwerver</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.747167" lon="-1.434833">
+    
+
+    <ns0:name>2K </ns0:name>
+    
+
+    <ns0:sym>Y</ns0:sym>
+    
+
+    <ns0:desc>Greetings Fintech</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.719" lon="-1.5325">
+    
+
+    <ns0:name>2L </ns0:name>
+    
+
+    <ns0:sym>Y</ns0:sym>
+    
+
+    <ns0:desc>Royal Lymington YC</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.757167" lon="-1.4315">
+    
+
+    <ns0:name>2R </ns0:name>
+    
+
+    <ns0:sym>Y</ns0:sym>
+    
+
+    <ns0:desc>Powder Byrne</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.718333" lon="-1.514167">
+    
+
+    <ns0:name>2T </ns0:name>
+    
+
+    <ns0:sym>R</ns0:sym>
+    
+
+    <ns0:desc>Lymington Bank</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.727833" lon="-1.491667">
+    
+
+    <ns0:name>2U </ns0:name>
+    
+
+    <ns0:sym>Y</ns0:sym>
+    
+
+    <ns0:desc>Tuakana Construction</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.737167" lon="-1.456167">
+    
+
+    <ns0:name>2X </ns0:name>
+    
+
+    <ns0:sym>R</ns0:sym>
+    
+
+    <ns0:desc>Solent Bank</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.7095" lon="-1.509833">
+    
+
+    <ns0:name>21 </ns0:name>
+    
+
+    <ns0:sym>G</ns0:sym>
+    
+
+    <ns0:desc>Black Rock</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.708833" lon="-1.523833">
+    
+
+    <ns0:name>20 </ns0:name>
+    
+
+    <ns0:sym>BY</ns0:sym>
+    
+
+    <ns0:desc>Sconce</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.740317" lon="-1.507033">
+    
+
+    <ns0:name>2PL </ns0:name>
+    
+
+    <ns0:sym>Y</ns0:sym>
+    
+
+    <ns0:desc>Lymington Starting Platform</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.714333" lon="-1.49">
+    
+
+    <ns0:name>22 </ns0:name>
+    
+
+    <ns0:sym>Y</ns0:sym>
+    
+
+    <ns0:desc>Charles Stanley</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.714333" lon="-1.473667">
+    
+
+    <ns0:name>24 </ns0:name>
+    
+
+    <ns0:sym>Y</ns0:sym>
+    
+
+    <ns0:desc>Now Students</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.719167" lon="-1.458167">
+    
+
+    <ns0:name>25 </ns0:name>
+    
+
+    <ns0:sym>Y</ns0:sym>
+    
+
+    <ns0:desc>Jeremy Rogers Contessa</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.731167" lon="-1.436333">
+    
+
+    <ns0:name>26 </ns0:name>
+    
+
+    <ns0:sym>G</ns0:sym>
+    
+
+    <ns0:desc>Hamstead Ledge</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.716167" lon="-1.469333">
+    
+
+    <ns0:name>27 </ns0:name>
+    
+
+    <ns0:sym>Y</ns0:sym>
+    
+
+    <ns0:desc>Adam Harding-Doneney</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.712167" lon="-1.478167">
+    
+
+    <ns0:name>28 </ns0:name>
+    
+
+    <ns0:sym>Y</ns0:sym>
+    
+
+    <ns0:desc>Harwoods</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.7666" lon="-1.3009">
+    
+
+    <ns0:name>3SQ </ns0:name>
+    
+
+    <ns0:sym>C</ns0:sym>
+    
+
+    <ns0:desc>Royal Yacht Squadron</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.754" lon="-1.4015">
+    
+
+    <ns0:name>3A </ns0:name>
+    
+
+    <ns0:sym>R</ns0:sym>
+    
+
+    <ns0:desc>West Lepe</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.739333" lon="-1.396667">
+    
+
+    <ns0:name>3B </ns0:name>
+    
+
+    <ns0:sym>Y</ns0:sym>
+    
+
+    <ns0:desc>Newtown East</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.760667" lon="-1.385333">
+    
+
+    <ns0:name>3C </ns0:name>
+    
+
+    <ns0:sym>Y</ns0:sym>
+    
+
+    <ns0:desc>Craft insure</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.741833" lon="-1.384">
+    
+
+    <ns0:name>3D </ns0:name>
+    
+
+    <ns0:sym>G</ns0:sym>
+    
+
+    <ns0:desc>Salt Mead</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.768833" lon="-1.369833">
+    
+
+    <ns0:name>3E </ns0:name>
+    
+
+    <ns0:sym>Y</ns0:sym>
+    
+
+    <ns0:desc>The Boss</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.745333" lon="-1.365833">
+    
+
+    <ns0:name>3F </ns0:name>
+    
+
+    <ns0:sym>Y</ns0:sym>
+    
+
+    <ns0:desc>Monex Marine</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.776333" lon="-1.357667">
+    
+
+    <ns0:name>3G </ns0:name>
+    
+
+    <ns0:sym>Y</ns0:sym>
+    
+
+    <ns0:desc>Cowes Week 2026</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.7655" lon="-1.351167">
+    
+
+    <ns0:name>3H </ns0:name>
+    
+
+    <ns0:sym>R</ns0:sym>
+    
+
+    <ns0:desc>East Lepe</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.779667" lon="-1.344">
+    
+
+    <ns0:name>3K </ns0:name>
+    
+
+    <ns0:sym>YB</ns0:sym>
+    
+
+    <ns0:desc>Lepe Spit</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.7585" lon="-1.343167">
+    
+
+    <ns0:name>3L </ns0:name>
+    
+
+    <ns0:sym>G</ns0:sym>
+    
+
+    <ns0:desc>Gurnard Ledge</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.7845" lon="-1.331333">
+    
+
+    <ns0:name>3N </ns0:name>
+    
+
+    <ns0:sym>Y</ns0:sym>
+    
+
+    <ns0:desc>MDL Marinas *</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.761333" lon="-1.333">
+    
+
+    <ns0:name>3P </ns0:name>
+    
+
+    <ns0:sym>Y</ns0:sym>
+    
+
+    <ns0:desc>Cowes Yacht Haven</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.766167" lon="-1.324167">
+    
+
+    <ns0:name>3Q </ns0:name>
+    
+
+    <ns0:sym>Y</ns0:sym>
+    
+
+    <ns0:desc>Polly's Challenge</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.784333" lon="-1.323667">
+    
+
+    <ns0:name>3R </ns0:name>
+    
+
+    <ns0:sym>R</ns0:sym>
+    
+
+    <ns0:desc>North East Gurnard #</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.796833" lon="-1.320833">
+    
+
+    <ns0:name>3S </ns0:name>
+    
+
+    <ns0:sym>Y</ns0:sym>
+    
+
+    <ns0:desc>TeamO *</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.768333" lon="-1.3145">
+    
+
+    <ns0:name>3T </ns0:name>
+    
+
+    <ns0:sym>Y</ns0:sym>
+    
+
+    <ns0:desc>CHS</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.770333" lon="-1.314">
+    
+
+    <ns0:name>3U </ns0:name>
+    
+
+    <ns0:sym>BY</ns0:sym>
+    
+
+    <ns0:desc>Gurnard</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.786667" lon="-1.310833">
+    
+
+    <ns0:name>3V </ns0:name>
+    
+
+    <ns0:sym>YBY</ns0:sym>
+    
+
+    <ns0:desc>West Bramble #</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.786667" lon="-1.309167">
+    
+
+    <ns0:name>3W </ns0:name>
+    
+
+    <ns0:sym>Y</ns0:sym>
+    
+
+    <ns0:desc>Williams Shipping *</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.768333" lon="-1.307167">
+    
+
+    <ns0:name>3X </ns0:name>
+    
+
+    <ns0:sym>Y</ns0:sym>
+    
+
+    <ns0:desc>Island Sailing Club</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.7905" lon="-1.297333">
+    
+
+    <ns0:name>3Y </ns0:name>
+    
+
+    <ns0:sym>Y</ns0:sym>
+    
+
+    <ns0:desc>West Knoll</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.771833" lon="-1.295833">
+    
+
+    <ns0:name>3Z </ns0:name>
+    
+
+    <ns0:sym>Y</ns0:sym>
+    
+
+    <ns0:desc>Trinity House Buoy</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.783" lon="-1.295333">
+    
+
+    <ns0:name>31 </ns0:name>
+    
+
+    <ns0:sym>G</ns0:sym>
+    
+
+    <ns0:desc>South Bramble</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.785333" lon="-1.295333">
+    
+
+    <ns0:name>30 </ns0:name>
+    
+
+    <ns0:sym>Y</ns0:sym>
+    
+
+    <ns0:desc>RORC *</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.7735" lon="-1.292667">
+    
+
+    <ns0:name>33 </ns0:name>
+    
+
+    <ns0:sym>BY</ns0:sym>
+    
+
+    <ns0:desc>Prince Consort</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.769167" lon="-1.286667">
+    
+
+    <ns0:name>34 </ns0:name>
+    
+
+    <ns0:sym>Y</ns0:sym>
+    
+
+    <ns0:desc>Cowes Corinthian</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.77" lon="-1.295833">
+    
+
+    <ns0:name>39 </ns0:name>
+    
+
+    <ns0:sym>Y</ns0:sym>
+    
+
+    <ns0:desc>Snowden</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.8175" lon="-1.294167">
+    
+
+    <ns0:name>4A </ns0:name>
+    
+
+    <ns0:sym>G</ns0:sym>
+    
+
+    <ns0:desc>Reach #</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.825833" lon="-1.293667">
+    
+
+    <ns0:name>4B </ns0:name>
+    
+
+    <ns0:sym>Y</ns0:sym>
+    
+
+    <ns0:desc>Coronation</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.820167" lon="-1.291">
+    
+
+    <ns0:name>4C </ns0:name>
+    
+
+    <ns0:sym>Y</ns0:sym>
+    
+
+    <ns0:desc>Fumesy*</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.807333" lon="-1.283833">
+    
+
+    <ns0:name>4D </ns0:name>
+    
+
+    <ns0:sym>BY</ns0:sym>
+    
+
+    <ns0:desc>Calshot #</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.7945" lon="-1.283333">
+    
+
+    <ns0:name>4E </ns0:name>
+    
+
+    <ns0:sym>Y</ns0:sym>
+    
+
+    <ns0:desc>Jane *</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.786667" lon="-1.283333">
+    
+
+    <ns0:name>4F </ns0:name>
+    
+
+    <ns0:sym>Y</ns0:sym>
+    
+
+    <ns0:desc>Royal Thames</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.824167" lon="-1.281833">
+    
+
+    <ns0:name>4G </ns0:name>
+    
+
+    <ns0:sym>Y</ns0:sym>
+    
+
+    <ns0:desc>Chieftain Training*</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.799333" lon="-1.2805">
+    
+
+    <ns0:name>4H </ns0:name>
+    
+
+    <ns0:sym>G</ns0:sym>
+    
+
+    <ns0:desc>East Knoll</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.8105" lon="-1.276">
+    
+
+    <ns0:name>4J </ns0:name>
+    
+
+    <ns0:sym>Y</ns0:sym>
+    
+
+    <ns0:desc>hamblewinterseries.com *</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.769167" lon="-1.2775">
+    
+
+    <ns0:name>4K </ns0:name>
+    
+
+    <ns0:sym>Y</ns0:sym>
+    
+
+    <ns0:desc>Royal London YC</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.817167" lon="-1.274833">
+    
+
+    <ns0:name>4L </ns0:name>
+    
+
+    <ns0:sym>Y</ns0:sym>
+    
+
+    <ns0:desc>William *</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.801167" lon="-1.266667">
+    
+
+    <ns0:name>4M </ns0:name>
+    
+
+    <ns0:sym>R</ns0:sym>
+    
+
+    <ns0:desc>Hill Head</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.787833" lon="-1.265">
+    
+
+    <ns0:name>4N </ns0:name>
+    
+
+    <ns0:sym>Y</ns0:sym>
+    
+
+    <ns0:desc>Ben F Wood</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.774667" lon="-1.263167">
+    
+
+    <ns0:name>4P </ns0:name>
+    
+
+    <ns0:sym>YBY</ns0:sym>
+    
+
+    <ns0:desc>West Ryde Middle</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.807667" lon="-1.262">
+    
+
+    <ns0:name>4Q </ns0:name>
+    
+
+    <ns0:sym>Y</ns0:sym>
+    
+
+    <ns0:desc>John Fisher*</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.819667" lon="-1.261833">
+    
+
+    <ns0:name>4R </ns0:name>
+    
+
+    <ns0:sym>Y</ns0:sym>
+    
+
+    <ns0:desc>Darling Buoy *</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.814333" lon="-1.257167">
+    
+
+    <ns0:name>4S </ns0:name>
+    
+
+    <ns0:sym>Y</ns0:sym>
+    
+
+    <ns0:desc>Royal Southern*</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.766167" lon="-1.2585">
+    
+
+    <ns0:name>4T </ns0:name>
+    
+
+    <ns0:sym>R</ns0:sym>
+    
+
+    <ns0:desc>Norris #</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.773833" lon="-1.2515">
+    
+
+    <ns0:name>4U </ns0:name>
+    
+
+    <ns0:sym>Y</ns0:sym>
+    
+
+    <ns0:desc>Goodall Roofing</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.802167" lon="-1.244">
+    
+
+    <ns0:name>4V </ns0:name>
+    
+
+    <ns0:sym>Y</ns0:sym>
+    
+
+    <ns0:desc>Hamble Yacht Services</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.788833" lon="-1.243167">
+    
+
+    <ns0:name>4W </ns0:name>
+    
+
+    <ns0:sym>Y</ns0:sym>
+    
+
+    <ns0:desc>Ancasta</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.758833" lon="-1.239833">
+    
+
+    <ns0:name>4X </ns0:name>
+    
+
+    <ns0:sym>Y</ns0:sym>
+    
+
+    <ns0:desc>Colette</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.776833" lon="-1.2385">
+    
+
+    <ns0:name>4Y </ns0:name>
+    
+
+    <ns0:sym>R</ns0:sym>
+    
+
+    <ns0:desc>North Ryde Middle</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.768833" lon="-1.236">
+    
+
+    <ns0:name>4Z </ns0:name>
+    
+
+    <ns0:sym>G</ns0:sym>
+    
+
+    <ns0:desc>South Ryde Middle</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.787167" lon="-1.227333">
+    
+
+    <ns0:name>41 </ns0:name>
+    
+
+    <ns0:sym>BYB</ns0:sym>
+    
+
+    <ns0:desc>East Bramble</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.794333" lon="-1.2275">
+    
+
+    <ns0:name>40 </ns0:name>
+    
+
+    <ns0:sym>Y</ns0:sym>
+    
+
+    <ns0:desc>Haven Knox Johnson Specialist</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.758167" lon="-1.2225">
+    
+
+    <ns0:name>42 </ns0:name>
+    
+
+    <ns0:sym>R</ns0:sym>
+    
+
+    <ns0:desc>Peel Bank</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.769333" lon="-1.218167">
+    
+
+    <ns0:name>43 </ns0:name>
+    
+
+    <ns0:sym>Y</ns0:sym>
+    
+
+    <ns0:desc>Little Ship Club</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.7885" lon="-1.201667">
+    
+
+    <ns0:name>44 </ns0:name>
+    
+
+    <ns0:sym>Y</ns0:sym>
+    
+
+    <ns0:desc>Royal Yacht Squadron</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.7655" lon="-1.201667">
+    
+
+    <ns0:name>45 </ns0:name>
+    
+
+    <ns0:sym>YB</ns0:sym>
+    
+
+    <ns0:desc>South East Ryde Middle</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.770167" lon="-1.198">
+    
+
+    <ns0:name>46 </ns0:name>
+    
+
+    <ns0:sym>R</ns0:sym>
+    
+
+    <ns0:desc>North East Ryde Middle</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.795" lon="-1.254167">
+    
+
+    <ns0:name>47 </ns0:name>
+    
+
+    <ns0:sym>Y</ns0:sym>
+    
+
+    <ns0:desc>Contessa 32 Class</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.8035" lon="-1.278">
+    
+
+    <ns0:name>48 </ns0:name>
+    
+
+    <ns0:sym>Y</ns0:sym>
+    
+
+    <ns0:desc>Paul Heys *</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.773333" lon="-1.226333">
+    
+
+    <ns0:name>49 </ns0:name>
+    
+
+    <ns0:sym>Y</ns0:sym>
+    
+
+    <ns0:desc>250th Anniversary</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.7505" lon="-1.198167">
+    
+
+    <ns0:name>5A </ns0:name>
+    
+
+    <ns0:sym>Y</ns0:sym>
+    
+
+    <ns0:desc>Quarr</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.758167" lon="-1.186833">
+    
+
+    <ns0:name>5B </ns0:name>
+    
+
+    <ns0:sym>R</ns0:sym>
+    
+
+    <ns0:desc>Mother Bank</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.776167" lon="-1.1825">
+    
+
+    <ns0:name>5C </ns0:name>
+    
+
+    <ns0:sym>G</ns0:sym>
+    
+
+    <ns0:desc>Browndown</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.753" lon="-1.160833">
+    
+
+    <ns0:name>5D </ns0:name>
+    
+
+    <ns0:sym>Y</ns0:sym>
+    
+
+    <ns0:desc>Kemps Quay</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.771" lon="-1.146">
+    
+
+    <ns0:name>5E </ns0:name>
+    
+
+    <ns0:sym>Y</ns0:sym>
+    
+
+    <ns0:desc>Warsash Sailing Club</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.7555" lon="-1.137167">
+    
+
+    <ns0:name>5F </ns0:name>
+    
+
+    <ns0:sym>BY</ns0:sym>
+    
+
+    <ns0:desc>North Sturbridge</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.773667" lon="-1.131667">
+    
+
+    <ns0:name>5G </ns0:name>
+    
+
+    <ns0:sym>Y</ns0:sym>
+    
+
+    <ns0:desc>Baker Trayte Marine</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.780333" lon="-1.1225">
+    
+
+    <ns0:name>5H </ns0:name>
+    
+
+    <ns0:sym>Y</ns0:sym>
+    
+
+    <ns0:desc>Portsmouth SC</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.776833" lon="-1.1215">
+    
+
+    <ns0:name>5J </ns0:name>
+    
+
+    <ns0:sym>Y</ns0:sym>
+    
+
+    <ns0:desc>KB Dry Stack</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.784667" lon="-1.113">
+    
+
+    <ns0:name>5K </ns0:name>
+    
+
+    <ns0:sym>Y</ns0:sym>
+    
+
+    <ns0:desc>Yola</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.7685" lon="-1.108667">
+    
+
+    <ns0:name>5M </ns0:name>
+    
+
+    <ns0:sym>Y</ns0:sym>
+    
+
+    <ns0:desc>Gleeds </ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.763333" lon="-1.103333">
+    
+
+    <ns0:name>5N </ns0:name>
+    
+
+    <ns0:sym>Y</ns0:sym>
+    
+
+    <ns0:desc>Mary Rose</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.772667" lon="-1.101333">
+    
+
+    <ns0:name>5P </ns0:name>
+    
+
+    <ns0:sym>Y</ns0:sym>
+    
+
+    <ns0:desc>Naomi House and Jacksplace</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.757333" lon="-1.091">
+    
+
+    <ns0:name>5Q </ns0:name>
+    
+
+    <ns0:sym>YB</ns0:sym>
+    
+
+    <ns0:desc>Outer Spit �</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.776667" lon="-1.164167">
+    
+
+    <ns0:name>51 </ns0:name>
+    
+
+    <ns0:sym>Y</ns0:sym>
+    
+
+    <ns0:desc>SBSC Central @</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.780167" lon="-1.173333">
+    
+
+    <ns0:name>50 </ns0:name>
+    
+
+    <ns0:sym>Y</ns0:sym>
+    
+
+    <ns0:desc>Fairhall West @</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.74" lon="-1.095">
+    
+
+    <ns0:name>6A </ns0:name>
+    
+
+    <ns0:sym>B</ns0:sym>
+    
+
+    <ns0:desc>No Man's Land Fort</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.750167" lon="-1.072333">
+    
+
+    <ns0:name>6B </ns0:name>
+    
+
+    <ns0:sym>B</ns0:sym>
+    
+
+    <ns0:desc>Horse Sand Fort</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.731167" lon="-1.0665">
+    
+
+    <ns0:name>6C </ns0:name>
+    
+
+    <ns0:sym>R</ns0:sym>
+    
+
+    <ns0:desc>Warner</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.737667" lon="-1.064667">
+    
+
+    <ns0:name>6D </ns0:name>
+    
+
+    <ns0:sym>G</ns0:sym>
+    
+
+    <ns0:desc>Horse Elbow</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.669333" lon="-1.060833">
+    
+
+    <ns0:name>6E </ns0:name>
+    
+
+    <ns0:sym>YBY</ns0:sym>
+    
+
+    <ns0:desc>West Princessa</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.685833" lon="-1.046833">
+    
+
+    <ns0:name>6F </ns0:name>
+    
+
+    <ns0:sym>BYB</ns0:sym>
+    
+
+    <ns0:desc>Bembridge Ledge Buoy</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.722667" lon="-1.040167">
+    
+
+    <ns0:name>6G </ns0:name>
+    
+
+    <ns0:sym>R</ns0:sym>
+    
+
+    <ns0:desc>St Helens Buoy</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.728167" lon="-1.031333">
+    
+
+    <ns0:name>6H </ns0:name>
+    
+
+    <ns0:sym>G</ns0:sym>
+    
+
+    <ns0:desc>Dean Elbow</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.714333" lon="-1.013333">
+    
+
+    <ns0:name>6J </ns0:name>
+    
+
+    <ns0:sym>R</ns0:sym>
+    
+
+    <ns0:desc>Nab East</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.7205" lon="-1.003833">
+    
+
+    <ns0:name>6K </ns0:name>
+    
+
+    <ns0:sym>G</ns0:sym>
+    
+
+    <ns0:desc>Horse Tail</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.751667" lon="-1.001667">
+    
+
+    <ns0:name>6L </ns0:name>
+    
+
+    <ns0:sym>YB</ns0:sym>
+    
+
+    <ns0:desc>Winner</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.7105" lon="-0.9915">
+    
+
+    <ns0:name>6M </ns0:name>
+    
+
+    <ns0:sym>R</ns0:sym>
+    
+
+    <ns0:desc>Nab End</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.7165" lon="-0.986167">
+    
+
+    <ns0:name>6N </ns0:name>
+    
+
+    <ns0:sym>G</ns0:sym>
+    
+
+    <ns0:desc>Dean Tail</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.697333" lon="-0.974833">
+    
+
+    <ns0:name>6P </ns0:name>
+    
+
+    <ns0:sym>BYB</ns0:sym>
+    
+
+    <ns0:desc>New Grounds</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.668" lon="-0.9525">
+    
+
+    <ns0:name>6R </ns0:name>
+    
+
+    <ns0:sym>B</ns0:sym>
+    
+
+    <ns0:desc>Nab Tower</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.6405" lon="-0.961667">
+    
+
+    <ns0:name>6S </ns0:name>
+    
+
+    <ns0:sym>BYB</ns0:sym>
+    
+
+    <ns0:desc>Outer Nab No 2</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.8845" lon="-1.402667">
+    
+
+    <ns0:name>7A </ns0:name>
+    
+
+    <ns0:sym>R</ns0:sym>
+    
+
+    <ns0:desc>Gymp</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.8805" lon="-1.396833">
+    
+
+    <ns0:name>7B </ns0:name>
+    
+
+    <ns0:sym>R</ns0:sym>
+    
+
+    <ns0:desc>Hythe Knock</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.883333" lon="-1.390667">
+    
+
+    <ns0:name>7C </ns0:name>
+    
+
+    <ns0:sym>G</ns0:sym>
+    
+
+    <ns0:desc>No 1 Swinging</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.8785" lon="-1.387667">
+    
+
+    <ns0:name>7D </ns0:name>
+    
+
+    <ns0:sym>G</ns0:sym>
+    
+
+    <ns0:desc>Weston Shelf</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.882667" lon="-1.384333">
+    
+
+    <ns0:name>7F </ns0:name>
+    
+
+    <ns0:sym>Y</ns0:sym>
+    
+
+    <ns0:desc>Jib *</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.875833" lon="-1.381667">
+    
+
+    <ns0:name>7H </ns0:name>
+    
+
+    <ns0:sym>G</ns0:sym>
+    
+
+    <ns0:desc>Moorhead</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.87" lon="-1.380833">
+    
+
+    <ns0:name>7J </ns0:name>
+    
+
+    <ns0:sym>R</ns0:sym>
+    
+
+    <ns0:desc>Deans Elbow</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.871833" lon="-1.378833">
+    
+
+    <ns0:name>7K </ns0:name>
+    
+
+    <ns0:sym>G</ns0:sym>
+    
+
+    <ns0:desc>NW Netley</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.877667" lon="-1.373667">
+    
+
+    <ns0:name>7L </ns0:name>
+    
+
+    <ns0:sym>Y</ns0:sym>
+    
+
+    <ns0:desc>Hovercraft 4</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.862667" lon="-1.371333">
+    
+
+    <ns0:name>7N </ns0:name>
+    
+
+    <ns0:sym>Y</ns0:sym>
+    
+
+    <ns0:desc>SWSA/HSC</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.873833" lon="-1.366833">
+    
+
+    <ns0:name>7P </ns0:name>
+    
+
+    <ns0:sym>Y</ns0:sym>
+    
+
+    <ns0:desc>Hovercraft 3</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.867167" lon="-1.3635">
+    
+
+    <ns0:name>7Q </ns0:name>
+    
+
+    <ns0:sym>G</ns0:sym>
+    
+
+    <ns0:desc>Netley</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.859833" lon="-1.360833">
+    
+
+    <ns0:name>7R </ns0:name>
+    
+
+    <ns0:sym>R</ns0:sym>
+    
+
+    <ns0:desc>Lains Lake</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.856667" lon="-1.359833">
+    
+
+    <ns0:name>7S </ns0:name>
+    
+
+    <ns0:sym>R</ns0:sym>
+    
+
+    <ns0:desc>Deans Lake</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.870167" lon="-1.359667">
+    
+
+    <ns0:name>7T </ns0:name>
+    
+
+    <ns0:sym>Y</ns0:sym>
+    
+
+    <ns0:desc>Hovercraft 2</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.861333" lon="-1.358667">
+    
+
+    <ns0:name>7U </ns0:name>
+    
+
+    <ns0:sym>G</ns0:sym>
+    
+
+    <ns0:desc>Hound</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.8665" lon="-1.352667">
+    
+
+    <ns0:name>7V </ns0:name>
+    
+
+    <ns0:sym>Y</ns0:sym>
+    
+
+    <ns0:desc>Hovercraft 1</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.858833" lon="-1.347">
+    
+
+    <ns0:name>7W </ns0:name>
+    
+
+    <ns0:sym>G</ns0:sym>
+    
+
+    <ns0:desc>After Barn</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.850333" lon="-1.342333">
+    
+
+    <ns0:name>7Y </ns0:name>
+    
+
+    <ns0:sym>R</ns0:sym>
+    
+
+    <ns0:desc>Cadland</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.851833" lon="-1.339667">
+    
+
+    <ns0:name>7Z </ns0:name>
+    
+
+    <ns0:sym>G</ns0:sym>
+    
+
+    <ns0:desc>Greenland</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.826" lon="-1.315667">
+    
+
+    <ns0:name>71 </ns0:name>
+    
+
+    <ns0:sym>Y</ns0:sym>
+    
+
+    <ns0:desc>Mark *</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.8435" lon="-1.320667">
+    
+
+    <ns0:name>70 </ns0:name>
+    
+
+    <ns0:sym>Y</ns0:sym>
+    
+
+    <ns0:desc>Cathead *</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.835833" lon="-1.311">
+    
+
+    <ns0:name>72 </ns0:name>
+    
+
+    <ns0:sym>YB</ns0:sym>
+    
+
+    <ns0:desc>Hamble Point</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.83" lon="-1.301167">
+    
+
+    <ns0:name>73 </ns0:name>
+    
+
+    <ns0:sym>G</ns0:sym>
+    
+
+    <ns0:desc>Bald Head</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.827667" lon="-1.293167">
+    
+
+    <ns0:name>74 </ns0:name>
+    
+
+    <ns0:sym>Y</ns0:sym>
+    
+
+    <ns0:desc>Sposa *</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.8805" lon="-1.399667">
+    
+
+    <ns0:name>75 </ns0:name>
+    
+
+    <ns0:sym>Y</ns0:sym>
+    
+
+    <ns0:desc>Magazine *</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.8765" lon="-1.390833">
+    
+
+    <ns0:name>76 </ns0:name>
+    
+
+    <ns0:sym>R</ns0:sym>
+    
+
+    <ns0:desc>Test</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.840333" lon="-1.319833">
+    
+
+    <ns0:name>77 </ns0:name>
+    
+
+    <ns0:sym>G</ns0:sym>
+    
+
+    <ns0:desc>Fawley Deep</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.825333" lon="-1.305">
+    
+
+    <ns0:name>78 </ns0:name>
+    
+
+    <ns0:sym>G</ns0:sym>
+    
+
+    <ns0:desc>Hook #</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.707833" lon="-1.507167">
+    
+
+    <ns0:name>23</ns0:name>
+    
+
+    <ns0:sym>Y</ns0:sym>
+    
+
+    <ns0:desc>Harbour</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.712000" lon="-1.495000">
+    
+
+    <ns0:name>29</ns0:name>
+    
+
+    <ns0:sym>Y</ns0:sym>
+    
+
+    <ns0:desc>R Sol YC ODM</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.710667" lon="-1.498000">
+    
+
+    <ns0:name>2HE</ns0:name>
+    
+
+    <ns0:sym>R</ns0:sym>
+    
+
+    <ns0:desc>East Fairway Bouy</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.710500" lon="-1.487667">
+    
+
+    <ns0:name>2#</ns0:name>
+    
+
+    <ns0:sym>Y</ns0:sym>
+    
+
+    <ns0:desc>Towers</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.733167" lon="-1.516500">
+    
+
+    <ns0:name>2♠</ns0:name>
+    
+
+    <ns0:sym>Y</ns0:sym>
+    
+
+    <ns0:desc>Spade</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.738000" lon="-1.511000">
+    
+
+    <ns0:name>2🌰</ns0:name>
+    
+
+    <ns0:sym>Y</ns0:sym>
+    
+
+    <ns0:desc>Acorn/Oakhaven</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.741833" lon="-1.500000">
+    
+
+    <ns0:name>2S</ns0:name>
+    
+
+    <ns0:sym>Y</ns0:sym>
+    
+
+    <ns0:desc>East Mark</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.738500" lon="-1.513500">
+    
+
+    <ns0:name>2Y</ns0:name>
+    
+
+    <ns0:sym>B</ns0:sym>
+    
+
+    <ns0:desc>Black &amp; Orange</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.741833" lon="-1.509333">
+    
+
+    <ns0:name>2Z</ns0:name>
+    
+
+    <ns0:sym>B</ns0:sym>
+    
+
+    <ns0:desc>Black &amp; White</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.748667" lon="-1.495000">
+    
+
+    <ns0:name>2π</ns0:name>
+    
+
+    <ns0:sym>Y</ns0:sym>
+    
+
+    <ns0:desc>Pylewell Inner</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.729667" lon="-1.525500">
+    
+
+    <ns0:name>2+</ns0:name>
+    
+
+    <ns0:sym>Y</ns0:sym>
+    
+
+    <ns0:desc>Plus Mark</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.743167" lon="-1.515333">
+    
+
+    <ns0:name>2@</ns0:name>
+    
+
+    <ns0:sym>Y</ns0:sym>
+    
+
+    <ns0:desc>West Reach</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.722000" lon="-1.535500">
+    
+
+    <ns0:name>2V1</ns0:name>
+    
+
+    <ns0:sym>Y</ns0:sym>
+    
+
+    <ns0:desc>Inshore of Mark L</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.722167" lon="-1.512500">
+    
+
+    <ns0:name>2V2</ns0:name>
+    
+
+    <ns0:sym>Y</ns0:sym>
+    
+
+    <ns0:desc>between Marks C &amp; T</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.734333" lon="-1.506667">
+    
+
+    <ns0:name>2V3</ns0:name>
+    
+
+    <ns0:sym>Y</ns0:sym>
+    
+
+    <ns0:desc>South of Jack in Basket</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.747833" lon="-1.487667">
+    
+
+    <ns0:name>2V4</ns0:name>
+    
+
+    <ns0:sym>Y</ns0:sym>
+    
+
+    <ns0:desc>North of Mark E</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.744833" lon="-1.482500">
+    
+
+    <ns0:name>2V5</ns0:name>
+    
+
+    <ns0:sym>Y</ns0:sym>
+    
+
+    <ns0:desc>Between Marks E &amp; G</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.740167" lon="-1.477500">
+    
+
+    <ns0:name>2V6</ns0:name>
+    
+
+    <ns0:sym>Y</ns0:sym>
+    
+
+    <ns0:desc>Between Marks F &amp; G</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+
+  <ns0:wpt lat="50.749667" lon="-1.465500">
+    
+
+    <ns0:name>2V7</ns0:name>
+    
+
+    <ns0:sym>Y</ns0:sym>
+    
+
+    <ns0:desc>Between Marks G &amp; J</ns0:desc>
+    
+
+  </ns0:wpt>
+  
+
+  <ns0:wpt lat="50.798750" lon="-0.900183"><ns0:name>0A - Astra</ns0:name><ns0:sym>R</ns0:sym><ns0:desc>Astra</ns0:desc></ns0:wpt><ns0:wpt lat="50.804167" lon="-0.893333"><ns0:name>0B - Baker</ns0:name><ns0:sym>R</ns0:sym><ns0:desc>Baker</ns0:desc></ns0:wpt><ns0:wpt lat="50.806200" lon="-0.940850"><ns0:name>0CH - Channel</ns0:name><ns0:sym>G</ns0:sym><ns0:desc>Channel</ns0:desc></ns0:wpt><ns0:wpt lat="50.782917" lon="-0.930383"><ns0:name>0CA - Calvert</ns0:name><ns0:sym>G</ns0:sym><ns0:desc>Calvert</ns0:desc></ns0:wpt><ns0:wpt lat="50.811167" lon="-0.870400"><ns0:name>0DE - Deep End</ns0:name><ns0:sym>R</ns0:sym><ns0:desc>Deep End</ns0:desc></ns0:wpt><ns0:wpt lat="50.788083" lon="-0.920333"><ns0:name>0DU - Dunes</ns0:name><ns0:sym>G</ns0:sym><ns0:desc>Dunes</ns0:desc></ns0:wpt><ns0:wpt lat="50.791133" lon="-0.902250"><ns0:name>0EH - East Head</ns0:name><ns0:sym>R</ns0:sym><ns0:desc>East Head</ns0:desc></ns0:wpt><ns0:wpt lat="50.794500" lon="-0.900550"><ns0:name>0EL - Ellanore</ns0:name><ns0:sym>G</ns0:sym><ns0:desc>Ellanore</ns0:desc></ns0:wpt><ns0:wpt lat="50.790383" lon="-0.931367"><ns0:name>0FR - Freddie Brooks</ns0:name><ns0:sym>R</ns0:sym><ns0:desc>Freddie Brooks</ns0:desc></ns0:wpt><ns0:wpt lat="50.791083" lon="-0.923700"><ns0:name>0G - Gardener</ns0:name><ns0:sym>R</ns0:sym><ns0:desc>Gardener</ns0:desc></ns0:wpt><ns0:wpt lat="50.809433" lon="-0.873267"><ns0:name>0I - Itchenor</ns0:name><ns0:sym>G</ns0:sym><ns0:desc>Itchenor</ns0:desc></ns0:wpt><ns0:wpt lat="50.792717" lon="-0.913467"><ns0:name>0JD - John Davis</ns0:name><ns0:sym>R</ns0:sym><ns0:desc>John Davis</ns0:desc></ns0:wpt><ns0:wpt lat="50.794333" lon="-0.912550"><ns0:name>0JF - Johns Folly</ns0:name><ns0:sym>R</ns0:sym><ns0:desc>Johns Folly</ns0:desc></ns0:wpt><ns0:wpt lat="50.793900" lon="-0.909417"><ns0:name>0L - Lowles</ns0:name><ns0:sym>G</ns0:sym><ns0:desc>Lowles</ns0:desc></ns0:wpt><ns0:wpt lat="50.813600" lon="-0.945933"><ns0:name>0M - Marker</ns0:name><ns0:sym>G</ns0:sym><ns0:desc>Marker</ns0:desc></ns0:wpt><ns0:wpt lat="50.807450" lon="-0.890900"><ns0:name>0PA - Park</ns0:name><ns0:sym>G</ns0:sym><ns0:desc>Park</ns0:desc></ns0:wpt><ns0:wpt lat="50.802250" lon="-0.893917"><ns0:name>0PE - Peacock</ns0:name><ns0:sym>R</ns0:sym><ns0:desc>Peacock</ns0:desc></ns0:wpt><ns0:wpt lat="50.797883" lon="-0.923217"><ns0:name>0PI - Pivot</ns0:name><ns0:sym>Y</ns0:sym><ns0:desc>Pivot</ns0:desc></ns0:wpt><ns0:wpt lat="50.793417" lon="-0.923650"><ns0:name>0R - Runway</ns0:name><ns0:sym>G</ns0:sym><ns0:desc>Runway</ns0:desc></ns0:wpt><ns0:wpt lat="50.786133" lon="-0.934000"><ns0:name>0SA - Sandy</ns0:name><ns0:sym>Y</ns0:sym><ns0:desc>Sandy</ns0:desc></ns0:wpt><ns0:wpt lat="50.824883" lon="-0.903133"><ns0:name>0SY - Stanbury</ns0:name><ns0:sym>G</ns0:sym><ns0:desc>Stanbury</ns0:desc></ns0:wpt><ns0:wpt lat="50.808233" lon="-0.903367"><ns0:name>0ST - Star</ns0:name><ns0:sym>G</ns0:sym><ns0:desc>Star</ns0:desc></ns0:wpt><ns0:wpt lat="50.790583" lon="-0.933267"><ns0:name>0SP - SW Pilsey</ns0:name><ns0:sym>G</ns0:sym><ns0:desc>SW Pilsey</ns0:desc></ns0:wpt><ns0:wpt lat="50.795917" lon="-0.901017"><ns0:name>0TH - Thorney</ns0:name><ns0:sym>G</ns0:sym><ns0:desc>Thorney</ns0:desc></ns0:wpt><ns0:wpt lat="50.779700" lon="-0.931717"><ns0:name>0TR - Treloar</ns0:name><ns0:sym>R</ns0:sym><ns0:desc>Treloar</ns0:desc></ns0:wpt><ns0:wpt lat="50.809133" lon="-0.888567"><ns0:name>0W - Wear</ns0:name><ns0:sym>R</ns0:sym><ns0:desc>Wear</ns0:desc></ns0:wpt></ns0:gpx>

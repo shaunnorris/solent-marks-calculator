@@ -9,7 +9,7 @@ def client():
 
 def test_calculate_button_positioned_right_of_course_list(client):
     """Test that the Calculate button is positioned to the right of the course list display"""
-    response = client.get('/')
+    response = client.get('/course')
     assert response.status_code == 200
     
     html = response.data.decode('utf-8')
@@ -91,7 +91,7 @@ def test_course_with_two_marks_both_tagged(client):
 
 def test_frontend_includes_mark_tag_styling(client):
     """Test that the frontend HTML includes the mark tag styling"""
-    response = client.get('/')
+    response = client.get('/course')
     assert response.status_code == 200
     
     html = response.data.decode('utf-8')
@@ -109,7 +109,7 @@ def test_frontend_includes_mark_tag_styling(client):
 
 def test_frontend_includes_comprehensive_tag_display(client):
     """Test that the frontend includes all necessary code for displaying tags in all locations"""
-    response = client.get('/')
+    response = client.get('/course')
     assert response.status_code == 200
     
     html = response.data.decode('utf-8')
@@ -143,7 +143,7 @@ def test_frontend_includes_comprehensive_tag_display(client):
 
 def test_course_leg_table_tag_display(client):
     """Test that the course leg cards properly display tags with correct CSS classes"""
-    response = client.get('/')
+    response = client.get('/course')
     assert response.status_code == 200
     
     html = response.data.decode('utf-8')
@@ -159,7 +159,7 @@ def test_course_leg_table_tag_display(client):
 
 def test_map_preserves_port_starboard_colors(client):
     """Test that the map preserves port/starboard colors while adding separate blue tags"""
-    response = client.get('/')
+    response = client.get('/course')
     assert response.status_code == 200
     
     html = response.data.decode('utf-8')
@@ -181,7 +181,7 @@ def test_map_preserves_port_starboard_colors(client):
 
 def test_frontend_includes_leg_number_functionality(client):
     """Test that the frontend includes leg number functionality in cards and map"""
-    response = client.get('/')
+    response = client.get('/course')
     assert response.status_code == 200
     
     html = response.data.decode('utf-8')
@@ -203,7 +203,7 @@ def test_frontend_includes_leg_number_functionality(client):
 def test_frontend_handles_repeated_legs():
     """Test that repeated legs are handled correctly to avoid overlapping labels"""
     with app.test_client() as client:
-        response = client.get('/')
+        response = client.get('/course')
         assert response.status_code == 200
         
         html = response.data.decode('utf-8')
@@ -223,7 +223,7 @@ def test_frontend_handles_repeated_legs():
 def test_frontend_handles_combined_start_finish_tags():
     """Test that Start/Finish tags are combined into a single label when both apply to the same mark"""
     with app.test_client() as client:
-        response = client.get('/')
+        response = client.get('/course')
         assert response.status_code == 200
         
         html = response.data.decode('utf-8')
@@ -244,7 +244,7 @@ def test_frontend_handles_combined_start_finish_tags():
 def test_table_shows_combined_start_finish_tags():
     """Test that the cards show combined Start/Finish tags when a mark has both tags"""
     with app.test_client() as client:
-        response = client.get('/')
+        response = client.get('/course')
         assert response.status_code == 200
         
         html = response.data.decode('utf-8')

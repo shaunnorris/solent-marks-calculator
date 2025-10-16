@@ -3,7 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Mark Lookup - Solent Marks Calculator</title>
+    <title>Solent Racing Mark Bearing Calculator</title>
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    
     <style>
         * {
             margin: 0;
@@ -381,7 +388,7 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>Mark Lookup Calculator</h1>
+            <h1>Solent Racing Mark Bearing Calculator</h1>
         </div>
         
         <div class="content">
@@ -401,6 +408,7 @@
                                     <span>{{ zone }}</span>
                                 </span>
                                 {% set zone_labels = {
+                                    '0': 'Itchenor',
                                     '1': 'Western Approaches',
                                     '2': 'West Solent',
                                     '3': 'Mid Solent (W)',
@@ -442,6 +450,11 @@
                 <div class="error" id="error"></div>
                 
                 <div class="result" id="result">
+                    <!-- Route Info Display -->
+                    <div id="routeInfo" class="route-info" style="display: none; text-align: center; margin-bottom: 15px; font-size: 14px; color: #7f8c8d; font-weight: 500;">
+                        <span id="routeFrom"></span> → <span id="routeTo"></span>
+                    </div>
+                    
                     <div class="results-row">
                         <div class="result-item">
                             <div class="result-label">Bearing</div>
@@ -453,6 +466,12 @@
                             <div class="result-large" id="distanceResult">---<span class="result-unit">nm</span></div>
                         </div>
                     </div>
+                </div>
+                
+                <!-- Map Section -->
+                <div id="mapSection" style="display: block; margin-top: 25px;">
+                    <div class="section-title" style="margin-bottom: 15px;">Route Map</div>
+                    <div id="map" style="height: 400px; border-radius: 12px; overflow: hidden; border: 2px solid #e1e8ed;"></div>
                 </div>
             </div>
         </div>
@@ -522,13 +541,13 @@
             filteredMarks.forEach(mark => {
                 const optionFrom = document.createElement('option');
                 optionFrom.value = mark.name;
-                optionFrom.textContent = `${mark.name} - ${mark.description}`;
+                optionFrom.textContent = mark.name; // Full name: "0A - Astra"
                 optionFrom.dataset.shortName = mark.name.split(' - ')[0];
                 fromMarkSelect.appendChild(optionFrom);
                 
                 const optionTo = document.createElement('option');
                 optionTo.value = mark.name;
-                optionTo.textContent = `${mark.name} - ${mark.description}`;
+                optionTo.textContent = mark.name; // Full name: "0A - Astra"
                 optionTo.dataset.shortName = mark.name.split(' - ')[0];
                 toMarkSelect.appendChild(optionTo);
             });
@@ -599,6 +618,295 @@
             checkbox.addEventListener('change', updateDropdowns);
         });
 
+        // Map functionality
+        let map = null;
+        let routeLayer = null;
+        
+        // Tile caching for Solent area
+        const TILE_CACHE_KEY = 'solent_tiles_cache';
+        const CACHE_VERSION = '1.0';
+        const SOLENT_BOUNDS = {
+            north: 50.8,
+            south: 50.6,
+            east: -1.5,
+            west: -2.0
+        };
+        
+        // Check if tile is within Solent bounds
+        function isTileInSolentBounds(x, y, z) {
+            const n = Math.pow(2, z);
+            const lonDeg = x / n * 360.0 - 180.0;
+            const latRad = Math.atan(Math.sinh(Math.PI * (1 - 2 * y / n)));
+            const latDeg = latRad * 180.0 / Math.PI;
+            
+            return latDeg >= SOLENT_BOUNDS.south && latDeg <= SOLENT_BOUNDS.north &&
+                   lonDeg >= SOLENT_BOUNDS.west && lonDeg <= SOLENT_BOUNDS.east;
+        }
+        
+        // Custom tile layer with caching
+        function createCachedTileLayer() {
+            return L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors',
+                maxZoom: 19
+            });
+        }
+        
+        // Enhanced tile caching with localStorage
+        function createAdvancedCachedTileLayer() {
+            return L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+                attribution: '© OpenStreetMap contributors, © CARTO',
+                subdomains: 'abcd',
+                maxZoom: 20,
+                tileSize: 256,
+                zoomOffset: 0,
+                // Custom tile loading with cache
+                tileLoadFunction: function(tile, url) {
+                    const tileKey = url.replace(/https:\/\/[^\/]+/, '');
+                    const cachedTile = localStorage.getItem(TILE_CACHE_KEY + tileKey);
+                    
+                    if (cachedTile && isTileInSolentBounds(
+                        parseInt(tileKey.split('/')[2]), 
+                        parseInt(tileKey.split('/')[3]), 
+                        parseInt(tileKey.split('/')[1])
+                    )) {
+                        // Use cached tile
+                        tile.src = cachedTile;
+                    } else {
+                        // Load from server and cache if in Solent
+                        tile.onload = function() {
+                            if (isTileInSolentBounds(
+                                parseInt(tileKey.split('/')[2]), 
+                                parseInt(tileKey.split('/')[3]), 
+                                parseInt(tileKey.split('/')[1])
+                            )) {
+                                // Convert to data URL and cache
+                                const canvas = document.createElement('canvas');
+                                const ctx = canvas.getContext('2d');
+                                canvas.width = tile.naturalWidth;
+                                canvas.height = tile.naturalHeight;
+                                ctx.drawImage(tile, 0, 0);
+                                const dataURL = canvas.toDataURL();
+                                localStorage.setItem(TILE_CACHE_KEY + tileKey, dataURL);
+                            }
+                        };
+                        tile.src = url;
+                    }
+                }
+            });
+        }
+        
+        // Cache management
+        function manageTileCache() {
+            const maxCacheSize = 50 * 1024 * 1024; // 50MB limit
+            let totalSize = 0;
+            const cacheEntries = [];
+            
+            // Calculate current cache size
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                if (key && key.startsWith(TILE_CACHE_KEY)) {
+                    const value = localStorage.getItem(key);
+                    const size = new Blob([value]).size;
+                    totalSize += size;
+                    cacheEntries.push({ key, size, timestamp: Date.now() });
+                }
+            }
+            
+            // If cache is too large, remove oldest entries
+            if (totalSize > maxCacheSize) {
+                cacheEntries.sort((a, b) => a.timestamp - b.timestamp);
+                const entriesToRemove = Math.floor(cacheEntries.length * 0.3); // Remove 30%
+                
+                for (let i = 0; i < entriesToRemove; i++) {
+                    localStorage.removeItem(cacheEntries[i].key);
+                }
+            }
+        }
+
+        // Symbol to color mapping function
+        function getMarkerColor(symbol) {
+            if (!symbol) return '#3498db'; // Default blue
+            
+            // Color mappings
+                const colorMap = {
+                    'R': '#e74c3c',      // Red
+                    'G': '#27ae60',      // Green  
+                    'Y': '#f1c40f',      // Bright Yellow
+                    'B': '#2c3e50',      // Black/Dark
+                    'W': '#ecf0f1',      // White/Light gray
+                    'O': '#e67e22'       // Orange
+                };
+            
+            const sym = symbol.toUpperCase().trim();
+            
+            // Single color
+            if (sym.length === 1 && colorMap[sym]) {
+                return colorMap[sym];
+            }
+            
+            // Two colors - striped (RW, YB, etc)
+            if (sym.length === 2) {
+                const color1 = colorMap[sym[0]] || '#3498db';
+                const color2 = colorMap[sym[1]] || '#3498db';
+                return `linear-gradient(to right, ${color1} 0%, ${color1} 50%, ${color2} 50%, ${color2} 100%)`;
+            }
+            
+            // Three+ colors - striped (YBY, BYB, etc) - use CSS gradient
+            if (sym.length >= 3) {
+                const colors = [];
+                for (let char of sym) {
+                    colors.push(colorMap[char] || '#3498db');
+                }
+                // Return gradient string for striped appearance
+                return `linear-gradient(to right, ${colors[0]} 0%, ${colors[0]} 33%, ${colors[1]} 33%, ${colors[1]} 66%, ${colors[2] || colors[0]} 66%, ${colors[2] || colors[0]} 100%)`;
+            }
+            
+            return '#3498db'; // Default blue
+        }
+
+        function initMap() {
+            if (map) return; // Already initialized
+            
+            try {
+                map = L.map('map').setView([50.7, -1.5], 5);
+                
+                // Use simple cached tile layer (browser handles caching automatically)
+                createCachedTileLayer().addTo(map);
+                
+                console.log('Map initialized successfully');
+            } catch (error) {
+                console.error('Map initialization failed:', error);
+                // Fallback to basic tile layer
+                map = L.map('map').setView([50.7, -1.5], 5);
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '© OpenStreetMap contributors',
+                    maxZoom: 19
+                }).addTo(map);
+            }
+        }
+
+        function drawRoute(fromMarkData, toMarkData, bearing, distance) {
+            console.log('drawRoute called with:', fromMarkData, toMarkData, bearing, distance);
+            
+            if (!map) {
+                console.log('Map not initialized, calling initMap()');
+                initMap();
+            }
+            
+            if (!map) {
+                console.error('Failed to initialize map');
+                return;
+            }
+            
+            console.log('Map initialized, proceeding with route drawing');
+            if (routeLayer) {
+                map.removeLayer(routeLayer);
+            }
+            
+            // Create layer group for route elements
+            routeLayer = L.layerGroup().addTo(map);
+            
+            // Get colors from symbol field
+            const fromColor = getMarkerColor(fromMarkData.symbol);
+            const toColor = getMarkerColor(toMarkData.symbol);
+            
+            // Determine if color is a gradient (for striped marks)
+            const fromIsGradient = fromColor.includes('gradient');
+            const toIsGradient = toColor.includes('gradient');
+            
+            // Add from marker with symbol color (round)
+            const fromMarker = L.marker([fromMarkData.lat, fromMarkData.lon], {
+                icon: L.divIcon({
+                    className: 'custom-marker',
+                    html: `<div style="background: ${fromColor}; color: white; padding: 8px; border-radius: 50%; font-weight: 600; white-space: nowrap; text-shadow: 1px 1px 2px rgba(0,0,0,0.5); border: 2px solid white; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; font-size: 12px;">${fromMarkData.name.split(' - ')[0]}</div>`,
+                    iconSize: [30, 30],
+                    iconAnchor: [15, 15]
+                })
+            });
+            fromMarker.addTo(routeLayer);
+            fromMarker.bindPopup(`<strong>${fromMarkData.name}</strong><br>${fromMarkData.description || ''}<br><em>Color: ${fromMarkData.symbol || 'N/A'}</em>`);
+            
+            // Add to marker with symbol color (round)
+            const toMarker = L.marker([toMarkData.lat, toMarkData.lon], {
+                icon: L.divIcon({
+                    className: 'custom-marker',
+                    html: `<div style="background: ${toColor}; color: white; padding: 8px; border-radius: 50%; font-weight: 600; white-space: nowrap; text-shadow: 1px 1px 2px rgba(0,0,0,0.5); border: 2px solid white; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; font-size: 12px;">${toMarkData.name.split(' - ')[0]}</div>`,
+                    iconSize: [30, 30],
+                    iconAnchor: [15, 15]
+                })
+            });
+            toMarker.addTo(routeLayer);
+            toMarker.bindPopup(`<strong>${toMarkData.name}</strong><br>${toMarkData.description || ''}<br><em>Color: ${toMarkData.symbol || 'N/A'}</em>`);
+            
+            // Draw line between marks
+            const line = L.polyline(
+                [[fromMarkData.lat, fromMarkData.lon], [toMarkData.lat, toMarkData.lon]],
+                { color: '#3498db', weight: 3, opacity: 0.7 }
+            );
+            line.addTo(routeLayer);
+            
+            // Add arrow at midpoint pointing to destination
+            const midLat = (fromMarkData.lat + toMarkData.lat) / 2;
+            const midLon = (fromMarkData.lon + toMarkData.lon) / 2;
+            
+            const arrowIcon = L.divIcon({
+                className: 'arrow-icon',
+                html: `<div style="
+                    width: 0; 
+                    height: 0; 
+                    border-left: 10px solid transparent;
+                    border-right: 10px solid transparent;
+                    border-bottom: 20px solid #3498db;
+                    transform: rotate(${bearing}deg);
+                    transform-origin: 50% 75%;
+                "></div>`,
+                iconSize: [20, 20],
+                iconAnchor: [10, 10]
+            });
+            
+            const arrowMarker = L.marker([midLat, midLon], { icon: arrowIcon });
+            arrowMarker.addTo(routeLayer);
+            
+            // Add bearing and distance overlay
+            const overlayIcon = L.divIcon({
+                className: 'overlay-icon',
+                html: `<div style="
+                    background: rgba(255, 255, 255, 0.95);
+                    border: 2px solid #3498db;
+                    border-radius: 8px;
+                    padding: 8px 12px;
+                    font-weight: 600;
+                    font-size: 14px;
+                    color: #2c3e50;
+                    text-align: center;
+                    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+                    white-space: nowrap;
+                ">
+                    <div style="font-size: 12px; color: #7f8c8d; margin-bottom: 2px;">${fromMarkData.name.split(' - ')[0]} → ${toMarkData.name.split(' - ')[0]}</div>
+                    <div style="color: #e74c3c;">${bearing}°</div>
+                    <div style="color: #27ae60;">${distance}nm</div>
+                </div>`,
+                iconSize: null,
+                iconAnchor: [0, 0]
+            });
+            
+            const overlayMarker = L.marker([midLat, midLon], { 
+                icon: overlayIcon,
+                interactive: false
+            });
+            overlayMarker.addTo(routeLayer);
+            
+            // Fit map to show both marks
+            const bounds = L.latLngBounds([
+                [fromMarkData.lat, fromMarkData.lon],
+                [toMarkData.lat, toMarkData.lon]
+            ]);
+            map.fitBounds(bounds, { padding: [50, 50] });
+            
+            // Show map section
+            document.getElementById('mapSection').style.display = 'block';
+        }
+
         // Calculate button handler
         calculateBtn.addEventListener('click', async function() {
             const fromMark = fromMarkSelect.value;
@@ -611,6 +919,8 @@
             if (!fromMark || !toMark) {
                 errorDiv.textContent = 'Please select both starting and destination marks';
                 errorDiv.classList.add('show');
+                resultDiv.classList.remove('show');
+                document.getElementById('routeInfo').style.display = 'none';
                 return;
             }
             
@@ -627,18 +937,45 @@
                     bearingResult.innerHTML = `${data.bearing}<span class="result-unit">°</span>`;
                     distanceResult.innerHTML = `${data.distance}<span class="result-unit">nm</span>`;
                     resultDiv.classList.add('show');
+                    
+                    // Display route info
+                    const fromMarkData = allMarks.find(m => m.name === fromMark);
+                    const toMarkData = allMarks.find(m => m.name === toMark);
+                    if (fromMarkData && toMarkData) {
+                        document.getElementById('routeFrom').textContent = `From: ${fromMarkData.name}`;
+                        document.getElementById('routeTo').textContent = `To: ${toMarkData.name}`;
+                        document.getElementById('routeInfo').style.display = 'block';
+                    }
+                    
+                    // Draw route on map
+                    console.log('Found mark data:', fromMarkData, toMarkData);
+                    if (fromMarkData && toMarkData) {
+                        console.log('Calling drawRoute...');
+                        drawRoute(fromMarkData, toMarkData, data.bearing, data.distance);
+                    } else {
+                        console.error('Could not find mark data for:', fromMark, toMark);
+                    }
                 } else {
                     errorDiv.textContent = data.error || 'An error occurred';
                     errorDiv.classList.add('show');
+                    document.getElementById('routeInfo').style.display = 'none';
                 }
             } catch (error) {
                 errorDiv.textContent = 'Network error: ' + error.message;
                 errorDiv.classList.add('show');
+                document.getElementById('routeInfo').style.display = 'none';
             }
         });
 
         // Load marks when page loads
         document.addEventListener('DOMContentLoaded', function() {
+            // Manage tile cache on page load
+            manageTileCache();
+            
+            // Initialize map immediately for debugging
+            console.log('Page loaded, initializing map...');
+            initMap();
+            
             loadAllMarks();
             
             // Set Zone 2 as default but keep filter collapsed

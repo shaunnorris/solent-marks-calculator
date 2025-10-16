@@ -81,7 +81,13 @@ def get_marks():
 
 @app.route('/')
 def index():
-    """Main page"""
+    """Redirect to lookup page (new homepage)"""
+    from flask import redirect, url_for
+    return redirect(url_for('lookup'))
+
+@app.route('/course')
+def course_page():
+    """Course calculator page (old homepage)"""
     marks = load_gpx_marks()
     zones = get_available_zones(marks)
     return render_template('index.html', marks=marks, zones=zones)

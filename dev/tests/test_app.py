@@ -61,16 +61,15 @@ def test_calculate_distance():
     assert 55.0 < distance < 65.0  # Should be approximately 60 nautical miles
 
 def test_index_route(client):
-    """Test the main page loads correctly"""
-    response = client.get('/')
-    assert response.status_code == 200
-    # Accept either 'Course Legs' or 'Current Course' as present in the page
-    assert b'Course Legs' in response.data or b'Current Course' in response.data
+    """Test the main page redirects to /lookup"""
+    response = client.get('/', follow_redirects=False)
+    assert response.status_code == 302
+    assert response.location.endswith('/lookup')
 
 def test_calculate_route_success(client):
     """Test successful calculation request"""
-    # First get the page to load marks
-    response = client.get('/')
+    # First get the course page to load marks
+    response = client.get('/course')
     assert response.status_code == 200
     
     # Get some marks to test with
