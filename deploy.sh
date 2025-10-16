@@ -77,11 +77,29 @@ if [ -f "$DEPLOY_DIR/.configured" ]; then
     exit 0
 fi
 
+# Check for existing configuration
+EXISTING_DOMAIN=""
+EXISTING_EMAIL=""
+
+if [ -f "$DEPLOY_DIR/.domain" ]; then
+    EXISTING_DOMAIN=$(cat "$DEPLOY_DIR/.domain")
+fi
+
+if [ -f "$DEPLOY_DIR/.email" ]; then
+    EXISTING_EMAIL=$(cat "$DEPLOY_DIR/.email")
+fi
+
 # Get domain name
 echo ""
 echo "📝 Configuration"
 echo "----------------"
-read -p "Enter your domain name (e.g., bearings.lymxod.org.uk): " DOMAIN_NAME
+
+if [ -n "$EXISTING_DOMAIN" ]; then
+    read -p "Enter your domain name [$EXISTING_DOMAIN]: " DOMAIN_NAME
+    DOMAIN_NAME=${DOMAIN_NAME:-$EXISTING_DOMAIN}
+else
+    read -p "Enter your domain name (e.g., bearings.lymxod.org.uk): " DOMAIN_NAME
+fi
 
 if [ -z "$DOMAIN_NAME" ]; then
     echo "❌ Domain name is required"
@@ -93,7 +111,12 @@ echo "ℹ️  Domain: $DOMAIN_NAME"
 echo ""
 
 # Get email for Let's Encrypt
-read -p "Enter your email for SSL certificate notifications: " EMAIL
+if [ -n "$EXISTING_EMAIL" ]; then
+    read -p "Enter your email for SSL certificate notifications [$EXISTING_EMAIL]: " EMAIL
+    EMAIL=${EMAIL:-$EXISTING_EMAIL}
+else
+    read -p "Enter your email for SSL certificate notifications: " EMAIL
+fi
 
 if [ -z "$EMAIL" ]; then
     echo "❌ Email is required"
@@ -337,6 +360,7 @@ echo "✅ Update script created"
 # Mark as configured
 touch "$DEPLOY_DIR/.configured"
 echo "$DOMAIN_NAME" > "$DEPLOY_DIR/.domain"
+echo "$EMAIL" > "$DEPLOY_DIR/.email"
 
 # Final check
 echo ""
