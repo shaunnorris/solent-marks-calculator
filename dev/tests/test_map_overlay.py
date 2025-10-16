@@ -38,8 +38,8 @@ class TestMapOverlay:
     def test_calculate_endpoint_returns_distance(self, client):
         """Test that the calculate endpoint returns distance in response."""
         # Test with valid marks
-        response = client.post('/lookup/calculate', 
-                             json={'from_mark': '2L - Royal Lymington YC', 'to_mark': '2E - Circle Marine Insurance'},
+        response = client.post('/lookup/calculate',
+                             json={'from_mark': '2A', 'to_mark': '2B'},
                              content_type='application/json')
         
         assert response.status_code == 200

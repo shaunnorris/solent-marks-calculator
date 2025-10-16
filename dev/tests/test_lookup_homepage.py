@@ -23,7 +23,7 @@ def test_root_redirect_works(client):
     """Test that following the redirect works"""
     response = client.get('/', follow_redirects=True)
     assert response.status_code == 200
-    assert b'Mark Lookup Calculator' in response.data
+    assert b'Solent Racing Mark Bearing Calculator' in response.data
 
 
 def test_lookup_has_map_container(client):

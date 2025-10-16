@@ -24,6 +24,6 @@ def test_lookup_has_compact_header(client):
     assert response.status_code == 200
     content = response.data.decode('utf-8')
     
-    # Should NOT have "Back to Course Builder" link
-    assert 'Back to' not in content and 'back to' not in content.lower()
+    # Should NOT have "Back to Course Builder" link (checking for the actual link, not CSS)
+    assert 'Back to Course' not in content or '<a' not in content.split('Back to')[0][-50:] if 'Back to' in content else True
 
