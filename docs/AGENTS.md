@@ -78,6 +78,13 @@ sudo apt-get update
 sudo apt-get install trivy -y
 ```
 
+## Deployment Practices
+- **NEVER manually hack config files on production servers**
+- **All changes must go through deployment scripts** (deploy.sh, update.sh)
+- Simple, repeatable deployments via automation
+- If config needs changing, update the script and redeploy
+- Production servers should be treated as immutable infrastructure
+
 ## Notes for Future Sessions
 - User prefers concise, actionable responses
 - Focus on best practices and official methods

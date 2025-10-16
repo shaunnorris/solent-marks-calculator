@@ -240,6 +240,36 @@ server {
     add_header X-Content-Type-Options "nosniff" always;
     add_header X-XSS-Protection "1; mode=block" always;
 
+    # Analytics (Umami) - login required
+    location /analytics/ {
+        proxy_pass http://umami:3000/;
+        proxy_set_header Host \$host;
+        proxy_set_header X-Real-IP \$remote_addr;
+        proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto \$scheme;
+        proxy_set_header X-Forwarded-Host \$server_name;
+    }
+    
+    location = /analytics {
+        return 301 /analytics/;
+    }
+    
+    # Analytics tracking script (public)
+    location /script.js {
+        proxy_pass http://umami:3000/script.js;
+        proxy_set_header Host \$host;
+        add_header Cache-Control "public, max-age=3600";
+    }
+    
+    # Analytics API endpoint (for tracking data)
+    location /api/send {
+        proxy_pass http://umami:3000/api/send;
+        proxy_set_header Host \$host;
+        proxy_set_header X-Real-IP \$remote_addr;
+        proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto \$scheme;
+    }
+
     # Proxy to Flask app
     location / {
         proxy_pass http://web:8000;
