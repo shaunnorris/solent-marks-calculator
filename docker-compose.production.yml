@@ -9,6 +9,7 @@ services:
       - app-network
     environment:
       - PYTHONUNBUFFERED=1
+      - UMAMI_WEBSITE_ID=${UMAMI_WEBSITE_ID:-placeholder}
 
   umami:
     image: ghcr.io/umami-software/umami:postgresql-latest

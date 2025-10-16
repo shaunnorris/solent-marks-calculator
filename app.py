@@ -102,9 +102,11 @@ def privacy():
 @app.route('/lookup')
 def lookup():
     """Lookup page - simple bearing and distance calculator"""
+    import os
     marks = load_gpx_marks()
     zones = get_available_zones(marks)
-    return render_template('lookup.html', marks=marks, zones=zones)
+    umami_website_id = os.environ.get('UMAMI_WEBSITE_ID', 'placeholder')
+    return render_template('lookup.html', marks=marks, zones=zones, umami_website_id=umami_website_id)
 
 
 

@@ -100,6 +100,12 @@ if [ -z "$EMAIL" ]; then
     exit 1
 fi
 
+# Umami website ID will be configured after first deployment
+UMAMI_ID="placeholder"
+echo ""
+echo "ℹ️  Analytics will be available after deployment"
+echo "   You'll configure the website ID in a second step"
+
 # Download configuration files
 echo ""
 echo "📥 Downloading configuration files..."
@@ -117,7 +123,7 @@ docker pull ghcr.io/shaunnorris/solent-marks-calculator:latest
 
 echo ""
 echo "🚀 Starting services (HTTP only)..."
-docker compose up -d
+UMAMI_WEBSITE_ID=$UMAMI_ID docker compose up -d
 
 # Wait for services to start
 echo "⏳ Waiting for services to start..."
@@ -320,6 +326,16 @@ echo "=================================================="
 echo ""
 echo "🌐 Your app is now available at:"
 echo "   https://$DOMAIN_NAME"
+echo ""
+echo "📊 Analytics Setup (Next Steps):"
+echo "   1. Login to analytics: https://$DOMAIN_NAME/analytics"
+echo "      Default credentials: admin / umami"
+echo "   2. Change password immediately!"
+echo "   3. Create a website and get the Website ID"
+echo "   4. Set environment variable:"
+echo "      cd $DEPLOY_DIR"
+echo "      echo 'UMAMI_WEBSITE_ID=your-id-here' > .env"
+echo "      sudo docker compose up -d"
 echo ""
 echo "📋 Useful commands:"
 echo "   View logs:        sudo docker compose -f $DEPLOY_DIR/docker-compose.yml logs -f"

@@ -22,14 +22,18 @@ The Solent Racing Mark Bearing Calculator includes integrated **Umami Analytics*
 
 ## First-Time Setup
 
+After deploying the app, analytics will be available but tracking will use a "placeholder" ID. Follow these steps to activate tracking:
+
 ### 1. Login to Analytics Dashboard
 
-Visit https://bearings.lymxod.org.uk/analytics and login with default credentials.
+Visit https://your-domain.com/analytics and login:
+- **Username**: `admin`
+- **Password**: `umami`
 
 ### 2. Change Password
 
 1. Click on your profile (top right)
-2. Go to "Profile"
+2. Go to "Profile"  
 3. Click "Change password"
 4. Set a strong password
 
@@ -39,25 +43,26 @@ Visit https://bearings.lymxod.org.uk/analytics and login with default credential
 2. Click "Add website"
 3. Enter:
    - **Name**: Solent Bearings Calculator
-   - **Domain**: bearings.lymxod.org.uk
+   - **Domain**: your-domain.com
    - **Enable share URL**: (optional)
 4. Click "Save"
-5. Copy the **Website ID** (you'll need this next)
+5. **Copy the Website ID** (looks like: `f0e5b8c5-a009-4b4d-8632-dd6167d4f3df`)
 
-### 4. Update Tracking Code
+### 4. Update Environment Variable
 
-Edit `/opt/bearings-app/nginx.conf` or update the app template with your website ID:
+Set the website ID on your server:
 
-```html
-<!-- Replace 'placeholder' with your actual website ID -->
-<script defer src="/script.js" data-website-id="YOUR-WEBSITE-ID"></script>
-```
-
-Then rebuild:
 ```bash
 cd /opt/bearings-app
+
+# Create .env file with your website ID
+echo "UMAMI_WEBSITE_ID=f0e5b8c5-a009-4b4d-8632-dd6167d4f3df" > .env
+
+# Restart services to apply
 sudo docker compose up -d
 ```
+
+That's it! Analytics tracking is now active. Visit your site and check the dashboard to see real-time stats.
 
 ## Configuration
 
