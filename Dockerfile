@@ -20,6 +20,7 @@ RUN pip install --no-cache-dir --user -r requirements.txt
 COPY app.py .
 COPY 2025scra.gpx .
 COPY templates ./templates/
+COPY dev ./dev/
 
 # Stage 2: Production stage
 FROM python:3.12-slim

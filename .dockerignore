@@ -28,7 +28,7 @@ ENV/
 Thumbs.db
 
 # Development files
-dev/
+# dev/ - commented out to allow tests in CI/CD
 *.log
 
 # Deployment scripts (not needed in container)
