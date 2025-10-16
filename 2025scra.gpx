@@ -544,6 +544,20 @@
 
   </ns0:wpt>
   
+  <ns0:wpt lat="50.745167" lon="-1.500000">
+    
+
+    <ns0:name>2$ - Dollar</ns0:name>
+    
+
+    <ns0:sym>Y</ns0:sym>
+    
+
+    <ns0:desc>Dollar</ns0:desc>
+    
+
+  </ns0:wpt>
+  
 
 
   <ns0:wpt lat="50.714333" lon="-1.49">

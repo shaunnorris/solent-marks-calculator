@@ -22,6 +22,7 @@ This file contains project-specific context and user preferences for AI agents w
 - **Test-Driven Development (TDD)** and **Behavior-Driven Development (BDD)** with pytest
 - **ALWAYS write tests BEFORE writing functionality code**
 - All tests must ALWAYS pass - no exceptions
+- **NEVER push to GitHub without confirming all tests pass first**
 - Always run tests after edits
 - Fix warnings at root cause, don't silence them
 - Include linting in standard test runs
