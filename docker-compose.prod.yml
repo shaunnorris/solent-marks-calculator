@@ -3,8 +3,6 @@ version: '3.8'
 # Production environment - SSL with Let's Encrypt
 services:
   web:
-    ports:
-      - "127.0.0.1:8000:8000"
     restart: always
     deploy:
       resources:

@@ -52,8 +52,9 @@ docker-compose logs -f
 **Using an external reverse proxy (Caddy, Traefik, etc.)**
 
 - Leave the bundled Nginx container disabled (it now sits behind an optional `nginx` profile).
-- Bind the Flask app only to localhost in production by combining the prod override, which no longer declares the Nginx service:
+- Bind the Flask app to any host/port by setting `WEB_HOST_PORT` in your `.env` (defaults to `8000:8000`). For production, pin it to loopback and use the prod override:
   ```bash
+  export WEB_HOST_PORT=127.0.0.1:8000
   docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
   ```
 - Point your reverse proxy at `http://127.0.0.1:8000` and handle TLS there (example Caddy block):
@@ -89,7 +90,7 @@ docker logs -f solent-marks
 
 ### SSL/TLS Setup
 
-> **Note:** The instructions below apply to the optional bundled Nginx container. Start it with `docker-compose --profile nginx up -d` (without the production override) if you want Caddy-less deployments.
+> **Note:** The instructions below apply to the optional bundled Nginx container. Start it with `docker-compose --profile nginx up -d` (without the production override) if you want Caddy-less deployments, and leave `WEB_HOST_PORT` unset so the container publishes 8000/80 as before.
 
 1. **Update nginx-docker.conf** with your domain:
    ```nginx
