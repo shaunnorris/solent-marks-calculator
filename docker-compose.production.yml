@@ -5,6 +5,8 @@ services:
     image: ghcr.io/shaunnorris/solent-marks-calculator:latest
     container_name: bearings-app
     restart: unless-stopped
+    ports:
+      - "${WEB_HOST_PORT:-8000}:8000"
     networks:
       - app-network
     environment:
