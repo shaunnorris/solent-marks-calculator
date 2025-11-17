@@ -52,7 +52,7 @@ docker-compose logs -f
 **Using an external reverse proxy (Caddy, Traefik, etc.)**
 
 - Leave the bundled Nginx container disabled (it now sits behind an optional `nginx` profile).
-- Bind the Flask app only to localhost in production by combining the prod override:
+- Bind the Flask app only to localhost in production by combining the prod override, which no longer declares the Nginx service:
   ```bash
   docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
   ```
@@ -63,7 +63,7 @@ docker-compose logs -f
       encode gzip
   }
   ```
-- If you still want the internal Nginx container, enable the profile explicitly:
+- If you still want the internal Nginx container (with its own TLS termination), enable the profile explicitly and skip the prod override:
   ```bash
   docker-compose --profile nginx up -d
   ```
@@ -89,7 +89,7 @@ docker logs -f solent-marks
 
 ### SSL/TLS Setup
 
-> **Note:** The instructions below apply to the optional bundled Nginx container. Start it with `docker-compose --profile nginx up -d`.
+> **Note:** The instructions below apply to the optional bundled Nginx container. Start it with `docker-compose --profile nginx up -d` (without the production override) if you want Caddy-less deployments.
 
 1. **Update nginx-docker.conf** with your domain:
    ```nginx
