@@ -37,22 +37,6 @@ services:
     volumes:
       - umami-data:/var/lib/postgresql/data
 
-  nginx:
-    image: nginx:alpine
-    container_name: bearings-nginx
-    restart: unless-stopped
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
-      - /etc/letsencrypt:/etc/letsencrypt:ro
-      - /var/lib/letsencrypt:/var/lib/letsencrypt:ro
-    networks:
-      - app-network
-    depends_on:
-      - web
-      - umami
 
 networks:
   app-network:
@@ -60,4 +44,3 @@ networks:
 
 volumes:
   umami-data:
-
