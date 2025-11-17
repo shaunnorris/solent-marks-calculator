@@ -3,6 +3,8 @@ version: '3.8'
 # Production environment - SSL with Let's Encrypt
 services:
   web:
+    ports:
+      - "127.0.0.1:8000:8000"
     restart: always
     deploy:
       resources:
@@ -11,6 +13,7 @@ services:
           memory: 512M
 
   nginx:
+    profiles: ["nginx"]
     restart: always
     ports:
       - "80:80"
@@ -20,4 +23,3 @@ services:
       - /etc/letsencrypt:/etc/letsencrypt:ro
     environment:
       - ENVIRONMENT=production
-

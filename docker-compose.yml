@@ -57,6 +57,7 @@ services:
     image: nginx:alpine
     container_name: solent-marks-nginx
     restart: unless-stopped
+    profiles: ["nginx"]
     ports:
       - "80:80"
       - "443:443"
@@ -81,4 +82,3 @@ networks:
 
 volumes:
   umami-data:
-
