@@ -20,6 +20,7 @@ RUN pip install --no-cache-dir --user -r requirements.txt
 COPY app.py .
 COPY 2025scra.gpx .
 COPY templates ./templates/
+COPY static ./static/
 COPY dev ./dev/
 
 # Stage 2: Production stage (lean, no tests or dev files)
@@ -38,6 +39,7 @@ COPY --chown=appuser:appuser app.py .
 COPY --chown=appuser:appuser gunicorn-docker.conf.py ./gunicorn.conf.py
 COPY --chown=appuser:appuser 2025scra.gpx .
 COPY --chown=appuser:appuser templates ./templates/
+COPY --chown=appuser:appuser static ./static/
 
 # Set environment variables
 ENV PATH=/home/appuser/.local/bin:$PATH \
@@ -58,4 +60,3 @@ HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
 
 # Run Gunicorn
 CMD ["gunicorn", "--config", "gunicorn.conf.py", "app:app"]
-
