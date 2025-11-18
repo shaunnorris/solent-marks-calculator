@@ -7,6 +7,8 @@ services:
       dockerfile: Dockerfile
     container_name: solent-marks-calculator
     restart: unless-stopped
+    env_file:
+      - .env
     ports:
       - "${WEB_HOST_PORT:-8000}:8000"
     environment:
@@ -50,4 +52,3 @@ services:
 networks:
   app-network:
     driver: bridge
-
