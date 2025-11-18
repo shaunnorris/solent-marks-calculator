@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, jsonify
 # Updated for production deployment
 import xml.etree.ElementTree as ET
 import math
+import os
 
 app = Flask(__name__)
 
@@ -102,11 +103,17 @@ def privacy():
 @app.route('/lookup')
 def lookup():
     """Lookup page - simple bearing and distance calculator"""
-    import os
     marks = load_gpx_marks()
     zones = get_available_zones(marks)
-    umami_website_id = os.environ.get('UMAMI_WEBSITE_ID', 'placeholder')
-    return render_template('lookup.html', marks=marks, zones=zones, umami_website_id=umami_website_id)
+    umami_website_id = os.environ.get('UMAMI_WEBSITE_ID')
+    umami_script_url = os.environ.get('UMAMI_SCRIPT_URL')
+    return render_template(
+        'lookup.html',
+        marks=marks,
+        zones=zones,
+        umami_website_id=umami_website_id,
+        umami_script_url=umami_script_url,
+    )
 
 
 

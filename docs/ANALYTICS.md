@@ -1,202 +1,53 @@
 # Analytics Setup Guide
 
-The Solent Racing Mark Bearing Calculator includes integrated **Umami Analytics** - a lightweight, privacy-friendly, open-source analytics solution.
+All analytics for the Solent stack now flows through a **shared Umami instance** that lives outside this repository. Each application loads the tracking script directly from that centralized service and only needs two environment variables:
 
-## Features
+| Variable | Description |
+| --- | --- |
+| `UMAMI_SCRIPT_URL` | Full URL to the shared Umami JavaScript (for example `https://analytics.xonedesign.com/script.js`). Leave unset to disable tracking. |
+| `UMAMI_WEBSITE_ID` | UUID for this application's property within Umami. |
 
-- ✅ **Privacy-first**: No cookies, GDPR compliant
-- ✅ **Lightweight**: < 2KB tracking script
-- ✅ **Self-hosted**: Your data stays on your server
-- ✅ **Real-time**: Live visitor tracking
-- ✅ **Integrated**: Deployed with your app automatically
+Both values are issued by ops. Keep them in your `.env` and avoid committing them to git.
 
-## Access Analytics Dashboard
-
-**URL**: https://bearings.lymxod.org.uk/analytics
-
-**Default Login:**
-- Username: `admin`
-- Password: `umami`
-
-⚠️ **IMPORTANT**: Change the default password immediately after first login!
-
-## First-Time Setup
-
-After deploying the app, analytics will be available but tracking will use a "placeholder" ID. Follow these steps to activate tracking:
-
-### 1. Login to Analytics Dashboard
-
-Visit https://your-domain.com/analytics and login:
-- **Username**: `admin`
-- **Password**: `umami`
-
-### 2. Change Password
-
-1. Click on your profile (top right)
-2. Go to "Profile"  
-3. Click "Change password"
-4. Set a strong password
-
-### 3. Add Your Website
-
-1. Go to "Settings" → "Websites"
-2. Click "Add website"
-3. Enter:
-   - **Name**: Solent Bearings Calculator
-   - **Domain**: your-domain.com
-   - **Enable share URL**: (optional)
-4. Click "Save"
-5. **Copy the Website ID** (looks like: `f0e5b8c5-a009-4b4d-8632-dd6167d4f3df`)
-
-### 4. Update Environment Variable
-
-Set the website ID on your server:
+## Configure the Marks App
 
 ```bash
-cd /opt/bearings-app
-
-# Create .env file with your website ID
-echo "UMAMI_WEBSITE_ID=f0e5b8c5-a009-4b4d-8632-dd6167d4f3df" > .env
-
-# Restart services to apply
-sudo docker compose up -d
+cd /srv/deploy/solent-marks-calculator
+cat <<'EOF' > .env
+WEB_HOST_PORT=127.0.0.1:8000
+UMAMI_SCRIPT_URL=https://analytics.xonedesign.com/script.js
+UMAMI_WEBSITE_ID=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+EOF
+docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d
 ```
 
-That's it! Analytics tracking is now active. Visit your site and check the dashboard to see real-time stats.
+The template only injects the `<script>` tag when both values are present, so leaving either blank disables analytics.
 
-## Configuration
+## Accessing the Dashboard
 
-### Environment Variables
+- **URL**: provided by ops (for example `https://analytics.xonedesign.com/login`)
+- **Accounts**: personal logins are managed centrally; request access if you need to view metrics.
+- **Websites**: each app gets its own Website ID. If you add a new site, create the property in the shared Umami instance and update the `.env`.
 
-Set in `/opt/bearings-app/.env`:
+## Custom Events
 
-```bash
-# Generate a random secret (required for production)
-UMAMI_SECRET=$(openssl rand -base64 32)
-```
-
-Then restart:
-```bash
-cd /opt/bearings-app
-sudo docker compose up -d
-```
-
-### Database
-
-Analytics data is stored in PostgreSQL:
-- **Container**: `bearings-analytics-db`
-- **Volume**: `umami-data`
-- **Backup**: Included in Docker volume backups
-
-## Usage
-
-### View Analytics
-
-Visit https://bearings.lymxod.org.uk/analytics to see:
-- Real-time visitors
-- Page views
-- Traffic sources
-- Geographic data
-- Browser/device stats
-
-### Custom Events (Optional)
-
-Track custom events in your app:
+The frontend can continue to push custom events if needed:
 
 ```javascript
-// Track button clicks
 umami.track('calculate-bearing', { zone: '2' });
-
-// Track mark selections
-umami.track('mark-selected', { mark: '2A' });
 ```
 
-## Backup & Restore
+Just ensure the global `umami` object exists before calling it (wrap calls in a guard).
 
-### Backup Analytics Data
+## Other Apps
 
-```bash
-cd /opt/bearings-app
-docker compose exec umami-db pg_dump -U umami umami > umami-backup.sql
-```
+When new services join the stack:
 
-### Restore Analytics Data
+1. Request a Website ID + script URL from ops.
+2. Set `UMAMI_SCRIPT_URL` / `UMAMI_WEBSITE_ID` in that app's `.env`.
+3. Insert the same conditional script snippet as in `templates/lookup.html`.
 
-```bash
-cd /opt/bearings-app
-cat umami-backup.sql | docker compose exec -T umami-db psql -U umami umami
-```
-
-## Troubleshooting
-
-### Analytics not loading
-
-1. Check containers are running:
-```bash
-cd /opt/bearings-app
-sudo docker compose ps
-```
-
-2. Check logs:
-```bash
-sudo docker compose logs umami
-sudo docker compose logs umami-db
-```
-
-### Can't login
-
-Reset admin password:
-```bash
-cd /opt/bearings-app
-docker compose exec umami-db psql -U umami umami -c \
-  "UPDATE account SET password = '\$2b\$10\$BUli0c.muyCW1ErNJc3jL.vFRFtFJWrT8/GcR4A.sUdSDRXrvCmP6' WHERE username = 'admin';"
-```
-This resets password to: `umami`
-
-### Database issues
-
-Recreate database:
-```bash
-cd /opt/bearings-app
-sudo docker compose down
-sudo docker volume rm bearings-app_umami-data
-sudo docker compose up -d
-```
-
-## Privacy & GDPR
-
-Umami is **fully GDPR compliant**:
-- ✅ No cookies
-- ✅ No personal data collection
-- ✅ All data anonymized
-- ✅ Self-hosted (you control the data)
-- ✅ No third-party services
-
-**You don't need a cookie banner or GDPR notice** when using Umami.
-
-## Upgrading
-
-To upgrade Umami to the latest version:
-
-```bash
-cd /opt/bearings-app
-sudo docker compose pull umami
-sudo docker compose up -d
-```
-
-## Uninstalling
-
-To remove analytics completely:
-
-```bash
-cd /opt/bearings-app
-sudo docker compose down
-sudo docker volume rm bearings-app_umami-data
-```
-
-Then remove the analytics sections from `docker-compose.yml` and `nginx.conf`.
-
-## Support
+No additional containers or databases are required per app.
 
 - **Umami Docs**: https://umami.is/docs
 - **GitHub**: https://github.com/umami-software/umami
@@ -204,9 +55,6 @@ Then remove the analytics sections from `docker-compose.yml` and `nginx.conf`.
 
 ## Security Notes
 
-1. **Change default password** immediately
-2. **Use strong passwords** for admin account
-3. **Set UMAMI_SECRET** environment variable
-4. **Regular backups** of analytics data
-5. **Keep Umami updated** for security patches
-
+- Ops maintains the shared Umami instance (patching, backups, user management).
+- Request access instead of creating ad-hoc accounts.
+- Treat `UMAMI_SCRIPT_URL` as trusted infrastructure—only point at approved domains.

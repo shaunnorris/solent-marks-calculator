@@ -11,8 +11,10 @@
     <!-- Leaflet JS -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     
+    {% if umami_script_url and umami_website_id %}
     <!-- Analytics (Umami - privacy-friendly, no cookies) -->
-    <script defer src="/script.js" data-website-id="{{ umami_website_id }}"></script>
+    <script defer src="{{ umami_script_url }}" data-website-id="{{ umami_website_id }}"></script>
+    {% endif %}
     
     <style>
         * {
@@ -999,4 +1001,3 @@
     </div>
 </body>
 </html>
-
